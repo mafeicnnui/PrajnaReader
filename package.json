@@ -1,0 +1,14 @@
+{
+  "name": "prajna-reader-root",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "npm --prefix ./prajna-buddy run dev",
+    "build": "npm --prefix ./prajna-buddy run build",
+    "test.unit": "npm --prefix ./prajna-buddy run test.unit",
+    "lint": "npm --prefix ./prajna-buddy run lint",
+    "cap:add:android": "npm --prefix ./prajna-buddy exec -- cap add android",
+    "cap:sync:android": "npm --prefix ./prajna-buddy exec -- cap sync android",
+    "android:open": "npm --prefix ./prajna-buddy exec -- cap open android"
+  }
+}

@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Builds
+prajna-buddy/dist/
+prajna-buddy/.vite/
+
+# Capacitor / Ionic
+prajna-buddy/android/.gradle/
+prajna-buddy/android/build/
+prajna-buddy/android/app/build/
+prajna-buddy/android/local.properties
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

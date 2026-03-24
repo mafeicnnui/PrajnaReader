@@ -1,0 +1,53 @@
+name: Android Debug APK
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build-android-debug-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: prajna-buddy/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Install dependencies
+        working-directory: prajna-buddy
+        run: npm ci
+
+      - name: Build web
+        working-directory: prajna-buddy
+        run: npm run build
+
+      - name: Capacitor sync android
+        working-directory: prajna-buddy
+        run: npx cap sync android
+
+      - name: Build Debug APK
+        working-directory: prajna-buddy/android
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: prajna-buddy/android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
