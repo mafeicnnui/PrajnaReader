@@ -15,13 +15,13 @@ const Categories: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Prajna Buddy</IonTitle>
+          <IonTitle>般若伴读</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Prajna Buddy</IonTitle>
+            <IonTitle size="large">般若伴读</IonTitle>
           </IonToolbar>
         </IonHeader>
 

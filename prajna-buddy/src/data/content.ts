@@ -20,11 +20,11 @@ export interface VideoItem {
 }
 
 export const categories: Category[] = [
-  { id: 'sutra', title: 'Sutra Reading' },
-  { id: 'cartoon', title: 'Buddhist Cartoon Stories' },
-  { id: 'culture', title: 'Traditional Culture' },
-  { id: 'science', title: 'Science Experiments' },
-  { id: 'movie', title: 'Buddhist Movies & TV' },
+  { id: 'sutra', title: '经典阅读' },
+  { id: 'cartoon', title: '佛教动画故事' },
+  { id: 'culture', title: '传统文化' },
+  { id: 'science', title: '科学实验' },
+  { id: 'movie', title: '佛教影视' },
 ];
 
 export const videos: VideoItem[] = [

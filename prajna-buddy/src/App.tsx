@@ -3,7 +3,8 @@ import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import Categories from './pages/Categories';
 import CategoryVideos from './pages/CategoryVideos';
-import SutraReader from './pages/SutraReader';
+import DizangToc from './pages/DizangToc';
+import SutraChapterReader from './pages/SutraChapterReader';
 import VideoPlayer from './pages/VideoPlayer';
 
 /* Core CSS required for Ionic components to work properly */
@@ -49,7 +50,10 @@ const App: React.FC = () => (
           <CategoryVideos />
         </Route>
         <Route exact path="/sutra/dizang">
-          <SutraReader />
+          <DizangToc />
+        </Route>
+        <Route exact path="/sutra/dizang/:chapterId">
+          <SutraChapterReader />
         </Route>
         <Route exact path="/player/:videoId">
           <VideoPlayer />
