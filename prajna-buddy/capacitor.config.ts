@@ -2,7 +2,7 @@ import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'prajna-buddy',
+  appName: '般若阅读',
   webDir: 'dist'
 };
 

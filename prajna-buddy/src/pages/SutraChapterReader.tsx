@@ -1,7 +1,7 @@
 import {
   IonBackButton,
-  IonButtons,
   IonButton,
+  IonButtons,
   IonChip,
   IonContent,
   IonHeader,
@@ -16,6 +16,7 @@ import {
   IonSelectOption,
   IonTitle,
   IonToolbar,
+  useIonToast,
 } from '@ionic/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -186,6 +187,8 @@ const SutraChapterReader: React.FC = () => {
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
   const [loopAudio, setLoopAudio] = useState<boolean>(false);
 
+  const [presentToast] = useIonToast();
+
   const sections = useMemo(() => {
     if (!chapter) return [];
     return getSectionsByIds(chapter.sectionIds);
@@ -353,11 +356,21 @@ const SutraChapterReader: React.FC = () => {
 
           <IonButton
             size="small"
-            fill="clear"
+            fill={loopAudio ? 'solid' : 'clear'}
             disabled={!audioUrl}
-            color={loopAudio ? 'primary' : undefined}
+            color={loopAudio ? 'primary' : 'medium'}
             style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
-            onClick={() => setLoopAudio((v) => !v)}
+            onClick={() => {
+              setLoopAudio((v) => {
+                const next = !v;
+                presentToast({
+                  message: next ? '循环播放：已开启' : '循环播放：已关闭',
+                  duration: 900,
+                  position: 'top',
+                });
+                return next;
+              });
+            }}
           >
             <IonIcon slot="icon-only" icon={repeat} />
           </IonButton>
