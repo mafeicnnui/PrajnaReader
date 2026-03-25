@@ -48,13 +48,24 @@ jobs:
         working-directory: prajna-buddy/android
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK
+      - name: Prepare signing keystore
         working-directory: prajna-buddy/android
-        run: ./gradlew assembleDebug
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > prajna-buddy-release.jks
+          cat > keystore.properties <<'EOF'
+          storeFile=prajna-buddy-release.jks
+          storePassword=${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+          keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+          EOF
+
+      - name: Build Release APK
+        working-directory: prajna-buddy/android
+        run: ./gradlew assembleRelease
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: prajna-buddy/android/app/build/outputs/apk/debug/app-debug.apk
+          name: app-release-apk
+          path: prajna-buddy/android/app/build/outputs/apk/release/app-release.apk
           if-no-files-found: error
