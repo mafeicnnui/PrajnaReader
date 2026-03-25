@@ -66,7 +66,22 @@ jobs:
       - name: Rename APK
         working-directory: prajna-buddy/android
         run: |
-          cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Prajna-Reader.apk
+          APK_DIR="app/build/outputs/apk/release"
+          if [ -f "$APK_DIR/Prajna-Reader.apk" ]; then
+            echo "APK already named Prajna-Reader.apk"
+            ls -lah "$APK_DIR/Prajna-Reader.apk"
+            exit 0
+          fi
+
+          SRC_APK=$(ls -1 "$APK_DIR"/*.apk 2>/dev/null | head -n 1)
+          if [ -z "$SRC_APK" ]; then
+            echo "No APK found in $APK_DIR"
+            ls -lah "$APK_DIR" || true
+            exit 1
+          fi
+
+          echo "Renaming APK: $SRC_APK -> $APK_DIR/Prajna-Reader.apk"
+          cp "$SRC_APK" "$APK_DIR/Prajna-Reader.apk"
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
