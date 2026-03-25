@@ -4,6 +4,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import Categories from './pages/Categories';
 import CategoryVideos from './pages/CategoryVideos';
 import DizangToc from './pages/DizangToc';
+import SutraBooks from './pages/SutraBooks';
 import SutraChapterReader from './pages/SutraChapterReader';
 import VideoPlayer from './pages/VideoPlayer';
 
@@ -48,6 +49,9 @@ const App: React.FC = () => (
         </Route>
         <Route exact path="/category/:categoryId">
           <CategoryVideos />
+        </Route>
+        <Route exact path="/sutra">
+          <SutraBooks />
         </Route>
         <Route exact path="/sutra/dizang">
           <DizangToc />

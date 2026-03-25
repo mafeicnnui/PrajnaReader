@@ -9,6 +9,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonModal,
   IonPage,
   IonRange,
   IonSelect,
@@ -24,6 +25,8 @@ import {
   playSkipBack,
   playSkipForward,
   remove,
+  star,
+  starOutline,
   eye,
   school,
 } from 'ionicons/icons';
@@ -160,7 +163,7 @@ const SutraChapterReader: React.FC = () => {
   const { chapterId } = useParams<RouteParams>();
   const chapter = getChapter(chapterId);
 
-  const [showMenu, setShowMenu] = useState<boolean>(true);
+  const [showChapterPicker, setShowChapterPicker] = useState<boolean>(false);
   const [showBookmarks, setShowBookmarks] = useState<boolean>(false);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
@@ -228,21 +231,12 @@ const SutraChapterReader: React.FC = () => {
 
   useEffect(() => {
     try {
-      const v = localStorage.getItem('sutra:chapterReader:showMenu');
-      if (v === '0') setShowMenu(false);
-      if (v === '1') setShowMenu(true);
+      // keep for backward compatibility
+      localStorage.removeItem('sutra:chapterReader:showMenu');
     } catch {
       // ignore
     }
   }, []);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('sutra:chapterReader:showMenu', showMenu ? '1' : '0');
-    } catch {
-      // ignore
-    }
-  }, [showMenu]);
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(`section-${sectionId}`);
@@ -505,7 +499,7 @@ const SutraChapterReader: React.FC = () => {
             <IonButton size="small" fill="clear" onClick={() => setFontSize((s) => Math.min(24, s + 1))}>
               <IonIcon slot="icon-only" icon={add} />
             </IonButton>
-            <IonButton size="small" fill="clear" onClick={() => setShowMenu((v) => !v)}>
+            <IonButton size="small" fill="clear" onClick={() => setShowChapterPicker(true)}>
               <IonIcon slot="icon-only" icon={list} />
             </IonButton>
           </IonButtons>
@@ -575,32 +569,6 @@ const SutraChapterReader: React.FC = () => {
             minHeight: 'calc(100vh - 260px)',
           }}
         >
-          {showMenu ? (
-            <div
-              style={{
-                width: 260,
-                maxWidth: '45vw',
-                borderRight: '1px solid rgba(255,255,255,0.08)',
-                paddingRight: 12,
-                overflowY: 'auto',
-                maxHeight: 'calc(100vh - 320px)',
-              }}
-            >
-              <IonList inset>
-                {chapters.map((c) => (
-                  <IonItem
-                    key={`ch-${c.id}`}
-                    routerLink={`/sutra/dizang/${c.id}`}
-                    detail={false}
-                    color={c.id === chapterId ? 'primary' : undefined}
-                  >
-                    <IonLabel className="ion-text-wrap">{c.title}</IonLabel>
-                  </IonItem>
-                ))}
-              </IonList>
-            </div>
-          ) : null}
-
           <div style={{ flex: 1, minWidth: 0 }}>
             {showBookmarks ? (
               <IonList inset>
@@ -705,18 +673,20 @@ const SutraChapterReader: React.FC = () => {
                             </div>
                           ) : null}
                         </IonLabel>
-                        <IonButton
-                          slot="end"
-                          fill="clear"
-                          size="small"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            toggleBookmark(s.id, s.title);
-                          }}
-                        >
-                          {isBookmarked(s.id) ? '已收藏' : '收藏'}
-                        </IonButton>
+                        <div style={{ position: 'absolute', top: 6, right: 6, zIndex: 2 }}>
+                          <IonButton
+                            fill="clear"
+                            size="small"
+                            style={{ '--padding-start': '6px', '--padding-end': '6px' } as any}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleBookmark(s.id, s.title);
+                            }}
+                          >
+                            <IonIcon slot="icon-only" icon={isBookmarked(s.id) ? star : starOutline} />
+                          </IonButton>
+                        </div>
                       </IonItem>
                     );
                   })}
@@ -735,6 +705,32 @@ const SutraChapterReader: React.FC = () => {
             )}
           </div>
         </div>
+
+        <IonModal isOpen={showChapterPicker} onDidDismiss={() => setShowChapterPicker(false)}>
+          <IonHeader>
+            <IonToolbar>
+              <IonButtons slot="start">
+                <IonButton onClick={() => setShowChapterPicker(false)}>关闭</IonButton>
+              </IonButtons>
+              <IonTitle>切换章节</IonTitle>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent>
+            <IonList inset>
+              {chapters.map((c) => (
+                <IonItem
+                  key={`pick-${c.id}`}
+                  routerLink={`/sutra/dizang/${c.id}`}
+                  detail={false}
+                  color={c.id === chapterId ? 'primary' : undefined}
+                  onClick={() => setShowChapterPicker(false)}
+                >
+                  <IonLabel className="ion-text-wrap">{c.title}</IonLabel>
+                </IonItem>
+              ))}
+            </IonList>
+          </IonContent>
+        </IonModal>
       </IonContent>
     </IonPage>
   );
