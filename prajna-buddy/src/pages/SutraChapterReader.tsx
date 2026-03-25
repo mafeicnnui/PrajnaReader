@@ -13,14 +13,20 @@ import {
   IonRange,
   IonSelect,
   IonSelectOption,
-  IonText,
   IonTitle,
-  IonToggle,
   IonToolbar,
 } from '@ionic/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { playSkipBack, playSkipForward } from 'ionicons/icons';
+import {
+  add,
+  list,
+  playSkipBack,
+  playSkipForward,
+  remove,
+  eye,
+  school,
+} from 'ionicons/icons';
 import { SutraSection } from '../data/dizang';
 import {
   dizangBook,
@@ -30,8 +36,6 @@ import {
   VoiceId,
 } from '../data/dizangBook';
 import { cacheAudio, getCachedAudioSrc } from '../services/audioCache';
-
-type ReaderMode = 'text' | 'meaning';
 
 type RouteParams = {
   chapterId: string;
@@ -152,11 +156,6 @@ function renderStackedPinyin(text: string, pinyin: string, baseFontSize: number)
   return nodes;
 }
 
-function sectionContent(section: SutraSection, mode: ReaderMode): string {
-  if (mode === 'meaning') return section.meaning;
-  return section.text;
-}
-
 const SutraChapterReader: React.FC = () => {
   const { chapterId } = useParams<RouteParams>();
   const chapter = getChapter(chapterId);
@@ -256,6 +255,122 @@ const SutraChapterReader: React.FC = () => {
     } catch {
       window.scrollTo(0, 0);
     }
+  };
+
+  const renderMiniPlayer = () => {
+    return (
+      <div
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 5,
+          paddingBottom: 8,
+          background: 'var(--ion-background-color)',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 6,
+            padding: '6px 8px',
+            borderRadius: 10,
+            background: 'rgba(255,255,255,0.04)',
+          }}
+        >
+          <IonButton
+            size="small"
+            fill="clear"
+            disabled={!audioUrl}
+            style={{ width: 34, height: 34, minWidth: 34, '--padding-start': '0px', '--padding-end': '0px' } as any}
+            onClick={async () => {
+              const el = audioRef.current;
+              if (!el) return;
+              if (el.paused) {
+                if (audioUrl && audioCacheKey) {
+                  try {
+                    const src = await cacheAudio(audioCacheKey, audioUrl);
+                    if (el.src !== src) el.src = src;
+                  } catch {
+                    if (el.src !== (audioSrc ?? audioUrl)) el.src = audioSrc ?? audioUrl;
+                  }
+                }
+                void el.play();
+              } else {
+                el.pause();
+              }
+            }}
+          >
+            <img
+              alt={voice === 'male' ? '男声' : '女声'}
+              src={getVoiceAvatarSrc(voice)}
+              style={{ width: 26, height: 26, borderRadius: 999, display: 'block' }}
+            />
+          </IonButton>
+
+          <IonButton
+            size="small"
+            fill="clear"
+            disabled={!audioUrl}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={() => {
+              const el = audioRef.current;
+              if (!el) return;
+              el.currentTime = Math.max(0, (el.currentTime || 0) - 15);
+            }}
+          >
+            <IonIcon slot="icon-only" icon={playSkipBack} />
+          </IonButton>
+
+          <IonButton
+            size="small"
+            fill="clear"
+            disabled={!audioUrl}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={() => {
+              const el = audioRef.current;
+              if (!el) return;
+              const d = Number.isFinite(el.duration) ? el.duration : 0;
+              el.currentTime = Math.min(d || 0, (el.currentTime || 0) + 15);
+            }}
+          >
+            <IonIcon slot="icon-only" icon={playSkipForward} />
+          </IonButton>
+
+          <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: 'nowrap' }}>
+            {formatTime(audioCurrentTime)}
+          </div>
+
+          <div style={{ flex: 1, minWidth: 80, maxWidth: 160 }}>
+            <IonRange
+              min={0}
+              max={audioDuration && Number.isFinite(audioDuration) ? audioDuration : 0}
+              value={audioCurrentTime}
+              disabled={!audioDuration || !Number.isFinite(audioDuration) || audioDuration <= 0}
+              onIonKnobMoveStart={() => setIsSeeking(true)}
+              onIonKnobMoveEnd={(e) => {
+                const el = audioRef.current;
+                if (el) {
+                  const v = typeof e.detail.value === 'number' ? e.detail.value : 0;
+                  el.currentTime = v;
+                  setAudioCurrentTime(v);
+                }
+                setIsSeeking(false);
+              }}
+              onIonChange={(e) => {
+                if (!isSeeking) return;
+                const v = typeof e.detail.value === 'number' ? e.detail.value : 0;
+                setAudioCurrentTime(v);
+              }}
+            />
+          </div>
+
+          <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: 'nowrap' }}>
+            {formatTime(audioDuration)}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const isBookmarked = (sectionId: string) => {
@@ -384,151 +499,47 @@ const SutraChapterReader: React.FC = () => {
 
         <IonToolbar style={{ '--min-height': '48px', fontSize: 14 } as any}>
           <IonButtons slot="start">
-            <IonButton size="small" onClick={() => setFontSize((s) => Math.max(14, s - 1))}>
-              A-
+            <IonButton size="small" fill="clear" onClick={() => setFontSize((s) => Math.max(14, s - 1))}>
+              <IonIcon slot="icon-only" icon={remove} />
             </IonButton>
-            <IonButton size="small" onClick={() => setFontSize((s) => Math.min(24, s + 1))}>
-              A+
+            <IonButton size="small" fill="clear" onClick={() => setFontSize((s) => Math.min(24, s + 1))}>
+              <IonIcon slot="icon-only" icon={add} />
             </IonButton>
-            <IonButton size="small" onClick={() => setShowMenu((v) => !v)}>
-              {showMenu ? '隐藏目录' : '目录'}
+            <IonButton size="small" fill="clear" onClick={() => setShowMenu((v) => !v)}>
+              <IonIcon slot="icon-only" icon={list} />
             </IonButton>
           </IonButtons>
 
           <div
             slot="end"
-            style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'nowrap', fontSize: 14 }}
+            style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'nowrap', fontSize: 14 }}
           >
-            <IonToggle
-              style={{ fontSize: 14 } as any}
-              checked={showPinyinAbove}
-              onIonChange={(e) => setShowPinyinAbove(e.detail.checked)}
+            <IonButton
+              size="small"
+              fill="clear"
+              color={showPinyinAbove ? 'primary' : undefined}
+              onClick={() => setShowPinyinAbove((v) => !v)}
             >
-              显示拼音
-            </IonToggle>
-            <IonToggle
-              style={{ fontSize: 14 } as any}
-              checked={reciteMode}
-              onIonChange={(e) => {
-                const next = e.detail.checked;
-                setReciteMode(next);
-                if (!next) setRevealedIds({});
+              <IonIcon slot="icon-only" icon={eye} />
+            </IonButton>
+            <IonButton
+              size="small"
+              fill="clear"
+              color={reciteMode ? 'primary' : undefined}
+              onClick={() => {
+                setReciteMode((v) => {
+                  const next = !v;
+                  if (!next) setRevealedIds({});
+                  return next;
+                });
               }}
             >
-              背诵模式
-            </IonToggle>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 12, opacity: 0.8, whiteSpace: 'nowrap' }}>普通话</span>
-              <IonSelect
-                value={voice}
-                interface="popover"
-                style={{ fontSize: 14 } as any}
-                onIonChange={(e) => setVoice(e.detail.value as VoiceId)}
-              >
-                <IonSelectOption value="male">男声</IonSelectOption>
-                <IonSelectOption value="female">女声</IonSelectOption>
-              </IonSelect>
-            </div>
-
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginLeft: 4 }}>
-              <IonButton
-                size="small"
-                fill="clear"
-                disabled={!audioUrl}
-                style={{ width: 34, height: 34, minWidth: 34, '--padding-start': '0px', '--padding-end': '0px' } as any}
-                onClick={async () => {
-                  const el = audioRef.current;
-                  if (!el) return;
-                  if (el.paused) {
-                    if (audioUrl && audioCacheKey) {
-                      try {
-                        const src = await cacheAudio(audioCacheKey, audioUrl);
-                        if (el.src !== src) el.src = src;
-                      } catch {
-                        if (el.src !== (audioSrc ?? audioUrl)) el.src = audioSrc ?? audioUrl;
-                      }
-                    }
-                    void el.play();
-                  } else {
-                    el.pause();
-                  }
-                }}
-              >
-                <img
-                  alt={voice === 'male' ? '男声' : '女声'}
-                  src={getVoiceAvatarSrc(voice)}
-                  style={{ width: 26, height: 26, borderRadius: 999, display: 'block' }}
-                />
-              </IonButton>
-
-              <IonButton
-                size="small"
-                fill="clear"
-                disabled={!audioUrl}
-                onClick={() => {
-                  const el = audioRef.current;
-                  if (!el) return;
-                  el.currentTime = Math.max(0, (el.currentTime || 0) - 15);
-                }}
-              >
-                <IonIcon slot="icon-only" icon={playSkipBack} />
-              </IonButton>
-
-              <IonButton
-                size="small"
-                fill="clear"
-                disabled={!audioUrl}
-                onClick={() => {
-                  const el = audioRef.current;
-                  if (!el) return;
-                  const d = Number.isFinite(el.duration) ? el.duration : 0;
-                  el.currentTime = Math.min(d || 0, (el.currentTime || 0) + 15);
-                }}
-              >
-                <IonIcon slot="icon-only" icon={playSkipForward} />
-              </IonButton>
-
-              <div style={{ fontSize: 12, opacity: 0.8, whiteSpace: 'nowrap' }}>
-                {formatTime(audioCurrentTime)} / {formatTime(audioDuration)}
-              </div>
-
-              <div style={{ width: 160, maxWidth: '18vw', minWidth: 120 }}>
-                <IonRange
-                  min={0}
-                  max={audioDuration && Number.isFinite(audioDuration) ? audioDuration : 0}
-                  value={audioCurrentTime}
-                  disabled={!audioDuration || !Number.isFinite(audioDuration) || audioDuration <= 0}
-                  onIonKnobMoveStart={() => setIsSeeking(true)}
-                  onIonKnobMoveEnd={(e) => {
-                    const el = audioRef.current;
-                    if (el) {
-                      const v = typeof e.detail.value === 'number' ? e.detail.value : 0;
-                      el.currentTime = v;
-                      setAudioCurrentTime(v);
-                    }
-                    setIsSeeking(false);
-                  }}
-                  onIonChange={(e) => {
-                    if (!isSeeking) return;
-                    const v = typeof e.detail.value === 'number' ? e.detail.value : 0;
-                    setAudioCurrentTime(v);
-                  }}
-                />
-              </div>
-
-              <IonSelect
-                value={playbackRate}
-                interface="popover"
-                style={{ fontSize: 14, minWidth: 74 } as any}
-                onIonChange={(e) => setPlaybackRate(Number(e.detail.value))}
-              >
-                <IonSelectOption value={0.75}>0.75x</IonSelectOption>
-                <IonSelectOption value={1}>1.0x</IonSelectOption>
-                <IonSelectOption value={1.25}>1.25x</IonSelectOption>
-                <IonSelectOption value={1.5}>1.5x</IonSelectOption>
-              </IonSelect>
-            </div>
+              <IonIcon slot="icon-only" icon={school} />
+            </IonButton>
+            <IonSelect value={voice} interface="popover" style={{ fontSize: 14, minWidth: 74 } as any} onIonChange={(e) => setVoice(e.detail.value as VoiceId)}>
+              <IonSelectOption value="male">男声</IonSelectOption>
+              <IonSelectOption value="female">女声</IonSelectOption>
+            </IonSelect>
           </div>
         </IonToolbar>
 
@@ -635,89 +646,92 @@ const SutraChapterReader: React.FC = () => {
                 )}
               </IonList>
             ) : (
-              <IonList inset>
-                {sections.map((s) => {
-                  const revealed = !reciteMode || !!revealedIds[s.id];
-                  const showPinyin = showText && showPinyinAbove;
+              <>
+                {renderMiniPlayer()}
+                <IonList inset>
+                  {sections.map((s) => {
+                    const revealed = !reciteMode || !!revealedIds[s.id];
+                    const showPinyin = showText && showPinyinAbove;
 
-                  return (
-                    <IonItem
-                      key={s.id}
-                      id={`section-${s.id}`}
-                      button={reciteMode}
-                      detail={false}
-                      onClick={() => {
-                        if (!reciteMode) return;
-                        setRevealedIds((prev) => ({ ...prev, [s.id]: !prev[s.id] }));
-                      }}
-                    >
-                      <IonLabel className="ion-text-wrap">
-                        {s.title ? <div style={{ fontWeight: 600, marginBottom: 8 }}>{s.title}</div> : null}
-
-                        {showText ? (
-                          <div
-                            style={{
-                              whiteSpace: 'pre-wrap',
-                              lineHeight: 1.8,
-                              fontSize,
-                              opacity: revealed ? 1 : 0.15,
-                              userSelect: 'text',
-                            }}
-                          >
-                            {showPinyin ? renderStackedPinyin(s.text, s.pinyin, fontSize) : s.text}
-                          </div>
-                        ) : null}
-
-                        {showMeaning ? (
-                          <div
-                            style={{
-                              whiteSpace: 'pre-wrap',
-                              lineHeight: 1.8,
-                              fontSize,
-                              opacity: 0.9,
-                              userSelect: 'text',
-                              marginTop: showText ? 10 : 0,
-                            }}
-                          >
-                            {s.meaning}
-                          </div>
-                        ) : null}
-
-                        {!showText && !showMeaning ? (
-                          <div style={{ fontSize: 12, opacity: 0.6 }}>未选择显示内容。</div>
-                        ) : null}
-                        {reciteMode ? (
-                          <div style={{ marginTop: 8, fontSize: 12, opacity: 0.6 }}>
-                            点击此段 {revealed ? '隐藏' : '显示'}
-                          </div>
-                        ) : null}
-                      </IonLabel>
-                      <IonButton
-                        slot="end"
-                        fill="clear"
-                        size="small"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          toggleBookmark(s.id, s.title);
+                    return (
+                      <IonItem
+                        key={s.id}
+                        id={`section-${s.id}`}
+                        button={reciteMode}
+                        detail={false}
+                        onClick={() => {
+                          if (!reciteMode) return;
+                          setRevealedIds((prev) => ({ ...prev, [s.id]: !prev[s.id] }));
                         }}
                       >
-                        {isBookmarked(s.id) ? '已收藏' : '收藏'}
-                      </IonButton>
+                        <IonLabel className="ion-text-wrap">
+                          {s.title ? <div style={{ fontWeight: 600, marginBottom: 8 }}>{s.title}</div> : null}
+
+                          {showText ? (
+                            <div
+                              style={{
+                                whiteSpace: 'pre-wrap',
+                                lineHeight: 1.8,
+                                fontSize,
+                                opacity: revealed ? 1 : 0.15,
+                                userSelect: 'text',
+                              }}
+                            >
+                              {showPinyin ? renderStackedPinyin(s.text, s.pinyin, fontSize) : s.text}
+                            </div>
+                          ) : null}
+
+                          {showMeaning ? (
+                            <div
+                              style={{
+                                whiteSpace: 'pre-wrap',
+                                lineHeight: 1.8,
+                                fontSize,
+                                opacity: 0.9,
+                                userSelect: 'text',
+                                marginTop: showText ? 10 : 0,
+                              }}
+                            >
+                              {s.meaning}
+                            </div>
+                          ) : null}
+
+                          {!showText && !showMeaning ? (
+                            <div style={{ fontSize: 12, opacity: 0.6 }}>未选择显示内容。</div>
+                          ) : null}
+                          {reciteMode ? (
+                            <div style={{ marginTop: 8, fontSize: 12, opacity: 0.6 }}>
+                              点击此段 {revealed ? '隐藏' : '显示'}
+                            </div>
+                          ) : null}
+                        </IonLabel>
+                        <IonButton
+                          slot="end"
+                          fill="clear"
+                          size="small"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            toggleBookmark(s.id, s.title);
+                          }}
+                        >
+                          {isBookmarked(s.id) ? '已收藏' : '收藏'}
+                        </IonButton>
+                      </IonItem>
+                    );
+                  })}
+                  {!chapter ? (
+                    <IonItem lines="none">
+                      <IonLabel>章节不存在。</IonLabel>
                     </IonItem>
-                  );
-                })}
-                {!chapter ? (
-                  <IonItem lines="none">
-                    <IonLabel>章节不存在。</IonLabel>
-                  </IonItem>
-                ) : null}
-                {chapter && sections.length === 0 ? (
-                  <IonItem lines="none">
-                    <IonLabel>本章内容待补充。</IonLabel>
-                  </IonItem>
-                ) : null}
-              </IonList>
+                  ) : null}
+                  {chapter && sections.length === 0 ? (
+                    <IonItem lines="none">
+                      <IonLabel>本章内容待补充。</IonLabel>
+                    </IonItem>
+                  ) : null}
+                </IonList>
+              </>
             )}
           </div>
         </div>

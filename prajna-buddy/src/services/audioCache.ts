@@ -30,7 +30,7 @@ export async function getCachedAudioSrc(cacheKey: string): Promise<string | unde
 
   try {
     const uri = await Filesystem.getUri({ directory: Directory.Cache, path: value });
-    return uri.uri;
+    return Capacitor.convertFileSrc(uri.uri);
   } catch {
     await Preferences.remove({ key: prefKey(cacheKey) });
     return undefined;
@@ -65,7 +65,7 @@ export async function cacheAudio(cacheKey: string, remoteUrl: string): Promise<s
   await Preferences.set({ key: prefKey(cacheKey), value: path });
 
   const uri = await Filesystem.getUri({ directory: Directory.Cache, path });
-  return uri.uri;
+  return Capacitor.convertFileSrc(uri.uri);
 }
 
 export async function clearCachedAudio(cacheKey: string): Promise<void> {
