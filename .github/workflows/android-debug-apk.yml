@@ -44,6 +44,10 @@ jobs:
         working-directory: prajna-buddy
         run: npx cap sync android
 
+      - name: Make gradlew executable
+        working-directory: prajna-buddy/android
+        run: chmod +x ./gradlew
+
       - name: Build Debug APK
         working-directory: prajna-buddy/android
         run: ./gradlew assembleDebug
