@@ -63,9 +63,14 @@ jobs:
         working-directory: prajna-buddy/android
         run: ./gradlew assembleRelease
 
+      - name: Rename APK
+        working-directory: prajna-buddy/android
+        run: |
+          cp app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Prajna-Reader.apk
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-apk
-          path: prajna-buddy/android/app/build/outputs/apk/release/app-release.apk
+          name: Prajna-Reader-apk
+          path: prajna-buddy/android/app/build/outputs/apk/release/Prajna-Reader.apk
           if-no-files-found: error

@@ -53,8 +53,20 @@ Ionic 的脚手架默认会创建一个 **项目目录**（这里是 `prajna-bud
   - 手动触发（`workflow_dispatch`）
 
 - **产物**
-  - Actions 会构建并上传 `debug APK` 作为 Artifact：`app-debug-apk`
+  - Actions 会构建并上传 **Release APK** 作为 Artifact：`Prajna-Reader-apk`
   - 下载路径：GitHub 仓库 -> Actions -> 选择一次运行 -> Artifacts
+  - 下载后得到：`Prajna-Reader.apk`
+
+## Android 签名（用于可覆盖安装/升级）
+
+为了保证手机上安装的 APK 可以持续升级（避免“签名不一致无法覆盖安装”），Release 构建使用固定 keystore 签名。
+
+- 本机构建：在 `prajna-buddy/android/` 下准备 `keystore.properties`（已被 `.gitignore` 忽略，勿提交）
+- CI 构建：在 GitHub 仓库 Secrets 中配置：
+  - `ANDROID_KEYSTORE_BASE64`
+  - `ANDROID_KEYSTORE_PASSWORD`
+  - `ANDROID_KEY_ALIAS`
+  - `ANDROID_KEY_PASSWORD`
 
 ## 当前功能（MVP）
 
@@ -64,9 +76,13 @@ Ionic 的脚手架默认会创建一个 **项目目录**（这里是 `prajna-bud
   - MP4 播放（HTML5 `<video>`）
 
 - 经典阅读
-  - 《地藏菩萨本愿经》阅读页
+  - 经典列表 -> 章节列表 -> 章节阅读
+  - 目前内置：《地藏菩萨本愿经》（样例数据）
   - 模式：经文 / 拼音 / 白话
   - 背诵模式：点击段落显示/隐藏
+  - 段落收藏：星标按钮
+  - 章节切换：工具栏弹出章节列表
+  - 音频：章节朗读（支持循环）
 
 ## 内容配置
 

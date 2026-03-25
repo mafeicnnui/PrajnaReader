@@ -24,6 +24,7 @@ import {
   list,
   playSkipBack,
   playSkipForward,
+  repeat,
   remove,
   star,
   starOutline,
@@ -183,6 +184,7 @@ const SutraChapterReader: React.FC = () => {
   const [audioCurrentTime, setAudioCurrentTime] = useState<number>(0);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
+  const [loopAudio, setLoopAudio] = useState<boolean>(false);
 
   const sections = useMemo(() => {
     if (!chapter) return [];
@@ -220,6 +222,24 @@ const SutraChapterReader: React.FC = () => {
       // ignore
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      const v = localStorage.getItem('sutra:chapterReader:loopAudio');
+      if (v === '1') setLoopAudio(true);
+      if (v === '0') setLoopAudio(false);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('sutra:chapterReader:loopAudio', loopAudio ? '1' : '0');
+    } catch {
+      // ignore
+    }
+  }, [loopAudio]);
 
   useEffect(() => {
     try {
@@ -329,6 +349,17 @@ const SutraChapterReader: React.FC = () => {
             }}
           >
             <IonIcon slot="icon-only" icon={playSkipForward} />
+          </IonButton>
+
+          <IonButton
+            size="small"
+            fill="clear"
+            disabled={!audioUrl}
+            color={loopAudio ? 'primary' : undefined}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={() => setLoopAudio((v) => !v)}
+          >
+            <IonIcon slot="icon-only" icon={repeat} />
           </IonButton>
 
           <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: 'nowrap' }}>
@@ -472,6 +503,12 @@ const SutraChapterReader: React.FC = () => {
     if (!el) return;
     el.playbackRate = playbackRate;
   }, [playbackRate]);
+
+  useEffect(() => {
+    const el = audioRef.current;
+    if (!el) return;
+    el.loop = loopAudio;
+  }, [loopAudio]);
 
   return (
     <IonPage>

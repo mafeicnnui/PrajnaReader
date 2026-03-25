@@ -43,6 +43,14 @@ android {
         }
     }
 
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == 'release') {
+            variant.outputs.all { output ->
+                output.outputFileName = 'Prajna-Reader.apk'
+            }
+        }
+    }
+
     if (gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') } && !keystorePropertiesFile.exists()) {
         throw new GradleException("Missing keystore.properties for release build. Create android/keystore.properties to configure signing.")
     }
