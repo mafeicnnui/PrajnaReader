@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="般若伴读 - 地藏经阅读App，支持经文、拼音、白话文，男女声朗读">
+    <meta name="keywords" content="地藏经,佛经,阅读,朗读,般若伴读">
+    <title>般若伴读 - 地藏经阅读App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+        }
+
+        .app-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .version {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .download-section {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 20px 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .download-btn svg {
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .qr-code {
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .qr-code img {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+
+        .qr-hint {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 30px 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .screenshots {
+            margin: 40px 0;
+        }
+
+        .screenshots h2 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 30px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .screenshot {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .info-section {
+            margin: 40px 0;
+        }
+
+        .info-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .info-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid white;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .download-btn {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="app-icon">🙏</div>
+            <h1>般若伴读</h1>
+            <p class="subtitle">地藏菩萨本愿经 · 诵读伴侣</p>
+            <span class="version">v1.0.0</span>
+        </header>
+
+        <div class="main-content">
+            <!-- 下载区域 -->
+            <div class="download-section">
+                <h2>📱 立即下载</h2>
+                <p style="margin: 15px 0;">支持Android 5.0及以上版本</p>
+                
+                <a href="https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk" class="download-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
+                    下载 Android APK
+                </a>
+
+                <div class="qr-code">
+                    <div id="qrcode"></div>
+                    <p class="qr-hint">扫描二维码下载</p>
+                </div>
+
+                <p style="font-size: 0.9em; margin-top: 20px;">
+                    文件大小: 3.74 MB<br>
+                    最新版本: v1.0.0
+                </p>
+            </div>
+
+            <!-- 统计信息 -->
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">章节</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">51</div>
+                    <div class="stat-label">段落</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">音色</div>
+                </div>
+            </div>
+
+            <!-- 功能特性 -->
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📖</div>
+                    <h3>完整经文</h3>
+                    <p>包含地藏经全部13品，以及香赞、开经偈、回向偈等完整内容</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔊</div>
+                    <h3>语音朗读</h3>
+                    <p>支持男声、女声两种音色，可按段落播放或连续播放</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📝</div>
+                    <h3>拼音注音</h3>
+                    <p>每个汉字都标注拼音，方便学习和诵读</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💬</div>
+                    <h3>白话翻译</h3>
+                    <p>提供白话文翻译，帮助理解经文含义</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎯</div>
+                    <h3>背诵模式</h3>
+                    <p>支持隐藏经文，点击显示，方便背诵练习</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⭐</div>
+                    <h3>收藏功能</h3>
+                    <p>可收藏喜欢的段落，方便快速访问</p>
+                </div>
+            </div>
+
+            <!-- 使用说明 -->
+            <div class="info-section">
+                <h2>📚 使用说明</h2>
+                <ul>
+                    <li>点击章节列表选择要阅读的品</li>
+                    <li>点击段落旁的播放按钮可播放该段音频</li>
+                    <li>开启"连续播放"可自动播放下一段</li>
+                    <li>开启"单段循环"可重复播放当前段</li>
+                    <li>点击"眼睛"图标可显示/隐藏拼音</li>
+                    <li>点击"书本"图标可开启背诵模式</li>
+                    <li>点击"星星"图标可收藏段落</li>
+                    <li>可调整字体大小以适应阅读习惯</li>
+                </ul>
+            </div>
+
+            <!-- 技术特性 -->
+            <div class="info-section">
+                <h2>⚙️ 技术特性</h2>
+                <ul>
+                    <li>基于 Ionic + Vue 3 开发，跨平台支持</li>
+                    <li>使用 TTS API 实时生成音频，节省存储空间</li>
+                    <li>支持离线阅读（音频需联网）</li>
+                    <li>响应式设计，适配各种屏幕尺寸</li>
+                    <li>流畅的动画和交互体验</li>
+                </ul>
+            </div>
+
+            <!-- 更新日志 -->
+            <div class="info-section">
+                <h2>📝 更新日志</h2>
+                <h3 style="color: #667eea; margin: 15px 0;">v1.0.0 (2026-03-26)</h3>
+                <ul>
+                    <li>首次发布</li>
+                    <li>完整的地藏经13品内容</li>
+                    <li>支持男声、女声朗读</li>
+                    <li>拼音注音和白话翻译</li>
+                    <li>背诵模式和收藏功能</li>
+                    <li>连续播放和单段循环</li>
+                </ul>
+            </div>
+
+            <!-- 常见问题 -->
+            <div class="info-section">
+                <h2>❓ 常见问题</h2>
+                <h3 style="color: #667eea; margin: 15px 0;">Q: 为什么音频播放失败？</h3>
+                <p style="margin-left: 30px; margin-bottom: 15px;">
+                    A: 音频需要联网加载，请检查网络连接。首次播放需要生成音频，可能需要等待1-3秒。
+                </p>
+
+                <h3 style="color: #667eea; margin: 15px 0;">Q: 可以离线使用吗？</h3>
+                <p style="margin-left: 30px; margin-bottom: 15px;">
+                    A: 经文内容可以离线阅读，但音频朗读功能需要联网。已播放过的音频会被浏览器缓存，可以离线重复播放。
+                </p>
+
+                <h3 style="color: #667eea; margin: 15px 0;">Q: 如何反馈问题或建议？</h3>
+                <p style="margin-left: 30px; margin-bottom: 15px;">
+                    A: 可以在GitHub项目页面提交Issue，或通过邮件联系开发者。
+                </p>
+            </div>
+        </div>
+
+        <footer>
+            <p>
+                开源项目 · 
+                <a href="https://github.com/mafeicnnui/PrajnaReader" target="_blank">GitHub</a> · 
+                <a href="https://github.com/mafeicnnui/PrajnaReader/releases" target="_blank">所有版本</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.9em;">
+                © 2026 般若伴读 · 用心诵读，智慧人生
+            </p>
+        </footer>
+    </div>
+
+    <!-- 二维码生成库 -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // 生成下载链接的二维码
+        const downloadUrl = 'https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk';
+        
+        new QRCode(document.getElementById("qrcode"), {
+            text: downloadUrl,
+            width: 200,
+            height: 200,
+            colorDark: "#667eea",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        });
+
+        // 统计下载次数（可选）
+        document.querySelector('.download-btn').addEventListener('click', function() {
+            // 这里可以添加统计代码
+            console.log('Download clicked');
+        });
+    </script>
+</body>
+</html>
