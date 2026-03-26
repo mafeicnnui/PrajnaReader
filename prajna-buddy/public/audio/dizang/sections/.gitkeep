@@ -1,0 +1,3 @@
+# 此目录用于存放按小段生成的音频文件
+# 文件命名规则: {sectionId}_{voice}.mp3
+# 例如: ch1-1_male.mp3, ch1-1_female.mp3

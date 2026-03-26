@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# 虚拟环境
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 缓存文件（运行时生成）
+cache/
+*.mp3
+
+# 测试文件
+demo_male_voice.mp3
+
+# Git
+.git/
+.gitignore
+
+# 文档
+*.md
+!README.md
+
+# 其他
+.DS_Store

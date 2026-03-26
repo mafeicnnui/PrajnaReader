@@ -29,3 +29,10 @@ yarn-error.log*
 
 # Optional eslint cache
 .eslintcache
+
+# 音频文件（不上传到GitHub，使用TTS API或静态文件服务器）
+/public/audio/**/*.mp3
+/public/audio/**/*.wav
+/public/audio/**/*.ogg
+# 保留.gitkeep文件以维护目录结构
+!/public/audio/**/.gitkeep

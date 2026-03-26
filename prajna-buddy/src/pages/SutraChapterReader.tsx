@@ -23,6 +23,8 @@ import { useParams } from 'react-router-dom';
 import {
   add,
   list,
+  play,
+  pause,
   playSkipBack,
   playSkipForward,
   repeat,
@@ -37,10 +39,8 @@ import {
   dizangBook,
   getChapter,
   getSectionsByIds,
-  resolveAudioUrl,
   VoiceId,
 } from '../data/dizangBook';
-import { cacheAudio, getCachedAudioSrc } from '../services/audioCache';
 
 type RouteParams = {
   chapterId: string;
@@ -165,6 +165,14 @@ const SutraChapterReader: React.FC = () => {
   const { chapterId } = useParams<RouteParams>();
   const chapter = getChapter(chapterId);
 
+  // 调试：显示环境变量配置
+  useEffect(() => {
+    console.log('=== 音频配置信息 ===');
+    console.log('TTS API URL:', import.meta.env.VITE_TTS_API_URL || '未配置');
+    console.log('Audio Base URL:', import.meta.env.VITE_AUDIO_BASE_URL || '未配置');
+    console.log('==================');
+  }, []);
+
   const [showChapterPicker, setShowChapterPicker] = useState<boolean>(false);
   const [showBookmarks, setShowBookmarks] = useState<boolean>(false);
   const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
@@ -179,13 +187,14 @@ const SutraChapterReader: React.FC = () => {
   const [voice, setVoice] = useState<VoiceId>('male');
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioSrc, setAudioSrc] = useState<string | undefined>(undefined);
+  const [currentSectionId, setCurrentSectionId] = useState<string | null>(null);
   const [audioError, setAudioError] = useState<string | undefined>(undefined);
   const [audioDuration, setAudioDuration] = useState<number | undefined>(undefined);
   const [audioCurrentTime, setAudioCurrentTime] = useState<number>(0);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
   const [loopAudio, setLoopAudio] = useState<boolean>(false);
+  const [continuousPlay, setContinuousPlay] = useState<boolean>(true);
 
   const [presentToast] = useIonToast();
 
@@ -194,15 +203,35 @@ const SutraChapterReader: React.FC = () => {
     return getSectionsByIds(chapter.sectionIds);
   }, [chapter]);
 
-  const audioUrl = useMemo(() => {
-    if (!chapter?.audio) return undefined;
-    return resolveAudioUrl(voice === 'male' ? chapter.audio.male : chapter.audio.female);
-  }, [chapter, voice]);
+  // 构建小段音频URL
+  const getSectionAudioUrl = (sectionId: string, voiceType: VoiceId): string => {
+    // 支持从远程服务器或本地加载音频
+    // 优先级：TTS API > 远程静态文件 > 本地静态文件
+    
+    // 临时硬编码用于测试（正式环境请使用环境变量）
+    const ttsApiUrl = import.meta.env.VITE_TTS_API_URL || 'https://tts.zhdnpx.cn';
+    const audioBaseUrl = import.meta.env.VITE_AUDIO_BASE_URL || '';
+    
+    let url: string;
+    
+    // 如果配置了TTS API，使用实时生成
+    if (ttsApiUrl) {
+      url = `${ttsApiUrl}/tts/section/mp3?section_id=${sectionId}&voice=${voiceType}`;
+      console.log('[TTS API] 音频URL:', url);
+    } else {
+      // 否则使用静态文件
+      url = `${audioBaseUrl}/audio/sutras/dizang/sections/${sectionId}_${voiceType}.mp3`;
+      console.log('[静态文件] 音频URL:', url);
+    }
+    
+    return url;
+  };
 
-  const audioCacheKey = useMemo(() => {
-    if (!chapterId) return undefined;
-    return `dizang:${chapterId}:${voice}`;
-  }, [chapterId, voice]);
+  // 当前播放的section索引
+  const currentSectionIndex = useMemo(() => {
+    if (!currentSectionId) return -1;
+    return sections.findIndex(s => s.id === currentSectionId);
+  }, [currentSectionId, sections]);
 
   useEffect(() => {
     setReciteMode(false);
@@ -235,6 +264,14 @@ const SutraChapterReader: React.FC = () => {
       // ignore
     }
   }, []);
+
+  // 监听音色切换，重新加载当前播放的音频
+  useEffect(() => {
+    if (currentSectionId && isPlaying) {
+      console.log('[音色切换] 重新加载音频，新音色:', voice);
+      playSection(currentSectionId);
+    }
+  }, [voice]);
 
   useEffect(() => {
     try {
@@ -274,7 +311,69 @@ const SutraChapterReader: React.FC = () => {
     }
   };
 
+  // 播放指定section的音频
+  const playSection = async (sectionId: string) => {
+    const audioUrl = getSectionAudioUrl(sectionId, voice);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    try {
+      setCurrentSectionId(sectionId);
+      setAudioError(undefined);
+      audio.src = audioUrl;
+      await audio.play();
+      scrollToSection(sectionId);
+    } catch (error) {
+      console.error('播放失败:', error);
+      setAudioError('音频加载失败');
+      presentToast({
+        message: '音频加载失败，请检查网络连接',
+        duration: 2000,
+        position: 'top',
+        color: 'danger',
+      });
+    }
+  };
+
+  // 播放下一段
+  const playNext = () => {
+    if (currentSectionIndex < 0 || currentSectionIndex >= sections.length - 1) return;
+    const nextSection = sections[currentSectionIndex + 1];
+    if (nextSection) {
+      playSection(nextSection.id);
+    }
+  };
+
+  // 播放上一段
+  const playPrevious = () => {
+    if (currentSectionIndex <= 0) return;
+    const prevSection = sections[currentSectionIndex - 1];
+    if (prevSection) {
+      playSection(prevSection.id);
+    }
+  };
+
+  // 切换播放/暂停
+  const togglePlayPause = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (audio.paused) {
+      if (currentSectionId) {
+        audio.play();
+      } else if (sections.length > 0) {
+        // 如果没有当前section，从第一个开始播放
+        playSection(sections[0].id);
+      }
+    } else {
+      audio.pause();
+    }
+  };
+
   const renderMiniPlayer = () => {
+    const hasAudio = sections.length > 0;
+    const currentSection = currentSectionId ? sections.find(s => s.id === currentSectionId) : null;
+    
     return (
       <div
         style={{
@@ -295,28 +394,13 @@ const SutraChapterReader: React.FC = () => {
             background: 'rgba(255,255,255,0.04)',
           }}
         >
+          {/* 播放/暂停按钮 */}
           <IonButton
             size="small"
             fill="clear"
-            disabled={!audioUrl}
+            disabled={!hasAudio}
             style={{ width: 34, height: 34, minWidth: 34, '--padding-start': '0px', '--padding-end': '0px' } as any}
-            onClick={async () => {
-              const el = audioRef.current;
-              if (!el) return;
-              if (el.paused) {
-                if (audioUrl && audioCacheKey) {
-                  try {
-                    const src = await cacheAudio(audioCacheKey, audioUrl);
-                    if (el.src !== src) el.src = src;
-                  } catch {
-                    if (el.src !== (audioSrc ?? audioUrl)) el.src = audioSrc ?? audioUrl;
-                  }
-                }
-                void el.play();
-              } else {
-                el.pause();
-              }
-            }}
+            onClick={togglePlayPause}
           >
             <img
               alt={voice === 'male' ? '男声' : '女声'}
@@ -325,46 +409,41 @@ const SutraChapterReader: React.FC = () => {
             />
           </IonButton>
 
+          {/* 上一段 */}
           <IonButton
             size="small"
             fill="clear"
-            disabled={!audioUrl}
+            disabled={!hasAudio || currentSectionIndex <= 0}
             style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
-            onClick={() => {
-              const el = audioRef.current;
-              if (!el) return;
-              el.currentTime = Math.max(0, (el.currentTime || 0) - 15);
-            }}
+            onClick={playPrevious}
           >
             <IonIcon slot="icon-only" icon={playSkipBack} />
           </IonButton>
 
+          {/* 下一段 */}
           <IonButton
             size="small"
             fill="clear"
-            disabled={!audioUrl}
+            disabled={!hasAudio || currentSectionIndex >= sections.length - 1}
             style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
-            onClick={() => {
-              const el = audioRef.current;
-              if (!el) return;
-              const d = Number.isFinite(el.duration) ? el.duration : 0;
-              el.currentTime = Math.min(d || 0, (el.currentTime || 0) + 15);
-            }}
+            onClick={playNext}
           >
             <IonIcon slot="icon-only" icon={playSkipForward} />
           </IonButton>
 
+          {/* 单段循环 */}
           <IonButton
             size="small"
             fill={loopAudio ? 'solid' : 'clear'}
-            disabled={!audioUrl}
+            disabled={!hasAudio}
             color={loopAudio ? 'primary' : 'medium'}
             style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
             onClick={() => {
               setLoopAudio((v) => {
                 const next = !v;
+                if (next) setContinuousPlay(false); // 单段循环时关闭连续播放
                 presentToast({
-                  message: next ? '循环播放：已开启' : '循环播放：已关闭',
+                  message: next ? '单段循环：已开启' : '单段循环：已关闭',
                   duration: 900,
                   position: 'top',
                 });
@@ -375,11 +454,17 @@ const SutraChapterReader: React.FC = () => {
             <IonIcon slot="icon-only" icon={repeat} />
           </IonButton>
 
+          {/* 当前播放信息 */}
+          <div style={{ fontSize: 11, opacity: 0.7, whiteSpace: 'nowrap', maxWidth: 120, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {currentSection ? currentSection.title || `段落 ${currentSectionIndex + 1}` : '未播放'}
+          </div>
+
           <div style={{ fontSize: 12, opacity: 0.85, whiteSpace: 'nowrap' }}>
             {formatTime(audioCurrentTime)}
           </div>
 
-          <div style={{ flex: 1, minWidth: 80, maxWidth: 160 }}>
+          {/* 进度条 */}
+          <div style={{ flex: 1, minWidth: 60, maxWidth: 120 }}>
             <IonRange
               min={0}
               max={audioDuration && Number.isFinite(audioDuration) ? audioDuration : 0}
@@ -434,41 +519,17 @@ const SutraChapterReader: React.FC = () => {
   const chapters = dizangBook.chapters;
 
   useEffect(() => {
-    let canceled = false;
-
-    async function prepareAudio() {
-      if (!audioUrl || !audioCacheKey) {
-        setAudioSrc(undefined);
-        setAudioError(undefined);
-        setAudioDuration(undefined);
-        return;
-      }
-
-      const cached = await getCachedAudioSrc(audioCacheKey);
-      if (canceled) return;
-
-      if (cached) {
-        setAudioSrc(cached);
-        setAudioError(undefined);
-        return;
-      }
-
-      setAudioSrc(audioUrl);
-      setAudioError(undefined);
-    }
-
-    void prepareAudio();
-
-    return () => {
-      canceled = true;
-    };
-  }, [audioUrl, audioCacheKey]);
-
-  useEffect(() => {
     const el = audioRef.current;
     if (!el) return;
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
+    const onEnded = () => {
+      setIsPlaying(false);
+      // 如果开启连续播放且不是循环模式，播放下一段
+      if (continuousPlay && !loopAudio && currentSectionIndex >= 0 && currentSectionIndex < sections.length - 1) {
+        playNext();
+      }
+    };
     const onError = () => {
       const mediaError = el.error;
       if (!mediaError) {
@@ -497,19 +558,19 @@ const SutraChapterReader: React.FC = () => {
     };
     el.addEventListener('play', onPlay);
     el.addEventListener('pause', onPause);
-    el.addEventListener('ended', onPause);
+    el.addEventListener('ended', onEnded);
     el.addEventListener('error', onError);
     el.addEventListener('loadedmetadata', onLoadedMetadata);
     el.addEventListener('timeupdate', onTimeUpdate);
     return () => {
       el.removeEventListener('play', onPlay);
       el.removeEventListener('pause', onPause);
-      el.removeEventListener('ended', onPause);
+      el.removeEventListener('ended', onEnded);
       el.removeEventListener('error', onError);
       el.removeEventListener('loadedmetadata', onLoadedMetadata);
       el.removeEventListener('timeupdate', onTimeUpdate);
     };
-  }, [isSeeking]);
+  }, [isSeeking, continuousPlay, loopAudio, currentSectionIndex, sections.length]);
 
   useEffect(() => {
     const el = audioRef.current;
@@ -587,7 +648,7 @@ const SutraChapterReader: React.FC = () => {
           </div>
         </IonToolbar>
 
-        <audio ref={audioRef} src={audioSrc ?? audioUrl} preload="none" />
+        <audio ref={audioRef} preload="none" />
 
         <div style={{ padding: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <IonChip color={showText ? 'primary' : undefined} onClick={() => setShowText((v) => !v)}>
@@ -595,6 +656,20 @@ const SutraChapterReader: React.FC = () => {
           </IonChip>
           <IonChip color={showMeaning ? 'primary' : undefined} onClick={() => setShowMeaning((v) => !v)}>
             <IonLabel>白话</IonLabel>
+          </IonChip>
+          <IonChip color={continuousPlay ? 'primary' : undefined} onClick={() => {
+            setContinuousPlay((v) => {
+              const next = !v;
+              if (next && loopAudio) setLoopAudio(false); // 连续播放时关闭单段循环
+              presentToast({
+                message: next ? '连续播放：已开启' : '连续播放：已关闭',
+                duration: 900,
+                position: 'top',
+              });
+              return next;
+            });
+          }}>
+            <IonLabel>连续播放</IonLabel>
           </IonChip>
           <IonChip
             color={showBookmarks ? 'primary' : undefined}
@@ -723,7 +798,26 @@ const SutraChapterReader: React.FC = () => {
                             </div>
                           ) : null}
                         </IonLabel>
-                        <div style={{ position: 'absolute', top: 6, right: 6, zIndex: 2 }}>
+                        <div style={{ position: 'absolute', top: 6, right: 6, zIndex: 2, display: 'flex', gap: 4 }}>
+                          {/* 播放按钮 */}
+                          <IonButton
+                            fill={currentSectionId === s.id && isPlaying ? 'solid' : 'clear'}
+                            color={currentSectionId === s.id ? 'primary' : 'medium'}
+                            size="small"
+                            style={{ '--padding-start': '6px', '--padding-end': '6px' } as any}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (currentSectionId === s.id && isPlaying) {
+                                audioRef.current?.pause();
+                              } else {
+                                playSection(s.id);
+                              }
+                            }}
+                          >
+                            <IonIcon slot="icon-only" icon={currentSectionId === s.id && isPlaying ? pause : play} />
+                          </IonButton>
+                          {/* 收藏按钮 */}
                           <IonButton
                             fill="clear"
                             size="small"

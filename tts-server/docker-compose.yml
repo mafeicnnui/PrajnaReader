@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  tts-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prajna-tts-server
+    restart: unless-stopped
+    # 不需要暴露端口到宿主机，只在Docker网络内访问
+    # ports:
+    #   - "8000:8000"
+    expose:
+      - "8000"
+    environment:
+      # 可选：设置代理（如果需要）
+      # HTTPS_PROXY: "http://proxy.example.com:7890"
+      # HTTP_PROXY: "http://proxy.example.com:7890"
+      # TTS_PROXY: "http://proxy.example.com:7890"
+      
+      # 日志级别
+      LOG_LEVEL: "info"
+    volumes:
+      # 挂载缓存目录（持久化音频缓存）
+      - ./cache:/app/cache
+      
+      # 挂载数据目录（如果需要动态更新数据）
+      - ./data:/app/data:ro
+    networks:
+      - web
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+networks:
+  web:
+    external: true

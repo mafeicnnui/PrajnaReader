@@ -1,0 +1,483 @@
+// 地藏菩萨本愿经 - 完整版数据
+// 本文件包含地藏经十三品的完整经文
+// 注：拼音和白话文翻译需要专业人士逐步补充完善
+
+export interface SutraSection {
+  id: string;
+  title?: string;
+  text: string;
+  pinyin: string;
+  meaning: string;
+}
+
+export interface ChapterInfo {
+  chapterId: number;
+  chapterTitle: string;
+  description: string;
+}
+
+export const dizangSutraTitle = '地藏菩萨本愿经';
+
+export const dizangChapters: ChapterInfo[] = [
+  { chapterId: 1, chapterTitle: '忉利天宫神通品', description: '佛在忉利天为母说法，诸佛菩萨云集赞叹' },
+  { chapterId: 2, chapterTitle: '分身集会品', description: '地藏菩萨无量分身从各方世界云集忉利天宫' },
+  { chapterId: 3, chapterTitle: '观众生业缘品', description: '佛母摩耶夫人请问众生业缘果报之事' },
+  { chapterId: 4, chapterTitle: '阎浮众生业感品', description: '定自在王菩萨请问阎浮众生业力因缘' },
+  { chapterId: 5, chapterTitle: '地狱名号品', description: '普贤菩萨请问地狱名号及罪报等事' },
+  { chapterId: 6, chapterTitle: '如来赞叹品', description: '如来赞叹地藏菩萨威神誓愿不可思议' },
+  { chapterId: 7, chapterTitle: '利益存亡品', description: '地藏菩萨分身集会，利益存亡眷属' },
+  { chapterId: 8, chapterTitle: '阎罗王众赞叹品', description: '阎罗天子及诸大鬼王赞叹地藏菩萨' },
+  { chapterId: 9, chapterTitle: '称佛名号品', description: '地藏菩萨为众生宣说称念佛名的功德' },
+  { chapterId: 10, chapterTitle: '校量布施功德缘品', description: '地藏菩萨校量布施功德的大小差别' },
+  { chapterId: 11, chapterTitle: '地神护法品', description: '坚牢地神说明护持供养地藏菩萨者' },
+  { chapterId: 12, chapterTitle: '见闻利益品', description: '观世音菩萨请问见闻地藏菩萨的利益' },
+  { chapterId: 13, chapterTitle: '嘱累人天品', description: '世尊将未来众生嘱托给地藏菩萨' },
+];
+
+// 香赞
+export const incensePraise: SutraSection = {
+  id: 'preface-1',
+  title: '香赞',
+  text: '炉香乍爇，法界蒙熏，诸佛海会悉遥闻。\n随处结祥云，诚意方殷，诸佛现全身。',
+  pinyin: 'lú xiāng zhà ruò, fǎ jiè méng xūn, zhū fó hǎi huì xī yáo wén.\nsuí chù jié xiáng yún, chéng yì fāng yīn, zhū fó xiàn quán shēn.',
+  meaning: '炉中香刚刚点燃，香气熏遍整个法界，十方诸佛海会都能遥闻。随处结成祥云，诚意正殷切时，诸佛显现全身。',
+};
+
+// 觉林菩萨偈
+export const juelinBodhisattvaVerse: SutraSection = {
+  id: 'preface-2',
+  title: '觉林菩萨偈',
+  text: '譬如工画师，分布诸彩色，\n虚妄取异相，大种无差别。\n大种中无色，色中无大种，\n亦不离大种，而有色可得。\n心中无彩画，彩画中无心，\n然不离于心，有彩画可得。\n彼心恒不住，无量难思议，\n示现一切色，各各不相知。\n譬如工画师，不能知自心，\n而由心故画，诸法性如是。\n心如工画师，能画诸世间，\n五蕴悉从生，无法而不造。\n如心佛亦尔，如佛众生然，\n应知佛与心，体性皆无尽。\n若人知心行，普造诸世间，\n是人则见佛，了佛真实性。\n心不住于身，身亦不住心，\n而能作佛事，自在未曾有。\n若人欲了知，三世一切佛，\n应观法界性，一切唯心造。',
+  pinyin: 'pì rú gōng huà shī, fēn bù zhū cǎi sè,\nxū wàng qǔ yì xiàng, dà zhǒng wú chā bié.\ndà zhǒng zhōng wú sè, sè zhōng wú dà zhǒng,\nyì bù lí dà zhǒng, ér yǒu sè kě dé.\nxīn zhōng wú cǎi huà, cǎi huà zhōng wú xīn,\nrán bù lí yú xīn, yǒu cǎi huà kě dé.\nbǐ xīn héng bù zhù, wú liàng nán sī yì,\nshì xiàn yī qiè sè, gè gè bù xiāng zhī.\npì rú gōng huà shī, bù néng zhī zì xīn,\nér yóu xīn gù huà, zhū fǎ xìng rú shì.\nxīn rú gōng huà shī, néng huà zhū shì jiān,\nwǔ yùn xī cóng shēng, wú fǎ ér bù zào.\nrú xīn fó yì ěr, rú fó zhòng shēng rán,\nyīng zhī fó yǔ xīn, tǐ xìng jiē wú jìn.\nruò rén zhī xīn xíng, pǔ zào zhū shì jiān,\nshì rén zé jiàn fó, liǎo fó zhēn shí xìng.\nxīn bù zhù yú shēn, shēn yì bù zhù xīn,\nér néng zuò fó shì, zì zài wèi céng yǒu.\nruò rén yù liǎo zhī, sān shì yī qiè fó,\nyīng guān fǎ jiè xìng, yī qiè wéi xīn zào.',
+  meaning: '就像画师调配各种颜色，虚妄地取各种不同相状，但地水火风四大种性本无差别。四大种中本无颜色，颜色中也无四大种，但也不离开四大种而能得到颜色。心中本无彩画，彩画中也无心，但不离开心而有彩画可得。那个心恒常不住，无量难以思议，能示现一切色相，各各互不相知。就像画师不能了知自己的心，却由心而作画，诸法的本性也是如此。心就像画师，能画出一切世间，五蕴都从心生，没有一法不是心所造。心是这样，佛也是这样；佛是这样，众生也是这样。应当知道佛与心，体性都是无穷无尽的。如果有人了知心的运行，普遍造作诸世间，这个人就能见佛，了达佛的真实本性。心不住于身，身也不住于心，却能作佛事，自在未曾有。如果有人想要了知三世一切佛，应当观察法界性，一切唯心所造。',
+};
+
+// 赞
+export const praise: SutraSection = {
+  id: 'preface-3',
+  title: '赞',
+  text: '稽首本然净心地，无尽佛藏大慈尊。\n南方世界涌香云，香雨花云及花雨。\n宝雨宝云无数种，为祥为瑞遍庄严。\n天人问佛是何因，佛言地藏菩萨至。\n三世如来同赞叹，十方菩萨共归依。\n我今宿植善因缘，称扬地藏真功德。\n慈因积善，誓救众生。\n手中金锡，振开地狱之门。\n掌上明珠，光摄大千世界。\n智慧音里，吉祥云中，\n为阎浮提苦众生，\n作大证明功德主。\n大悲大愿，大圣大慈，\n本尊地藏菩萨摩诃萨。',
+  pinyin: 'qǐ shǒu běn rán jìng xīn dì, wú jìn fó zàng dà cí zūn.\nnán fāng shì jiè yǒng xiāng yún, xiāng yǔ huā yún jí huā yǔ.\nbǎo yǔ bǎo yún wú shù zhǒng, wèi xiáng wèi ruì biàn zhuāng yán.\ntiān rén wèn fó shì hé yīn, fó yán dì zàng pú sà zhì.\nsān shì rú lái tóng zàn tàn, shí fāng pú sà gòng guī yī.\nwǒ jīn sù zhí shàn yīn yuán, chēng yáng dì zàng zhēn gōng dé.\ncí yīn jī shàn, shì jiù zhòng shēng.\nshǒu zhōng jīn xī, zhèn kāi dì yù zhī mén.\nzhǎng shàng míng zhū, guāng shè dà qiān shì jiè.\nzhì huì yīn lǐ, jí xiáng yún zhōng,\nwèi yán fú tí kǔ zhòng shēng,\nzuò dà zhèng míng gōng dé zhǔ.\ndà bēi dà yuàn, dà shèng dà cí,\nběn zūn dì zàng pú sà mó hē sà.',
+  meaning: '恭敬礼拜本来清净的心地，无尽佛藏大慈悲尊。南方世界涌现香云，香雨、花云及花雨。宝雨宝云无数种，作为祥瑞遍满庄严。天人问佛这是什么因缘，佛说是地藏菩萨到了。三世如来共同赞叹，十方菩萨一起归依。我今生宿世种植善因缘，称扬地藏菩萨真实功德。因慈悲而积善，发誓救度众生。手中金锡杖，振开地狱之门。掌上明珠，光明摄受大千世界。在智慧音声里，吉祥云中，为阎浮提受苦众生，作大证明功德主。大悲大愿，大圣大慈，本尊地藏菩萨摩诃萨。',
+};
+
+// 开经偈
+export const openingSutra: SutraSection = {
+  id: 'preface-4',
+  title: '开经偈',
+  text: '无上甚深微妙法，百千万劫难遭遇。\n我今见闻得受持，愿解如来真实义。',
+  pinyin: 'wú shàng shèn shēn wēi miào fǎ, bǎi qiān wàn jié nán zāo yù.\nwǒ jīn jiàn wén dé shòu chí, yuàn jiě rú lái zhēn shí yì.',
+  meaning: '这是最无上、非常深奥微妙的佛法，百千万劫也难以遇到。我现在得以见闻并受持，愿能理解如来所说的真实义理。',
+};
+
+// 第一品：忉利天宫神通品
+export const chapter1Sections: SutraSection[] = [
+  {
+    id: 'ch1-1',
+    title: '第一品 忉利天宫神通品（一）如是我闻',
+    text: '如是我闻。一时佛在忉利天，为母说法。尔时十方无量世界，不可说不可说一切诸佛，及大菩萨摩诃萨，皆来集会。',
+    pinyin: 'rú shì wǒ wén. yī shí fó zài dāo lì tiān, wèi mǔ shuō fǎ. ěr shí shí fāng wú liàng shì jiè, bù kě shuō bù kě shuō yī qiè zhū fó, jí dà pú sà mó hē sà, jiē lái jí huì.',
+    meaning: '我听佛法是这样传下来的：有一次，佛在忉利天，为母亲宣说佛法。那时十方无量世界中不可说不可说的一切诸佛与大菩萨，都前来集会。',
+  },
+  {
+    id: 'ch1-2',
+    title: '第一品 忉利天宫神通品（二）赞叹世尊',
+    text: '赞叹释迦牟尼佛，能于五浊恶世，现不可思议大智慧神通之力，调伏刚强众生，知苦乐法，各遣侍者，问讯世尊。',
+    pinyin: 'zàn tàn shì jiā móu ní fó, néng yú wǔ zhuó è shì, xiàn bù kě sī yì dà zhì huì shén tōng zhī lì, tiáo fú gāng qiáng zhòng shēng, zhī kǔ lè fǎ, gè qiǎn shì zhě, wèn xùn shì zūn.',
+    meaning: '大家赞叹释迦牟尼佛能在五浊恶世显现不可思议的智慧与神通力量，调伏刚强难化的众生，令其明了苦乐之法；各自派遣侍者前来问候世尊。',
+  },
+  {
+    id: 'ch1-3',
+    title: '第一品 忉利天宫神通品（三）放光明云',
+    text: '是时如来含笑，放百千万亿大光明云。所谓大圆满光明云、大慈悲光明云、大智慧光明云、大般若光明云、大三昧光明云、大吉祥光明云、大福德光明云、大功德光明云、大归依光明云、大赞叹光明云。',
+    pinyin: 'shì shí rú lái hán xiào, fàng bǎi qiān wàn yì dà guāng míng yún. suǒ wèi dà yuán mǎn guāng míng yún, dà cí bēi guāng míng yún, dà zhì huì guāng míng yún, dà bō rě guāng míng yún, dà sān mèi guāng míng yún, dà jí xiáng guāng míng yún, dà fú dé guāng míng yún, dà gōng dé guāng míng yún, dà guī yī guāng míng yún, dà zàn tàn guāng míng yún.',
+    meaning: '这时如来含笑，放出百千万亿大光明云。所谓大圆满光明云、大慈悲光明云、大智慧光明云、大般若光明云、大三昧光明云、大吉祥光明云、大福德光明云、大功德光明云、大归依光明云、大赞叹光明云。',
+  },
+  {
+    id: 'ch1-4',
+    title: '第一品 忉利天宫神通品（四）出微妙音',
+    text: '放如是等不可说光明云已，又出种种微妙之音，所谓檀波罗蜜音、尸波罗蜜音、羼提波罗蜜音、毗离耶波罗蜜音、禅波罗蜜音、般若波罗蜜音、慈悲音、喜舍音、解脱音、无漏音、智慧音、大智慧音、师子吼音、大师子吼音、云雷音、大云雷音。',
+    pinyin: 'fàng rú shì děng bù kě shuō guāng míng yún yǐ, yòu chū zhǒng zhǒng wēi miào zhī yīn, suǒ wèi tán bō luó mì yīn, shī bō luó mì yīn, chàn tí bō luó mì yīn, pí lí yé bō luó mì yīn, chán bō luó mì yīn, bō rě bō luó mì yīn, cí bēi yīn, xǐ shě yīn, jiě tuō yīn, wú lòu yīn, zhì huì yīn, dà zhì huì yīn, shī zǐ hǒu yīn, dà shī zǐ hǒu yīn, yún léi yīn, dà yún léi yīn.',
+    meaning: '放出这些不可说的光明云后，又发出种种微妙的声音，所谓布施波罗蜜音、持戒波罗蜜音、忍辱波罗蜜音、精进波罗蜜音、禅定波罗蜜音、般若波罗蜜音、慈悲音、喜舍音、解脱音、无漏音、智慧音、大智慧音、师子吼音、大师子吼音、云雷音、大云雷音。',
+  },
+  {
+    id: 'ch1-5',
+    title: '第一品 忉利天宫神通品（五）天龙鬼神集会',
+    text: '出如是等不可说不可说音已，娑婆世界，及他方国土，有无量亿天龙鬼神，亦集到忉利天宫。所谓四天王天、忉利天、须焰摩天、兜率陀天、化乐天、他化自在天、梵众天、梵辅天、大梵天、少光天、无量光天、光音天、少净天、无量净天、遍净天、福生天、福爱天、广果天、无想天、无烦天、无热天、善见天、善现天、色究竟天、摩醯首罗天，乃至非想非非想处天，一切天众、龙众、鬼神等众，悉来集会。',
+    pinyin: 'chū rú shì děng bù kě shuō bù kě shuō yīn yǐ, suō pó shì jiè, jí tā fāng guó tǔ, yǒu wú liàng yì tiān lóng guǐ shén, yì jí dào dāo lì tiān gōng. suǒ wèi sì tiān wáng tiān, dāo lì tiān, xū yàn mó tiān, dōu shuài tuó tiān, huà lè tiān, tā huà zì zài tiān, fàn zhòng tiān, fàn fǔ tiān, dà fàn tiān, shǎo guāng tiān, wú liàng guāng tiān, guāng yīn tiān, shǎo jìng tiān, wú liàng jìng tiān, biàn jìng tiān, fú shēng tiān, fú ài tiān, guǎng guǒ tiān, wú xiǎng tiān, wú fán tiān, wú rè tiān, shàn jiàn tiān, shàn xiàn tiān, sè jiū jìng tiān, mó xī shǒu luó tiān, nǎi zhì fēi xiǎng fēi fēi xiǎng chù tiān, yī qiè tiān zhòng, lóng zhòng, guǐ shén děng zhòng, xī lái jí huì.',
+    meaning: '发出这些不可说不可说的声音后，娑婆世界及他方国土，有无量亿天龙鬼神，也都集会到忉利天宫。所谓四天王天、忉利天、须焰摩天、兜率陀天、化乐天、他化自在天、梵众天、梵辅天、大梵天、少光天、无量光天、光音天、少净天、无量净天、遍净天、福生天、福爱天、广果天、无想天、无烦天、无热天、善见天、善现天、色究竟天、摩醯首罗天，乃至非想非非想处天，一切天众、龙众、鬼神等众，全都来集会。',
+  },
+  {
+    id: 'ch1-6',
+    title: '第一品 忉利天宫神通品（六）诸神集会',
+    text: '复有他方国土，及娑婆世界，海神、江神、河神、树神、山神、地神、川泽神、苗稼神、昼神、夜神、空神、天神、饮食神、草木神，如是等神，皆来集会。复有他方国土，及娑婆世界，诸大鬼王，所谓恶目鬼王、啖血鬼王、啖精气鬼王、啖胎卵鬼王、行病鬼王、摄毒鬼王、慈心鬼王、福利鬼王、大爱敬鬼王，如是等鬼王，皆来集会。',
+    pinyin: 'fù yǒu tā fāng guó tǔ, jí suō pó shì jiè, hǎi shén, jiāng shén, hé shén, shù shén, shān shén, dì shén, chuān zé shén, miáo jià shén, zhòu shén, yè shén, kōng shén, tiān shén, yǐn shí shén, cǎo mù shén, rú shì děng shén, jiē lái jí huì. fù yǒu tā fāng guó tǔ, jí suō pó shì jiè, zhū dà guǐ wáng, suǒ wèi è mù guǐ wáng, dàn xuè guǐ wáng, dàn jīng qì guǐ wáng, dàn tāi luǎn guǐ wáng, xíng bìng guǐ wáng, shè dú guǐ wáng, cí xīn guǐ wáng, fú lì guǐ wáng, dà ài jìng guǐ wáng, rú shì děng guǐ wáng, jiē lái jí huì.',
+    meaning: '还有他方国土及娑婆世界的海神、江神、河神、树神、山神、地神、川泽神、苗稼神、昼神、夜神、空神、天神、饮食神、草木神，这些神都来集会。还有他方国土及娑婆世界的诸大鬼王，所谓恶目鬼王、啖血鬼王、啖精气鬼王、啖胎卵鬼王、行病鬼王、摄毒鬼王、慈心鬼王、福利鬼王、大爱敬鬼王，这些鬼王都来集会。',
+  },
+    {
+    id: 'ch1-7',
+    title: '第一品 忉利天宫神通品（七）佛问文殊',
+    text: '尔时释迦牟尼佛，告文殊师利法王子菩萨摩诃萨：汝观是一切诸佛菩萨，及天龙鬼神，此世界、他世界，此国土、他国土，如是今来集会到忉利天者，汝知数不？文殊师利白佛言：世尊！若以我神力，千劫测度不能得知。',
+    pinyin: 'ěr shí shì jiā móu ní fó, gào wén shū shī lì fǎ wáng zǐ pú sà mó hē sà: rǔ guān shì yī qiè zhū fó pú sà, jí tiān lóng guǐ shén, cǐ shì jiè, tā shì jiè, cǐ guó tǔ, tā guó tǔ, rú shì jīn lái jí huì dào dāo lì tiān zhě, rǔ zhī shù fǒu? wén shū shī lì bái fó yán: shì zūn! ruò yǐ wǒ shén lì, qiān jié cè dù bù néng dé zhī.',
+    meaning: '这时释迦牟尼佛告诉文殊师利法王子菩萨：你看这一切诸佛菩萨，以及天龙鬼神，从此世界、他世界，此国土、他国土，如今来集会到忉利天的，你知道有多少吗？文殊师利对佛说：世尊！即使以我的神力，用千劫时间也测度不出来。',
+  },
+  {
+    id: 'ch1-8',
+    title: '第一品 忉利天宫神通品（八）地藏度众无数',
+    text: '佛告文殊师利：吾以佛眼观故，犹不尽数，此皆是地藏菩萨久远劫来，已度、当度、未度，已成就、当成就、未成就。文殊师利白佛言：世尊！我已过去久修善根，证无碍智，闻佛所言，即当信受。小果声闻、天龙八部，及未来世诸众生等，虽闻如来诚实之语，必怀疑惑，设使顶受，未免兴谤。唯愿世尊，广说地藏菩萨摩诃萨，因地作何行，立何愿，而能成就不思议事？',
+    pinyin: 'fó gào wén shū shī lì: wú yǐ fó yǎn guān gù, yóu bù jìn shù, cǐ jiē shì dì zàng pú sà jiǔ yuǎn jié lái, yǐ dù, dāng dù, wèi dù, yǐ chéng jiù, dāng chéng jiù, wèi chéng jiù. wén shū shī lì bái fó yán: shì zūn! wǒ yǐ guò qù jiǔ xiū shàn gēn, zhèng wú ài zhì, wén fó suǒ yán, jí dāng xìn shòu. xiǎo guǒ shēng wén, tiān lóng bā bù, jí wèi lái shì zhū zhòng shēng děng, suī wén rú lái chéng shí zhī yǔ, bì huái yí huò, shè shǐ dǐng shòu, wèi miǎn xīng bàng. wéi yuàn shì zūn, guǎng shuō dì zàng pú sà mó hē sà, yīn dì zuò hé xíng, lì hé yuàn, ér néng chéng jiù bù sī yì shì?',
+    meaning: '佛告诉文殊师利：我以佛眼观察，也数不尽，这些都是地藏菩萨久远劫以来，已经度脱、将要度脱、未度脱，已经成就、将要成就、未成就的众生。文殊师利对佛说：世尊！我已过去久修善根，证得无碍智慧，听闻佛所说的话，立即信受。但小果声闻、天龙八部，以及未来世的众生，虽然听闻如来诚实的话语，必定会怀疑，即使恭敬接受，也难免会诽谤。希望世尊广说地藏菩萨在因地时做了什么行，立了什么愿，而能成就不可思议的事？',
+  },
+  {
+    id: 'ch1-9',
+    title: '第一品 忉利天宫神通品（九）地藏功德无量',
+    text: '佛告文殊师利：譬如三千大千世界，所有草木丛林、稻麻竹苇、山石微尘，一物一数，作一恒河；一恒河沙，一沙一界；一界之内，一尘一劫，一劫之内，所积尘数，尽充为劫。地藏菩萨证十地果位已来，千倍多于上喻，何况地藏菩萨在声闻辟支佛地。文殊师利！此菩萨威神誓愿，不可思议。若未来世，有善男子善女人，闻是菩萨名字，或赞叹，或瞻礼，或称名，或供养，乃至彩画刻镂塑漆形像，是人当得百返生于三十三天，永不堕恶道。',
+    pinyin: 'fó gào wén shū shī lì: pì rú sān qiān dà qiān shì jiè, suǒ yǒu cǎo mù cóng lín, dào má zhú wěi, shān shí wēi chén, yī wù yī shù, zuò yī héng hé; yī héng hé shā, yī shā yī jiè; yī jiè zhī nèi, yī chén yī jié, yī jié zhī nèi, suǒ jī chén shù, jìn chōng wéi jié. dì zàng pú sà zhèng shí dì guǒ wèi yǐ lái, qiān bèi duō yú shàng yù, hé kuàng dì zàng pú sà zài shēng wén pì zhī fó dì. wén shū shī lì! cǐ pú sà wēi shén shì yuàn, bù kě sī yì. ruò wèi lái shì, yǒu shàn nán zǐ shàn nǚ rén, wén shì pú sà míng zì, huò zàn tàn, huò zhān lǐ, huò chēng míng, huò gòng yǎng, nǎi zhì cǎi huà kè lòu sù qī xíng xiàng, shì rén dāng dé bǎi fǎn shēng yú sān shí sān tiān, yǒng bù duò è dào.',
+    meaning: '佛告诉文殊师利：譬如三千大千世界，所有的草木丛林、稻麻竹苇、山石微尘，每一物作为一个数，作为一条恒河；一恒河的沙，一沙作为一个世界；一个世界之内，一尘作为一劫，一劫之内，所积的尘数，全部充作劫数。地藏菩萨证得十地果位以来的时间，千倍多于上面的比喻，何况地藏菩萨在声闻辟支佛地的时间。文殊师利！这位菩萨的威神誓愿，不可思议。如果未来世，有善男子善女人，听到这位菩萨的名字，或赞叹，或瞻礼，或称名，或供养，乃至彩画刻镂塑漆形像，这人应当得以百次往返生于三十三天，永不堕入恶道。',
+  },
+  {
+    id: 'ch1-10',
+    title: '第一品 忉利天宫神通品（十）长者子发愿',
+    text: '文殊师利！是地藏菩萨摩诃萨，于过去久远不可说不可说劫前，身为大长者子。时世有佛，号曰师子奋迅具足万行如来。时长者子，见佛相好，千福庄严，因问彼佛：作何行愿，而得此相？时师子奋迅具足万行如来，告长者子：欲证此身，当须久远度脱一切受苦众生。',
+    pinyin: 'wén shū shī lì! shì dì zàng pú sà mó hē sà, yú guò qù jiǔ yuǎn bù kě shuō bù kě shuō jié qián, shēn wéi dà zhǎng zhě zǐ. shí shì yǒu fó, hào yuē shī zǐ fèn xùn jù zú wàn xíng rú lái. shí zhǎng zhě zǐ, jiàn fó xiàng hǎo, qiān fú zhuāng yán, yīn wèn bǐ fó: zuò hé xíng yuàn, ér dé cǐ xiàng? shí shī zǐ fèn xùn jù zú wàn xíng rú lái, gào zhǎng zhě zǐ: yù zhèng cǐ shēn, dāng xū jiǔ yuǎn dù tuō yī qiè shòu kǔ zhòng shēng.',
+    meaning: '文殊师利！地藏菩萨在过去久远不可说不可说劫前，曾是大长者的儿子。当时有佛，名叫师子奋迅具足万行如来。长者子见到佛的相好，千福庄严，就问那位佛：要修什么行愿，才能得到这样的相貌？师子奋迅具足万行如来告诉长者子：要证得此身，应当久远地度脱一切受苦众生。',
+  },
+  {
+    id: 'ch1-11',
+    title: '第一品 忉利天宫神通品（十一）长者子立大愿',
+    text: '文殊师利！时长者子，因发愿言：我今尽未来际不可计劫，为是罪苦六道众生，广设方便，尽令解脱，而我自身方成佛道。以是于彼佛前，立斯大愿，于今百千万亿那由他不可说劫，尚为菩萨。',
+    pinyin: 'wén shū shī lì! shí zhǎng zhě zǐ, yīn fā yuàn yán: wǒ jīn jìn wèi lái jì bù kě jì jié, wéi shì zuì kǔ liù dào zhòng shēng, guǎng shè fāng biàn, jìn lìng jiě tuō, ér wǒ zì shēn fāng chéng fó dào. yǐ shì yú bǐ fó qián, lì sī dà yuàn, yú jīn bǎi qiān wàn yì nà yóu tā bù kě shuō jié, shàng wéi pú sà.',
+    meaning: '文殊师利！当时长者子就发愿说：我现在尽未来际不可计劫，为这些罪苦六道众生，广设方便，全部令其解脱，而我自身才成佛道。因此在那位佛前，立下这个大愿，到现在百千万亿那由他不可说劫，还是菩萨。',
+  },
+  {
+    id: 'ch1-12',
+    title: '第一品 忉利天宫神通品（十二）婆罗门女',
+    text: '又于过去不可思议阿僧祇劫，时世有佛，号曰觉华定自在王如来，彼佛寿命四百千万亿阿僧祇劫。像法之中，有一婆罗门女，宿福深厚，众所钦敬，行住坐卧，诸天卫护。其母信邪，常轻三宝。是时圣女，广说方便，劝诱其母，令生正见。而此女母，未全生信，不久命终，魂神堕在无间地狱。',
+    pinyin: 'yòu yú guò qù bù kě sī yì ā sēng qí jié, shí shì yǒu fó, hào yuē jué huá dìng zì zài wáng rú lái, bǐ fó shòu mìng sì bǎi qiān wàn yì ā sēng qí jié. xiàng fǎ zhī zhōng, yǒu yī pó luó mén nǚ, sù fú shēn hòu, zhòng suǒ qīn jìng, xíng zhù zuò wò, zhū tiān wèi hù. qí mǔ xìn xié, cháng qīng sān bǎo. shì shí shèng nǚ, guǎng shuō fāng biàn, quàn yòu qí mǔ, lìng shēng zhèng jiàn. ér cǐ nǚ mǔ, wèi quán shēng xìn, bù jiǔ mìng zhōng, hún shén duò zài wú jiàn dì yù.',
+    meaning: '又在过去不可思议阿僧祇劫，当时有佛，名叫觉华定自在王如来，那位佛的寿命四百千万亿阿僧祇劫。在像法时期，有一位婆罗门女，宿世福德深厚，受众人钦敬，行住坐卧，诸天卫护。她的母亲信奉邪道，常轻视三宝。这时圣女广说方便，劝诱母亲，令其生起正见。但这位女子的母亲，没有完全生起信心，不久命终，魂神堕入无间地狱。',
+  },
+  {
+    id: 'ch1-13',
+    title: '第一品 忉利天宫神通品（十三）婆罗门女供佛',
+    text: '时婆罗门女，知母在世，不信因果，计当随业，必生恶趣。遂卖家宅，广求香华，及诸供具，于先佛塔寺，大兴供养。见觉华定自在王如来，其形像在一寺中，塑画威容，端严毕备。时婆罗门女，瞻礼尊容，倍生敬仰。私自念言：佛名大觉，具一切智，若在世时，我母死后，傥来问佛，必知处所。',
+    pinyin: 'shí pó luó mén nǚ, zhī mǔ zài shì, bù xìn yīn guǒ, jì dāng suí yè, bì shēng è qù. suì mài jiā zhái, guǎng qiú xiāng huá, jí zhū gòng jù, yú xiān fó tǎ sì, dà xīng gòng yǎng. jiàn jué huá dìng zì zài wáng rú lái, qí xíng xiàng zài yī sì zhōng, sù huà wēi róng, duān yán bì bèi. shí pó luó mén nǚ, zhān lǐ zūn róng, bèi shēng jìng yǎng. sī zì niàn yán: fó míng dà jué, jù yī qiè zhì, ruò zài shì shí, wǒ mǔ sǐ hòu, tǎng lái wèn fó, bì zhī chù suǒ.',
+    meaning: '当时婆罗门女知道母亲在世时不信因果，推算应当随业，必定生于恶趣。于是卖掉家宅，广求香花及各种供具，在先佛塔寺，大兴供养。见到觉华定自在王如来的形像在一座寺中，塑画威容，端严完备。当时婆罗门女瞻礼尊容，倍加生起敬仰之心。私自心念：佛名大觉，具一切智慧，如果在世时，我母亲死后，若来问佛，必定知道她的去处。',
+  },
+  {
+    id: 'ch1-14',
+    title: '第一品 忉利天宫神通品（十四）佛示母去处',
+    text: '时婆罗门女，垂泣良久，瞻恋如来。忽闻空中声曰：泣者圣女，勿至悲哀，我今示汝母之去处。婆罗门女，合掌向空，而白空曰：是何神德，宽我忧虑。我自失母已来，昼夜忆恋，无处可问，知母生界。时空中有声，再报女曰：我是汝所瞻礼者，过去觉华定自在王如来。见汝忆母，倍于常情众生之分，故来告示。',
+    pinyin: 'shí pó luó mén nǚ, chuí qì liáng jiǔ, zhān liàn rú lái. hū wén kōng zhōng shēng yuē: qì zhě shèng nǚ, wù zhì bēi āi, wǒ jīn shì rǔ mǔ zhī qù chù. pó luó mén nǚ, hé zhǎng xiàng kōng, ér bái kōng yuē: shì hé shén dé, kuān wǒ yōu lǜ. wǒ zì shī mǔ yǐ lái, zhòu yè yì liàn, wú chù kě wèn, zhī mǔ shēng jiè. shí kōng zhōng yǒu shēng, zài bào nǚ yuē: wǒ shì rǔ suǒ zhān lǐ zhě, guò qù jué huá dìng zì zài wáng rú lái. jiàn rǔ yì mǔ, bèi yú cháng qíng zhòng shēng zhī fēn, gù lái gào shì.',
+    meaning: '当时婆罗门女垂泣良久，瞻恋如来。忽然听到空中有声音说：哭泣的圣女，不要太悲哀，我现在告诉你母亲的去处。婆罗门女合掌向空，对空中说：是什么神德，宽解我的忧虑。我自从失去母亲以来，昼夜忆念，无处可问，想知道母亲生在何处。这时空中有声音，再次告诉女子说：我是你所瞻礼的，过去觉华定自在王如来。见你忆念母亲，超过常情众生的程度，所以来告诉你。',
+  },
+  {
+    id: 'ch1-15',
+    title: '第一品 忉利天宫神通品（十五）佛教念佛',
+    text: '婆罗门女，闻此声已，举身自扑，支节皆损，左右扶侍，良久方苏，而白空曰：愿佛慈愍，速说我母生界，我今身心将死不久。时觉华定自在王如来，告圣女曰：汝供养毕，但早返舍，端坐思惟吾之名号，即当知母所生去处。时婆罗门女，寻礼佛已，即归其舍。以忆母故，端坐念觉华定自在王如来，经一日一夜。',
+    pinyin: 'pó luó mén nǚ, wén cǐ shēng yǐ, jǔ shēn zì pū, zhī jié jiē sǔn, zuǒ yòu fú shì, liáng jiǔ fāng sū, ér bái kōng yuē: yuàn fó cí mǐn, sù shuō wǒ mǔ shēng jiè, wǒ jīn shēn xīn jiāng sǐ bù jiǔ. shí jué huá dìng zì zài wáng rú lái, gào shèng nǚ yuē: rǔ gòng yǎng bì, dàn zǎo fǎn shě, duān zuò sī wéi wú zhī míng hào, jí dāng zhī mǔ suǒ shēng qù chù. shí pó luó mén nǚ, xún lǐ fó yǐ, jí guī qí shě. yǐ yì mǔ gù, duān zuò niàn jué huá dìng zì zài wáng rú lái, jīng yī rì yī yè.',
+    meaning: '婆罗门女听到这声音后，举身自扑，支节都受损，左右扶侍，良久才苏醒，对空中说：愿佛慈悲怜愍，快说我母亲生在何处，我现在身心将死不久。这时觉华定自在王如来告诉圣女说：你供养完毕，只要早点回家，端坐思惟我的名号，就应当知道母亲所生的去处。当时婆罗门女，随即礼佛完毕，就回到家中。因为忆念母亲的缘故，端坐念觉华定自在王如来，经过一日一夜。',
+  },
+  {
+    id: 'ch1-16',
+    title: '第一品 忉利天宫神通品（十六）游历地狱',
+    text: '忽见自身到一海边，其水涌沸，多诸恶兽，尽复铁身，飞走海上，东西驰逐。见诸男子女人，百千万数，出没海中，被诸恶兽，争取食啖。又见夜叉，其形各异，或多手，多眼，多足，多头，口牙外出，利刃如剑，驱诸罪人，使近恶兽，复自搏攫，头足相就。其形万类，不敢久视。时婆罗门女，以念佛力故，自然无惧。',
+    pinyin: 'hū jiàn zì shēn dào yī hǎi biān, qí shuǐ yǒng fèi, duō zhū è shòu, jìn fù tiě shēn, fēi zǒu hǎi shàng, dōng xī chí zhú. jiàn zhū nán zǐ nǚ rén, bǎi qiān wàn shù, chū mò hǎi zhōng, bèi zhū è shòu, zhēng qǔ shí dàn. yòu jiàn yè chā, qí xíng gè yì, huò duō shǒu, duō yǎn, duō zú, duō tóu, kǒu yá wài chū, lì rèn rú jiàn, qū zhū zuì rén, shǐ jìn è shòu, fù zì bó jué, tóu zú xiāng jiù. qí xíng wàn lèi, bù gǎn jiǔ shì. shí pó luó mén nǚ, yǐ niàn fó lì gù, zì rán wú jù.',
+    meaning: '忽然见到自己到了一个海边，那水涌沸，有很多恶兽，全都是铁身，飞走在海上，东西驰逐。见到许多男子女人，百千万数，出没在海中，被各种恶兽争相取食。又见到夜叉，形状各异，有的多手、多眼、多足、多头，口牙外露，利刃如剑，驱赶罪人，使其靠近恶兽，又自己搏击抓取，头足相就。其形状万类，不敢久视。当时婆罗门女，因为念佛力的缘故，自然无惧。',
+  },
+  {
+    id: 'ch1-17',
+    title: '第一品 忉利天宫神通品（十七）遇无毒鬼王',
+    text: '有一鬼王，名曰无毒。稽首来迎，白圣女曰：善哉，菩萨，何缘来此？时婆罗门女，问鬼王曰：此是何处？无毒答曰：此是大铁围山，西面第一重海。圣女问曰：我闻铁围之内，地狱在中，是事实不？无毒答曰：实有地狱。圣女问曰：我今云何得到狱所？无毒答曰：若非威神，即须业力，非此二事，终不能到。',
+    pinyin: 'yǒu yī guǐ wáng, míng yuē wú dú. qǐ shǒu lái yíng, bái shèng nǚ yuē: shàn zāi, pú sà, hé yuán lái cǐ? shí pó luó mén nǚ, wèn guǐ wáng yuē: cǐ shì hé chù? wú dú dá yuē: cǐ shì dà tiě wéi shān, xī miàn dì yī chóng hǎi. shèng nǚ wèn yuē: wǒ wén tiě wéi zhī nèi, dì yù zài zhōng, shì shì shí fǒu? wú dú dá yuē: shí yǒu dì yù. shèng nǚ wèn yuē: wǒ jīn yún hé dé dào yù suǒ? wú dú dá yuē: ruò fēi wēi shén, jí xū yè lì, fēi cǐ èr shì, zhōng bù néng dào.',
+    meaning: '有一位鬼王，名叫无毒。稽首来迎接，对圣女说：善哉，菩萨，什么因缘来到这里？当时婆罗门女问鬼王说：这是什么地方？无毒回答说：这是大铁围山，西面第一重海。圣女问：我听说铁围之内，地狱在其中，这事是真的吗？无毒回答：确实有地狱。圣女问：我现在怎么能到地狱所在？无毒回答：如果不是威神之力，就须业力，不是这两件事，终究不能到达。',
+  },
+  {
+    id: 'ch1-18',
+    title: '第一品 忉利天宫神通品（十八）业海之苦',
+    text: '圣女又问：此水何缘，而乃涌沸，多诸罪人，及以恶兽？无毒答曰：此是阎浮提造恶众生，新死之者，经四十九日后，无人继嗣，为作功德，救拔苦难，生时又无善因。当据本业所感地狱，自然先渡此海。海东十万由旬，又有一海，其苦倍此。彼海之东，又有一海，其苦复倍。三业恶因之所招感，共号业海，其处是也。',
+    pinyin: 'shèng nǚ yòu wèn: cǐ shuǐ hé yuán, ér nǎi yǒng fèi, duō zhū zuì rén, jí yǐ è shòu? wú dú dá yuē: cǐ shì yán fú tí zào è zhòng shēng, xīn sǐ zhī zhě, jīng sì shí jiǔ rì hòu, wú rén jì sì, wéi zuò gōng dé, jiù bá kǔ nàn, shēng shí yòu wú shàn yīn. dāng jù běn yè suǒ gǎn dì yù, zì rán xiān dù cǐ hǎi. hǎi dōng shí wàn yóu xún, yòu yǒu yī hǎi, qí kǔ bèi cǐ. bǐ hǎi zhī dōng, yòu yǒu yī hǎi, qí kǔ fù bèi. sān yè è yīn zhī suǒ zhāo gǎn, gòng hào yè hǎi, qí chù shì yě.',
+    meaning: '圣女又问：这水什么缘故，竟然涌沸，有很多罪人，以及恶兽？无毒回答说：这是阎浮提造恶众生，新死的人，经过四十九日后，无人继嗣，为其作功德，救拔苦难，生时又无善因。应当根据本业所感的地狱，自然先渡过此海。海东十万由旬，又有一海，其苦加倍于此。那海之东，又有一海，其苦又加倍。三业恶因所招感，共同称为业海，那个地方就是。',
+  },
+  {
+    id: 'ch1-19',
+    title: '第一品 忉利天宫神通品（十九）地狱无数',
+    text: '圣女又问鬼王无毒曰：地狱何在？无毒答曰：三海之内，是大地狱，其数百千，各各差别。所谓大者，具有十八。次有五百，苦毒无量。次有千百，亦无量苦。圣女又问大鬼王曰：我母死来未久，不知魂神当至何趣？鬼王问圣女曰：菩萨之母，在生习何行业？圣女答曰：我母邪见，讥毁三宝。设或暂信，旋又不敬，死虽日浅，未知生处。',
+    pinyin: 'shèng nǚ yòu wèn guǐ wáng wú dú yuē: dì yù hé zài? wú dú dá yuē: sān hǎi zhī nèi, shì dà dì yù, qí shù bǎi qiān, gè gè chā bié. suǒ wèi dà zhě, jù yǒu shí bā. cì yǒu wǔ bǎi, kǔ dú wú liàng. cì yǒu qiān bǎi, yì wú liàng kǔ. shèng nǚ yòu wèn dà guǐ wáng yuē: wǒ mǔ sǐ lái wèi jiǔ, bù zhī hún shén dāng zhì hé qù? guǐ wáng wèn shèng nǚ yuē: pú sà zhī mǔ, zài shēng xí hé xíng yè? shèng nǚ dá yuē: wǒ mǔ xié jiàn, jī huǐ sān bǎo. shè huò zàn xìn, xuán yòu bù jìng, sǐ suī rì qiǎn, wèi zhī shēng chù.',
+    meaning: '圣女又问鬼王无毒说：地狱在哪里？无毒回答说：三海之内，是大地狱，其数百千，各各不同。所谓大的，共有十八个。其次有五百个，苦毒无量。再其次有千百个，也是无量苦。圣女又问大鬼王说：我母亲死来不久，不知魂神应当到何处？鬼王问圣女说：菩萨的母亲，在生时习什么行业？圣女回答说：我母亲邪见，讥毁三宝。即使偶尔相信，转眼又不敬，死虽日浅，不知生在何处。',
+  },
+  {
+    id: 'ch1-20',
+    title: '第一品 忉利天宫神通品（二十）母已生天',
+    text: '无毒问曰：菩萨之母，姓氏何等？圣女答曰：我父我母，俱婆罗门种，父号尸罗善现，母号悦帝利。无毒合掌启菩萨曰：愿圣者却返本处，无至忧忆悲恋。悦帝利罪女，生天以来，经今三日。云承孝顺之子，为母设供修福，布施觉华定自在王如来塔寺。非唯菩萨之母，得脱地狱，应是无间罪人，此日悉得受乐，俱同生讫。鬼王言毕，合掌而退。',
+    pinyin: 'wú dú wèn yuē: pú sà zhī mǔ, xìng shì hé děng? shèng nǚ dá yuē: wǒ fù wǒ mǔ, jù pó luó mén zhǒng, fù hào shī luó shàn xiàn, mǔ hào yuè dì lì. wú dú hé zhǎng qǐ pú sà yuē: yuàn shèng zhě què fǎn běn chù, wú zhì yōu yì bēi liàn. yuè dì lì zuì nǚ, shēng tiān yǐ lái, jīng jīn sān rì. yún chéng xiào shùn zhī zǐ, wéi mǔ shè gòng xiū fú, bù shī jué huá dìng zì zài wáng rú lái tǎ sì. fēi wéi pú sà zhī mǔ, dé tuō dì yù, yìng shì wú jiàn zuì rén, cǐ rì xī dé shòu lè, jù tóng shēng qì. guǐ wáng yán bì, hé zhǎng ér tuì.',
+    meaning: '无毒问说：菩萨的母亲，姓氏是什么？圣女回答说：我父我母，都是婆罗门种，父亲名叫尸罗善现，母亲名叫悦帝利。无毒合掌启白菩萨说：愿圣者返回本处，不要忧虑悲恋。悦帝利罪女，生天以来，到今天三日。据说承蒙孝顺的儿子，为母亲设供修福，布施觉华定自在王如来塔寺。不仅菩萨的母亲，得脱地狱，应该是无间罪人，这一天全都得以受乐，一同往生完毕。鬼王说完，合掌而退。',
+  },
+  {
+    id: 'ch1-21',
+    title: '第一品 忉利天宫神通品（二十一）婆罗门女发愿',
+    text: '婆罗门女寻如梦归，悟此事已，便于觉华定自在王如来塔像之前，立弘誓愿，愿我尽未来劫，应有罪苦众生，广设方便，使令解脱。佛告文殊师利：时鬼王无毒者，当今财首菩萨是。婆罗门女者，即地藏菩萨是。',
+    pinyin: 'pó luó mén nǚ xún rú mèng guī, wù cǐ shì yǐ, biàn yú jué huá dìng zì zài wáng rú lái tǎ xiàng zhī qián, lì hóng shì yuàn, yuàn wǒ jìn wèi lái jié, yìng yǒu zuì kǔ zhòng shēng, guǎng shè fāng biàn, shǐ lìng jiě tuō. fó gào wén shū shī lì: shí guǐ wáng wú dú zhě, dāng jīn cái shǒu pú sà shì. pó luó mén nǚ zhě, jí dì zàng pú sà shì.',
+    meaning: '婆罗门女随即如梦般回来，悟到这件事后，就在觉华定自在王如来塔像之前，立下弘誓大愿，愿我尽未来劫，应有罪苦众生，广设方便，使令解脱。佛告诉文殊师利：当时的鬼王无毒，就是现在的财首菩萨。婆罗门女，就是地藏菩萨。',
+  },
+];
+
+
+// 第二品：分身集会品
+export const chapter2Sections: SutraSection[] = [
+  {
+    id: 'ch2-1',
+    title: '第二品 分身集会品（分身云集）',
+    text: '尔时百千万亿不可思、不可议、不可量、不可说无量阿僧祇世界，所有地狱处，分身地藏菩萨，俱来集在忉利天宫。以如来神力故，各以方面，与诸得解脱从业道出者，亦各有千万亿那由他数，共持香华，来供养佛。',
+    pinyin: '【待补充】',
+    meaning: '这时百千万亿不可思议、不可称量的无量世界中，所有地狱处的分身地藏菩萨，都来集会在忉利天宫。承如来神力，各从四方而来，与那些得到解脱从业道中出来的众生，也各有千万亿那由他数，共同持香花来供养佛。',
+  },
+  {
+    id: 'ch2-2',
+    title: '第二品 分身集会品（佛嘱托地藏）',
+    text: '尔时世尊舒金色臂，摩百千万亿不可思、不可议、不可量、不可说无量阿僧祇世界，诸分身地藏菩萨摩诃萨顶，而作是言：吾于五浊恶世，教化如是刚强众生，令心调伏，舍邪归正，十有一二，尚恶习在。',
+    pinyin: '【待补充】',
+    meaning: '这时世尊伸出金色手臂，摩无量世界诸分身地藏菩萨的头顶，说道：我在五浊恶世，教化这些刚强的众生，令其心调伏，舍邪归正，十个中有一二个，还保留着恶习。',
+  },
+];
+
+// 第三品：观众生业缘品
+export const chapter3Sections: SutraSection[] = [
+  {
+    id: 'ch3-1',
+    title: '第三品 观众生业缘品（摩耶夫人问业报）',
+    text: '尔时佛母摩耶夫人，恭敬合掌，问地藏菩萨言：圣者！阎浮众生，造业差别，所受报应，其事云何？地藏答言：千万世界，乃及国土，或有地狱，或无地狱。或有女人，或无女人。或有佛法，或无佛法。',
+    pinyin: '【待补充】',
+    meaning: '这时佛母摩耶夫人恭敬合掌，问地藏菩萨：圣者！阎浮提众生造业的差别，所受的报应，是怎样的呢？地藏菩萨回答：千万世界及国土中，有的有地狱，有的没有地狱；有的有女人，有的没有女人；有的有佛法，有的没有佛法。',
+  },
+  {
+    id: 'ch3-2',
+    title: '第三品 观众生业缘品（无间地狱）',
+    text: '摩耶夫人重白地藏菩萨言：云何名为无间地狱？地藏白言：圣母！诸有地狱，在大铁围山之内。其大地狱有一十八所，次有五百，名号各别。次有千百，名字亦别。无间狱者，其狱城周匝八万余里，其城纯铁，高一万里。',
+    pinyin: '【待补充】',
+    meaning: '摩耶夫人又问地藏菩萨：什么叫做无间地狱？地藏菩萨说：圣母！所有地狱都在大铁围山之内。大地狱有十八所，其次有五百个，名号各不相同。再其次有千百个，名字也各不相同。无间地狱，其狱城周围八万多里，城墙纯铁打造，高一万里。',
+  },
+];
+
+// 第四品：阎浮众生业感品
+export const chapter4Sections: SutraSection[] = [
+  {
+    id: 'ch4-1',
+    title: '第四品 阎浮众生业感品（定自在王问愿）',
+    text: '说是语时，会中有一菩萨摩诃萨，名定自在王，白佛言：世尊！地藏菩萨，累劫已来，各发何愿，今蒙世尊，殷勤赞叹。唯愿世尊，略而说之。',
+    pinyin: '【待补充】',
+    meaning: '说这话时，会中有一位菩萨，名叫定自在王，对佛说：世尊！地藏菩萨累劫以来，发了什么愿，如今承蒙世尊殷勤赞叹。希望世尊简略地说一说。',
+  },
+  {
+    id: 'ch4-2',
+    title: '第四品 阎浮众生业感品（光目女救母）',
+    text: '复于过去无量阿僧祇劫，有佛出世，名清净莲华目如来。像法之中，有一罗汉，福度众生。因次教化，遇一女人，字曰光目，设食供养。罗汉问之：欲愿何等？光目答言：我以母亡之日，资福救拔，未知我母，生处何趣？',
+    pinyin: '【待补充】',
+    meaning: '又在过去无量阿僧祇劫，有佛出世，名叫清净莲华目如来。在像法时期，有一位罗汉，福度众生。在教化过程中，遇到一位女子，名叫光目，设食供养。罗汉问她：你想求什么？光目回答：我在母亲去世之日，为她修福救拔，不知道我母亲生在何处？',
+  },
+];
+
+// 第五品：地狱名号品
+export const chapter5Sections: SutraSection[] = [
+  {
+    id: 'ch5-1',
+    title: '第五品 地狱名号品（普贤问地狱）',
+    text: '尔时普贤菩萨摩诃萨白地藏菩萨言：仁者！愿为天龙四众，及未来现在一切众生，说娑婆世界，及阎浮提，罪苦众生，所受报处，地狱名号，及恶报等事，使未来世末法众生，知是果报。',
+    pinyin: '【待补充】',
+    meaning: '这时普贤菩萨对地藏菩萨说：仁者！希望为天龙四众及未来现在一切众生，说说娑婆世界及阎浮提罪苦众生所受报应之处，地狱的名号及恶报等事，使未来世末法众生知道这些果报。',
+  },
+  {
+    id: 'ch5-2',
+    title: '第五品 地狱名号品（地狱名号）',
+    text: '阎浮提东方有山，号曰铁围，其山黑邃，无日月光。有大地狱，号极无间，又有地狱，名大阿鼻。复有地狱，名曰四角。复有地狱，名曰飞刀。复有地狱，名曰火箭。复有地狱，名曰夹山。',
+    pinyin: '【待补充】',
+    meaning: '阎浮提东方有山，叫做铁围山，这山黑暗深邃，没有日月光明。有大地狱，叫极无间，又有地狱叫大阿鼻。还有地狱叫四角、飞刀、火箭、夹山等。',
+  },
+];
+
+// 第六品：如来赞叹品
+export const chapter6Sections: SutraSection[] = [
+  {
+    id: 'ch6-1',
+    title: '第六品 如来赞叹品（佛放光赞叹）',
+    text: '尔时世尊，举身放大光明，遍照百千万亿恒河沙等诸佛世界，出大音声，普告诸佛世界一切诸菩萨摩诃萨，及天龙鬼神人非人等：听吾今日称扬赞叹地藏菩萨摩诃萨，于十方世界，现大不可思议威神慈悲之力，救护一切罪苦之事。',
+    pinyin: '【待补充】',
+    meaning: '这时世尊全身放大光明，遍照百千万亿恒河沙等诸佛世界，发出大音声，普遍告诉诸佛世界一切菩萨及天龙鬼神等：听我今日称扬赞叹地藏菩萨，在十方世界现大不可思议威神慈悲之力，救护一切罪苦的事迹。',
+  },
+  {
+    id: 'ch6-2',
+    title: '第六品 如来赞叹品（供养功德）',
+    text: '佛告普广菩萨：未来世中，若有善男子善女人，闻是地藏菩萨摩诃萨名者，或合掌者、赞叹者、作礼者、恋慕者，是人超越三十劫罪。',
+    pinyin: '【待补充】',
+    meaning: '佛告诉普广菩萨：未来世中，如果有善男子善女人，听到地藏菩萨的名号，或合掌、赞叹、礼拜、恋慕，这人能超越三十劫的罪业。',
+  },
+];
+
+// 第七品：利益存亡品
+export const chapter7Sections: SutraSection[] = [
+  {
+    id: 'ch7-1',
+    title: '第七品 利益存亡品（临终修福）',
+    text: '尔时地藏菩萨摩诃萨白佛言：世尊！我观是阎浮众生，举心动念，无非是罪。脱获善利，多退初心。若遇恶缘，念念增益。是等辈人，如履泥涂，负于重石，渐困渐重，足步深邃。',
+    pinyin: '【待补充】',
+    meaning: '这时地藏菩萨对佛说：世尊！我观察阎浮提众生，举心动念，无不是罪。即使获得善利，也多退失初心。若遇恶缘，念念增长。这些人就像走在泥泞中，背负重石，越来越困难，越来越沉重，脚步越陷越深。',
+  },
+];
+
+// 第八品：阎罗王众赞叹品
+export const chapter8Sections: SutraSection[] = [
+  {
+    id: 'ch8-1',
+    title: '第八品 阎罗王众赞叹品（鬼王云集）',
+    text: '尔时铁围山内，有无量鬼王与阎罗天子，俱诣忉利，来到佛所。所谓恶毒鬼王、多恶鬼王、大诤鬼王、白虎鬼王、血虎鬼王、赤虎鬼王、散殃鬼王、飞身鬼王、电光鬼王、狼牙鬼王、千眼鬼王。',
+    pinyin: '【待补充】',
+    meaning: '这时铁围山内，有无量鬼王与阎罗天子，一起来到忉利天，来到佛所。所谓恶毒鬼王、多恶鬼王、大诤鬼王、白虎鬼王、血虎鬼王、赤虎鬼王、散殃鬼王、飞身鬼王、电光鬼王、狼牙鬼王、千眼鬼王等。',
+  },
+  {
+    id: 'ch8-2',
+    title: '第八品 阎罗王众赞叹品（主命鬼王）',
+    text: '说是语时，会中有一鬼王，名曰主命，白佛言：世尊！我本业缘，主阎浮人命，生时死时，我皆主之。在我本愿，甚欲利益。自是众生不会我意，致令生死俱不得安。',
+    pinyin: '【待补充】',
+    meaning: '说这话时，会中有一位鬼王，名叫主命，对佛说：世尊！我本来的业缘，是主管阎浮提人的生命，生时死时，我都主管。按我本愿，很想利益众生。但众生不理解我的意思，导致生死都不得安宁。',
+  },
+];
+
+// 第九品：称佛名号品
+export const chapter9Sections: SutraSection[] = [
+  {
+    id: 'ch9-1',
+    title: '第九品 称佛名号品（称名功德）',
+    text: '尔时地藏菩萨摩诃萨白佛言：世尊！我今为未来众生演利益事，于生死中，得大利益，唯愿世尊，听我说之。佛告地藏菩萨：汝今欲兴慈悲，救拔一切罪苦六道众生，演不思议事，今正是时，唯当速说。',
+    pinyin: '【待补充】',
+    meaning: '这时地藏菩萨对佛说：世尊！我现在为未来众生演说利益之事，使其在生死中得大利益，希望世尊听我说。佛告诉地藏菩萨：你现在想兴起慈悲，救拔一切罪苦六道众生，演说不思议事，现在正是时候，应当快说。',
+  },
+  {
+    id: 'ch9-2',
+    title: '第九品 称佛名号品（诸佛名号）',
+    text: '世尊！过去无量阿僧祇劫，有佛出世，号无边身如来。若有男子女人闻是佛名，暂生恭敬，即得超越四十劫生死重罪。何况塑画形像，供养赞叹，其人获福无量无边。',
+    pinyin: '【待补充】',
+    meaning: '世尊！过去无量阿僧祇劫，有佛出世，名叫无边身如来。如果有男子女人听到这佛名，暂时生起恭敬心，就能超越四十劫生死重罪。何况塑画形像，供养赞叹，这人获得的福德无量无边。',
+  },
+];
+
+// 第十品：校量布施功德缘品
+export const chapter10Sections: SutraSection[] = [
+  {
+    id: 'ch10-1',
+    title: '第十品 校量布施功德缘品（布施功德）',
+    text: '尔时地藏菩萨摩诃萨承佛威神，从座而起，胡跪合掌，白佛言：世尊！我观业道众生，校量布施，有轻有重，有一生受福，有十生受福，有百生千生受大福利者，是事云何？唯愿世尊，为我说之。',
+    pinyin: '【待补充】',
+    meaning: '这时地藏菩萨承佛威神，从座位起身，胡跪合掌，对佛说：世尊！我观察业道众生，校量布施，有轻有重，有一生受福的，有十生受福的，有百生千生受大福利的，这是怎么回事？希望世尊为我说明。',
+  },
+];
+
+// 第十一品：地神护法品
+export const chapter11Sections: SutraSection[] = [
+  {
+    id: 'ch11-1',
+    title: '第十一品 地神护法品（地神赞叹）',
+    text: '尔时坚牢地神白佛言：世尊！我从昔来，瞻视顶礼无量菩萨摩诃萨，皆是大不可思议神通智慧，广度众生。是地藏菩萨摩诃萨，于诸菩萨誓愿深重。',
+    pinyin: '【待补充】',
+    meaning: '这时坚牢地神对佛说：世尊！我从过去以来，瞻视顶礼无量菩萨，都是大不可思议神通智慧，广度众生。这位地藏菩萨，在诸菩萨中誓愿最为深重。',
+  },
+  {
+    id: 'ch11-2',
+    title: '第十一品 地神护法品（十种利益）',
+    text: '世尊！我观未来及现在众生，于所住处，于南方清洁之地，以土石竹木作其龛室，是中能塑画，乃至金银铜铁，作地藏形像，烧香供养，瞻礼赞叹。是人居处，即得十种利益。',
+    pinyin: '【待补充】',
+    meaning: '世尊！我观察未来及现在众生，在所住之处，在南方清洁的地方，用土石竹木做龛室，在其中塑画，乃至用金银铜铁，制作地藏形像，烧香供养，瞻礼赞叹。这人的居处，就能得到十种利益。',
+  },
+];
+
+// 第十二品：见闻利益品
+export const chapter12Sections: SutraSection[] = [
+  {
+    id: 'ch12-1',
+    title: '第十二品 见闻利益品（观音请问）',
+    text: '尔时世尊从顶门上放百千万亿大毫相光。说是语时，会中有一菩萨摩诃萨，名观世音，从座而起，胡跪合掌白佛言：世尊！是地藏菩萨摩诃萨具大慈悲，怜愍罪苦众生，于千万亿世界，化千万亿身。',
+    pinyin: '【待补充】',
+    meaning: '这时世尊从顶门上放百千万亿大毫相光。说这话时，会中有一位菩萨，名叫观世音，从座位起身，胡跪合掌对佛说：世尊！这位地藏菩萨具大慈悲，怜愍罪苦众生，在千万亿世界，化千万亿身。',
+  },
+  {
+    id: 'ch12-2',
+    title: '第十二品 见闻利益品（见闻功德）',
+    text: '佛告观世音菩萨：未来现在诸世界中，有天人受天福尽，有五衰相现，或有堕于恶道之者。如是天人，若男若女，当现相时，或见地藏菩萨形像，或闻地藏菩萨名，一瞻一礼。是诸天人，转增天福，受大快乐，永不堕三恶道报。',
+    pinyin: '【待补充】',
+    meaning: '佛告诉观世音菩萨：未来现在诸世界中，有天人受天福享尽，出现五衰相，或有堕入恶道的。这些天人，若男若女，当出现衰相时，或见地藏菩萨形像，或听闻地藏菩萨名号，一瞻一礼。这些天人，就能转增天福，受大快乐，永不堕三恶道。',
+  },
+];
+
+// 第十三品：嘱累人天品
+export const chapter13Sections: SutraSection[] = [
+  {
+    id: 'ch13-1',
+    title: '第十三品 嘱累人天品（佛嘱托地藏）',
+    text: '尔时世尊举金色臂，又摩地藏菩萨摩诃萨顶，而作是言：地藏！地藏！汝之神力不可思议，汝之慈悲不可思议，汝之智慧不可思议，汝之辩才不可思议。',
+    pinyin: '【待补充】',
+    meaning: '这时世尊举起金色手臂，又摩地藏菩萨的头顶，说道：地藏！地藏！你的神力不可思议，你的慈悲不可思议，你的智慧不可思议，你的辩才不可思议。',
+  },
+  {
+    id: 'ch13-2',
+    title: '第十三品 嘱累人天品（地藏承诺）',
+    text: '尔时地藏菩萨摩诃萨胡跪合掌白佛言：世尊！唯愿世尊，不以为虑。未来世中若有善男子善女人，于佛法中，一念恭敬，我亦百千方便，度脱是人，于生死中，速得解脱。',
+    pinyin: '【待补充】',
+    meaning: '这时地藏菩萨胡跪合掌对佛说：世尊！希望世尊不要忧虑。未来世中如果有善男子善女人，在佛法中，一念恭敬，我也会用百千方便，度脱这人，使其在生死中，速得解脱。',
+  },
+  {
+    id: 'ch13-3',
+    title: '第十三品 嘱累人天品（二十八种利益）',
+    text: '佛告虚空藏菩萨：若未来世，有善男子善女人，见地藏形像，及闻此经，乃至读诵，香华饮食，衣服珍宝，布施供养，赞叹瞻礼。得二十八种利益。',
+    pinyin: '【待补充】',
+    meaning: '佛告诉虚空藏菩萨：如果未来世，有善男子善女人，见地藏形像，以及听闻此经，乃至读诵，用香花饮食、衣服珍宝布施供养，赞叹瞻礼。能得二十八种利益。',
+  },
+];
+
+// 回向偈
+export const dedicationVerse: SutraSection = {
+  id: 'dedication-1',
+  title: '回向偈',
+  text: '诵经功德殊胜行，无边胜福皆回向。\n普愿沉溺诸众生，速往无量光佛刹。\n十方三世一切佛，一切菩萨摩诃萨，\n摩诃般若波罗蜜。',
+  pinyin: 'sòng jīng gōng dé shū shèng xíng, wú biān shèng fú jiē huí xiàng.\npǔ yuàn chén nì zhū zhòng shēng, sù wǎng wú liàng guāng fó chà.\nshí fāng sān shì yī qiè fó, yī qiè pú sà mó hē sà,\nmó hē bō rě bō luó mì.',
+  meaning: '诵经的功德是殊胜的修行，将无边殊胜的福德都回向出去。普遍愿沉溺在苦海中的一切众生，快速往生到无量光佛的净土。十方三世一切佛，一切菩萨摩诃萨，摩诃般若波罗蜜。',
+};
+
+// 三皈依
+export const threeRefuges: SutraSection = {
+  id: 'dedication-2',
+  title: '三皈依',
+  text: '自皈依佛，当愿众生，体解大道，发无上心。\n自皈依法，当愿众生，深入经藏，智慧如海。\n自皈依僧，当愿众生，统理大众，一切无碍。和南圣众。',
+  pinyin: 'zì guī yī fó, dāng yuàn zhòng shēng, tǐ jiě dà dào, fā wú shàng xīn.\nzì guī yī fǎ, dāng yuàn zhòng shēng, shēn rù jīng zàng, zhì huì rú hǎi.\nzì guī yī sēng, dāng yuàn zhòng shēng, tǒng lǐ dà zhòng, yī qiè wú ài. hé nán shèng zhòng.',
+  meaning: '自己皈依佛，愿一切众生都能体悟理解大道，发起无上菩提心。自己皈依法，愿一切众生都能深入经藏，智慧如海般广大。自己皈依僧，愿一切众生都能统理大众，一切无碍。恭敬礼拜圣众。',
+};
+
+// 回向
+export const finalDedication: SutraSection = {
+  id: 'dedication-3',
+  title: '回向',
+  text: '愿以此功德，庄严佛净土。\n上报四重恩，下济三途苦。\n若有见闻者，悉发菩提心。\n尽此一报身，同生极乐国。',
+  pinyin: 'yuàn yǐ cǐ gōng dé, zhuāng yán fó jìng tǔ.\nshàng bào sì zhòng ēn, xià jì sān tú kǔ.\nruò yǒu jiàn wén zhě, xī fā pú tí xīn.\njìn cǐ yī bào shēn, tóng shēng jí lè guó.',
+  meaning: '愿以此功德，庄严佛的净土。上报四重恩德，下济三恶道的苦难众生。若有见到听到的人，都发起菩提心。尽此一生报身，共同往生极乐国。',
+};
+
+// 汇总所有段落
+export const dizangSections: SutraSection[] = [
+  incensePraise,
+  juelinBodhisattvaVerse,
+  praise,
+  openingSutra,
+  ...chapter1Sections,
+  ...chapter2Sections,
+  ...chapter3Sections,
+  ...chapter4Sections,
+  ...chapter5Sections,
+  ...chapter6Sections,
+  ...chapter7Sections,
+  ...chapter8Sections,
+  ...chapter9Sections,
+  ...chapter10Sections,
+  ...chapter11Sections,
+  ...chapter12Sections,
+  ...chapter13Sections,
+  dedicationVerse,
+  threeRefuges,
+  finalDedication,
+];

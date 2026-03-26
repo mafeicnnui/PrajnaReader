@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TTS API 测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 TTS API 测试页面</h1>
+        
+        <div class="info">
+            <strong>当前配置：</strong><br>
+            TTS API URL: <span id="tts-url">检测中...</span><br>
+            静态文件 URL: <span id="static-url">检测中...</span>
+        </div>
+
+        <div class="test-section">
+            <h3>1. 测试健康检查</h3>
+            <button onclick="testHealth()">测试 /health</button>
+            <div id="health-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. 获取Sections列表</h3>
+            <button onclick="testSections()">测试 /sections</button>
+            <div id="sections-result" class="result" style="display:none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. 生成音频</h3>
+            <label>Section ID: 
+                <input type="text" id="section-id" value="ch1-1" style="padding: 5px;">
+            </label>
+            <label>Voice: 
+                <select id="voice" style="padding: 5px;">
+                    <option value="male">男声</option>
+                    <option value="female">女声</option>
+                </select>
+            </label>
+            <button onclick="testAudio()">生成并播放</button>
+            <div id="audio-result" class="result" style="display:none;"></div>
+            <audio id="audio-player" controls style="display:none;"></audio>
+        </div>
+
+        <div class="test-section">
+            <h3>4. 测试CORS</h3>
+            <button onclick="testCORS()">测试跨域</button>
+            <div id="cors-result" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        // 获取配置
+        const TTS_API_URL = 'https://tts.zhdnpx.cn';  // 修改为你的TTS服务器地址
+        const STATIC_URL = 'https://files.zhdnpx.cn'; // 修改为你的静态文件服务器地址
+
+        // 显示配置
+        document.getElementById('tts-url').textContent = TTS_API_URL || '未配置';
+        document.getElementById('static-url').textContent = STATIC_URL || '未配置';
+
+        // 测试健康检查
+        async function testHealth() {
+            const resultDiv = document.getElementById('health-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            resultDiv.textContent = '请求中...';
+
+            try {
+                const startTime = Date.now();
+                const response = await fetch(`${TTS_API_URL}/health`);
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `✓ 成功！\n` +
+                    `状态码: ${response.status}\n` +
+                    `响应时间: ${endTime - startTime}ms\n` +
+                    `响应数据: ${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `✗ 失败！\n错误: ${error.message}`;
+            }
+        }
+
+        // 测试获取sections
+        async function testSections() {
+            const resultDiv = document.getElementById('sections-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            resultDiv.textContent = '请求中...';
+
+            try {
+                const response = await fetch(`${TTS_API_URL}/sections`);
+                const data = await response.json();
+                
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `✓ 成功！\n` +
+                    `状态码: ${response.status}\n` +
+                    `总数: ${data.total}\n` +
+                    `前5个sections:\n${JSON.stringify(data.sections.slice(0, 5), null, 2)}`;
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `✗ 失败！\n错误: ${error.message}`;
+            }
+        }
+
+        // 测试音频生成
+        async function testAudio() {
+            const sectionId = document.getElementById('section-id').value;
+            const voice = document.getElementById('voice').value;
+            const resultDiv = document.getElementById('audio-result');
+            const audioPlayer = document.getElementById('audio-player');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            resultDiv.textContent = '生成中...';
+            audioPlayer.style.display = 'none';
+
+            try {
+                const url = `${TTS_API_URL}/tts/section/mp3?section_id=${sectionId}&voice=${voice}`;
+                const startTime = Date.now();
+                const response = await fetch(url);
+                const endTime = Date.now();
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const blob = await response.blob();
+                const audioUrl = URL.createObjectURL(blob);
+                
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `✓ 成功！\n` +
+                    `状态码: ${response.status}\n` +
+                    `生成时间: ${endTime - startTime}ms\n` +
+                    `文件大小: ${(blob.size / 1024).toFixed(2)} KB\n` +
+                    `Content-Type: ${response.headers.get('Content-Type')}`;
+                
+                audioPlayer.src = audioUrl;
+                audioPlayer.style.display = 'block';
+                audioPlayer.play();
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `✗ 失败！\n错误: ${error.message}`;
+            }
+        }
+
+        // 测试CORS
+        async function testCORS() {
+            const resultDiv = document.getElementById('cors-result');
+            resultDiv.style.display = 'block';
+            resultDiv.className = 'result';
+            resultDiv.textContent = '测试中...';
+
+            try {
+                const response = await fetch(`${TTS_API_URL}/health`);
+                const corsHeaders = {
+                    'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
+                    'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
+                    'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers'),
+                };
+                
+                resultDiv.className = 'result success';
+                resultDiv.textContent = `✓ CORS配置正常！\n` +
+                    `CORS Headers:\n${JSON.stringify(corsHeaders, null, 2)}`;
+            } catch (error) {
+                resultDiv.className = 'result error';
+                resultDiv.textContent = `✗ CORS测试失败！\n错误: ${error.message}`;
+            }
+        }
+
+        // 页面加载时自动测试健康检查
+        window.onload = function() {
+            console.log('TTS API URL:', TTS_API_URL);
+            console.log('Static URL:', STATIC_URL);
+        };
+    </script>
+</body>
+</html>

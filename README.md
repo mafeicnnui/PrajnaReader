@@ -2,11 +2,27 @@
 
 本仓库用于开发 **Prajna Buddy（般若伴读）** Android App（技术栈：**Ionic React + Capacitor**）。
 
+## 应用功能概述
+
+应用首页包含以下栏目入口：
+
+- **经典阅读**：内置经典目录，支持“经典 -> 章节 -> 段落”阅读；可切换经文/拼音/白话，支持背诵模式与段落收藏，并提供章节朗读音频（支持循环）。
+- **佛教动画故事**：以动画形式呈现佛教故事内容（后续支持列表与播放）。
+- **传统文化**：传统文化相关视频栏目（后续支持列表与播放）。
+- **科学实验**：适合亲子观看的科学实验视频栏目（后续支持列表与播放）。
+- **佛教影视**：佛教题材影视内容（后续支持列表与播放）。
+
 ## 项目结构
 
 - `prajna-buddy/`
   - Ionic React 主工程（Web 代码 + Capacitor 原生壳）
   - Android 工程会生成在 `prajna-buddy/android/`
+- `tts-server/`
+  - TTS（文本转语音）服务器
+- `docs/`
+  - 项目文档和资料
+  - 包含地藏经原文、数据说明等
+  - 详见 [docs/README.md](./docs/README.md)
 
 ## 为什么代码在 `prajna-buddy/` 目录下？
 
@@ -87,6 +103,19 @@ Ionic 的脚手架默认会创建一个 **项目目录**（这里是 `prajna-bud
 ## 内容配置
 
 - 视频清单：`prajna-buddy/src/data/content.ts`
-- 《地藏经》样例内容：`prajna-buddy/src/data/dizang.ts`
+- 《地藏经》内容：`prajna-buddy/src/data/dizang.ts`
+  - 完整的十三品数据结构
+  - 详细说明见 [docs/地藏经数据结构说明.md](./docs/地藏经数据结构说明.md)
 
 后续会把这些清单迁移为从 OSS/NAS 拉取的远程 JSON，方便你在线更新内容。
+
+## 📚 文档
+
+项目相关的所有文档和资料都已整理到 `docs/` 目录：
+
+- [地藏经原文](./docs/地藏菩萨本愿经.txt)
+- [地藏经数据更新总结](./docs/地藏经数据更新总结.md)
+- [地藏经数据结构说明](./docs/地藏经数据结构说明.md)
+- [更多文档...](./docs/README.md)
+
+查看完整文档列表：[docs/README.md](./docs/README.md)
