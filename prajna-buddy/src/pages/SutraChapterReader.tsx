@@ -203,6 +203,14 @@ const SutraChapterReader: React.FC = () => {
     return getSectionsByIds(chapter.sectionIds);
   }, [chapter]);
 
+  // 检测是否是 iOS PWA 模式
+  const isIOSPWA = (): boolean => {
+    const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+    const isStandalone = (window.navigator as any).standalone === true || 
+                        window.matchMedia('(display-mode: standalone)').matches;
+    return isIOS && isStandalone;
+  };
+
   // 构建小段音频URL
   const getSectionAudioUrl = (sectionId: string, voiceType: VoiceId): string => {
     // 支持从远程服务器或本地加载音频
@@ -217,7 +225,14 @@ const SutraChapterReader: React.FC = () => {
     // 如果配置了TTS API，使用实时生成
     if (ttsApiUrl) {
       url = `${ttsApiUrl}/tts/section/mp3?section_id=${sectionId}&voice=${voiceType}`;
-      console.log('[TTS API] 音频URL:', url);
+      
+      // iOS PWA 模式下添加时间戳避免缓存问题
+      if (isIOSPWA()) {
+        url += `&t=${Date.now()}`;
+        console.log('[iOS PWA] 音频URL (带时间戳):', url);
+      } else {
+        console.log('[TTS API] 音频URL:', url);
+      }
     } else {
       // 否则使用静态文件
       url = `${audioBaseUrl}/audio/sutras/dizang/sections/${sectionId}_${voiceType}.mp3`;
@@ -320,12 +335,57 @@ const SutraChapterReader: React.FC = () => {
     try {
       setCurrentSectionId(sectionId);
       setAudioError(undefined);
-      audio.src = audioUrl;
+      
+      // iOS PWA 模式下，先加载再播放，避免自动播放限制
+      if (isIOSPWA()) {
+        console.log('[iOS PWA] 加载音频:', audioUrl);
+        audio.src = audioUrl;
+        audio.load(); // 显式调用 load()
+        
+        // 等待音频可以播放
+        await new Promise<void>((resolve, reject) => {
+          const timeout = setTimeout(() => {
+            reject(new Error('音频加载超时'));
+          }, 10000); // 10秒超时
+          
+          const onCanPlay = () => {
+            clearTimeout(timeout);
+            audio.removeEventListener('canplay', onCanPlay);
+            audio.removeEventListener('error', onError);
+            resolve();
+          };
+          
+          const onError = () => {
+            clearTimeout(timeout);
+            audio.removeEventListener('canplay', onCanPlay);
+            audio.removeEventListener('error', onError);
+            reject(new Error('音频加载失败'));
+          };
+          
+          audio.addEventListener('canplay', onCanPlay, { once: true });
+          audio.addEventListener('error', onError, { once: true });
+        });
+        
+        console.log('[iOS PWA] 音频已就绪，开始播放');
+      } else {
+        audio.src = audioUrl;
+      }
+      
       await audio.play();
       scrollToSection(sectionId);
     } catch (error) {
       console.error('播放失败:', error);
       setAudioError('音频加载失败');
+      
+      // iOS PWA 模式下，尝试重试一次
+      if (isIOSPWA() && error instanceof Error && error.message !== '音频加载失败') {
+        console.log('[iOS PWA] 尝试重试...');
+        setTimeout(() => {
+          playSection(sectionId);
+        }, 1000);
+        return;
+      }
+      
       presentToast({
         message: '音频加载失败，请检查网络连接',
         duration: 2000,

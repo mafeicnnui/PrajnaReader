@@ -17,7 +17,7 @@ import { chapter10Sections } from './chapter10';
 import { chapter11Sections } from './chapter11';
 import { chapter12Sections } from './chapter12';
 import { chapter13Sections } from './chapter13';
-import { dedication, threeRefuges, finalDedication } from './dedication';
+import { dedicationVerse, threeRefuges, finalDedication } from './dedication';
 
 // 导出标题和章节信息
 export { dizangSutraTitle, dizangChapters };
@@ -35,7 +35,7 @@ export const prefaceSections: SutraSection[] = [
 
 // 回向部分
 export const dedicationSections: SutraSection[] = [
-  dedication,
+  dedicationVerse,
   threeRefuges,
   finalDedication,
 ];
@@ -78,7 +78,7 @@ export {
   chapter11Sections,
   chapter12Sections,
   chapter13Sections,
-  dedication,
+  dedicationVerse,
   threeRefuges,
   finalDedication,
 };
