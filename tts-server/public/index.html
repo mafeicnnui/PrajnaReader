@@ -176,6 +176,27 @@
             z-index: 1;
         }
 
+        .download-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-left {
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+        }
+
+        .download-right {
+            flex: 0 0 auto;
+        }
+
         .download-btn {
             display: inline-block;
             background: white;
@@ -183,14 +204,16 @@
             padding: 18px 45px;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: 600;
-            margin: 25px 10px;
+            margin: 15px 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             position: relative;
             z-index: 1;
             overflow: hidden;
+            width: 100%;
+            max-width: 320px;
         }
 
         .download-btn::before {
@@ -227,9 +250,15 @@
             z-index: 1;
         }
 
+        .download-info {
+            margin-top: 20px;
+            font-size: 0.95em;
+            opacity: 0.95;
+            line-height: 1.8;
+        }
+
         .qr-code {
-            margin: 35px auto;
-            padding: 25px;
+            padding: 20px;
             background: white;
             border-radius: 20px;
             display: inline-block;
@@ -244,17 +273,17 @@
         }
 
         .qr-code img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             display: block;
             border-radius: 10px;
         }
 
         .qr-hint {
-            margin-top: 15px;
-            font-size: 0.95em;
-            opacity: 0.95;
-            font-weight: 500;
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #667eea;
+            font-weight: 600;
         }
 
         .features {
@@ -553,13 +582,27 @@
                 padding: 30px 20px;
             }
 
-            .features {
-                grid-template-columns: 1fr;
+            .download-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .download-left {
+                max-width: 100%;
             }
 
             .download-btn {
-                display: block;
-                margin: 15px 0;
+                font-size: 1.1em;
+                padding: 16px 35px;
+            }
+
+            .qr-code img {
+                width: 160px;
+                height: 160px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
             }
 
             .stats {
@@ -604,24 +647,30 @@
             <!-- 下载区域 -->
             <div class="download-section">
                 <h2>📱 立即下载</h2>
-                <p style="margin: 15px 0;">支持Android 5.0及以上版本</p>
+                <p style="margin: 15px 0; font-size: 1.05em;">支持Android 5.0及以上版本</p>
                 
-                <a href="https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk" class="download-btn">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                    </svg>
-                    下载 Android APK
-                </a>
-
-                <div class="qr-code">
-                    <div id="qrcode"></div>
-                    <p class="qr-hint">扫描二维码下载</p>
+                <div class="download-content">
+                    <div class="download-left">
+                        <a href="https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk" class="download-btn">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                            下载 Android APK
+                        </a>
+                        <div class="download-info">
+                            📦 文件大小: 3.74 MB<br>
+                            🏷️ 最新版本: v1.0.0<br>
+                            ⚡ 点击按钮即可下载
+                        </div>
+                    </div>
+                    
+                    <div class="download-right">
+                        <div class="qr-code">
+                            <div id="qrcode"></div>
+                            <p class="qr-hint">扫码下载</p>
+                        </div>
+                    </div>
                 </div>
-
-                <p style="font-size: 0.9em; margin-top: 20px;">
-                    文件大小: 3.74 MB<br>
-                    最新版本: v1.0.0
-                </p>
             </div>
 
             <!-- 统计信息 -->
