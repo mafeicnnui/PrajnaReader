@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>iOS音频测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .test-item {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:active {
+            background: #5568d3;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>iOS音频播放诊断工具</h1>
+    
+    <div class="test-item">
+        <h3>环境检测</h3>
+        <div id="env-info"></div>
+    </div>
+
+    <div class="test-item">
+        <h3>音频URL测试</h3>
+        <button onclick="testAudioUrl()">测试音频URL</button>
+        <div id="url-test-result"></div>
+    </div>
+
+    <div class="test-item">
+        <h3>CORS测试</h3>
+        <button onclick="testCORS()">测试CORS</button>
+        <div id="cors-test-result"></div>
+    </div>
+
+    <div class="test-item">
+        <h3>Range请求测试</h3>
+        <button onclick="testRangeRequest()">测试Range请求</button>
+        <div id="range-test-result"></div>
+    </div>
+
+    <div class="test-item">
+        <h3>音频播放测试</h3>
+        <button onclick="testAudioPlayback()">播放测试音频</button>
+        <button onclick="stopAudio()">停止</button>
+        <div id="audio-test-result"></div>
+        <audio id="test-audio" style="width: 100%; margin-top: 10px;"></audio>
+    </div>
+
+    <div class="test-item">
+        <h3>日志</h3>
+        <button onclick="clearLog()">清除日志</button>
+        <div id="log" class="log"></div>
+    </div>
+
+    <script>
+        const TTS_URL = 'https://tts.zhdnpx.cn';
+        const TEST_SECTION = 'ch1-1';
+        const TEST_VOICE = 'male';
+
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const color = type === 'error' ? 'red' : type === 'success' ? 'green' : 'black';
+            logDiv.innerHTML += `<div style="color: ${color}">[${time}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        // 环境检测
+        function detectEnvironment() {
+            const info = {
+                userAgent: navigator.userAgent,
+                isIOS: /iPhone|iPad|iPod/.test(navigator.userAgent),
+                isPWA: window.navigator.standalone === true || window.matchMedia('(display-mode: standalone)').matches,
+                isStandalone: window.navigator.standalone,
+                displayMode: window.matchMedia('(display-mode: standalone)').matches ? 'standalone' : 'browser',
+                protocol: window.location.protocol,
+                host: window.location.host
+            };
+
+            const envDiv = document.getElementById('env-info');
+            envDiv.innerHTML = `
+                <pre>${JSON.stringify(info, null, 2)}</pre>
+            `;
+
+            log('环境检测完成');
+            return info;
+        }
+
+        // 测试音频URL
+        async function testAudioUrl() {
+            const resultDiv = document.getElementById('url-test-result');
+            resultDiv.innerHTML = '<span class="status info">测试中...</span>';
+            
+            const url = `${TTS_URL}/tts/section/mp3?section_id=${TEST_SECTION}&voice=${TEST_VOICE}`;
+            log(`测试URL: ${url}`);
+
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                log(`响应状态: ${response.status} ${response.statusText}`, 'success');
+                log(`Content-Type: ${response.headers.get('Content-Type')}`);
+                log(`Content-Length: ${response.headers.get('Content-Length')}`);
+                log(`Accept-Ranges: ${response.headers.get('Accept-Ranges')}`);
+                
+                resultDiv.innerHTML = `
+                    <span class="status success">✓ URL可访问</span>
+                    <pre>状态: ${response.status}
+Content-Type: ${response.headers.get('Content-Type')}
+Content-Length: ${response.headers.get('Content-Length')}
+Accept-Ranges: ${response.headers.get('Accept-Ranges')}</pre>
+                `;
+            } catch (error) {
+                log(`URL测试失败: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<span class="status error">✗ URL不可访问</span><pre>${error.message}</pre>`;
+            }
+        }
+
+        // 测试CORS
+        async function testCORS() {
+            const resultDiv = document.getElementById('cors-test-result');
+            resultDiv.innerHTML = '<span class="status info">测试中...</span>';
+            
+            const url = `${TTS_URL}/tts/section/mp3?section_id=${TEST_SECTION}&voice=${TEST_VOICE}`;
+            log(`测试CORS: ${url}`);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                const corsHeaders = {
+                    'Access-Control-Allow-Origin': response.headers.get('Access-Control-Allow-Origin'),
+                    'Access-Control-Allow-Methods': response.headers.get('Access-Control-Allow-Methods'),
+                    'Access-Control-Allow-Headers': response.headers.get('Access-Control-Allow-Headers'),
+                    'Access-Control-Expose-Headers': response.headers.get('Access-Control-Expose-Headers')
+                };
+                
+                log('CORS头部:', 'success');
+                log(JSON.stringify(corsHeaders, null, 2));
+                
+                resultDiv.innerHTML = `
+                    <span class="status success">✓ CORS配置正常</span>
+                    <pre>${JSON.stringify(corsHeaders, null, 2)}</pre>
+                `;
+            } catch (error) {
+                log(`CORS测试失败: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<span class="status error">✗ CORS配置有问题</span><pre>${error.message}</pre>`;
+            }
+        }
+
+        // 测试Range请求
+        async function testRangeRequest() {
+            const resultDiv = document.getElementById('range-test-result');
+            resultDiv.innerHTML = '<span class="status info">测试中...</span>';
+            
+            const url = `${TTS_URL}/tts/section/mp3?section_id=${TEST_SECTION}&voice=${TEST_VOICE}`;
+            log(`测试Range请求: ${url}`);
+
+            try {
+                const response = await fetch(url, {
+                    headers: {
+                        'Range': 'bytes=0-1023'
+                    }
+                });
+                
+                log(`Range响应状态: ${response.status}`, response.status === 206 ? 'success' : 'error');
+                log(`Content-Range: ${response.headers.get('Content-Range')}`);
+                log(`Content-Length: ${response.headers.get('Content-Length')}`);
+                
+                const isSupported = response.status === 206;
+                resultDiv.innerHTML = `
+                    <span class="status ${isSupported ? 'success' : 'error'}">
+                        ${isSupported ? '✓ 支持Range请求' : '✗ 不支持Range请求'}
+                    </span>
+                    <pre>状态: ${response.status}
+Content-Range: ${response.headers.get('Content-Range')}
+Content-Length: ${response.headers.get('Content-Length')}</pre>
+                `;
+            } catch (error) {
+                log(`Range请求测试失败: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<span class="status error">✗ Range请求失败</span><pre>${error.message}</pre>`;
+            }
+        }
+
+        // 测试音频播放
+        function testAudioPlayback() {
+            const resultDiv = document.getElementById('audio-test-result');
+            const audio = document.getElementById('test-audio');
+            
+            const url = `${TTS_URL}/tts/section/mp3?section_id=${TEST_SECTION}&voice=${TEST_VOICE}&t=${Date.now()}`;
+            log(`播放音频: ${url}`);
+            
+            audio.src = url;
+            
+            audio.onloadstart = () => {
+                log('开始加载音频');
+                resultDiv.innerHTML = '<span class="status info">加载中...</span>';
+            };
+            
+            audio.onloadedmetadata = () => {
+                log(`音频元数据加载完成，时长: ${audio.duration}秒`, 'success');
+            };
+            
+            audio.oncanplay = () => {
+                log('音频可以播放', 'success');
+                resultDiv.innerHTML = '<span class="status success">✓ 音频加载成功</span>';
+            };
+            
+            audio.onerror = (e) => {
+                const error = audio.error;
+                const errorMsg = error ? `错误代码: ${error.code}, 消息: ${error.message}` : '未知错误';
+                log(`音频加载失败: ${errorMsg}`, 'error');
+                resultDiv.innerHTML = `<span class="status error">✗ 音频加载失败</span><pre>${errorMsg}</pre>`;
+            };
+            
+            audio.play().then(() => {
+                log('开始播放', 'success');
+            }).catch(error => {
+                log(`播放失败: ${error.message}`, 'error');
+                resultDiv.innerHTML = `<span class="status error">✗ 播放失败</span><pre>${error.message}</pre>`;
+            });
+        }
+
+        function stopAudio() {
+            const audio = document.getElementById('test-audio');
+            audio.pause();
+            audio.currentTime = 0;
+            log('停止播放');
+        }
+
+        // 页面加载时自动检测环境
+        window.onload = () => {
+            detectEnvironment();
+            log('=== iOS音频诊断工具已就绪 ===');
+            log('请依次点击各个测试按钮进行诊断');
+        };
+    </script>
+</body>
+</html>
