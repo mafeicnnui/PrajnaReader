@@ -606,21 +606,22 @@
                 <h2>📱 立即下载</h2>
                 <p style="margin: 15px 0;">支持Android 5.0及以上版本</p>
                 
-                <a href="https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk" class="download-btn">
+                <a href="https://github.com/mafeicnnui/PrajnaReader/actions" class="download-btn" target="_blank">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                     </svg>
-                    下载 Android APK
+                    前往下载页面
                 </a>
 
                 <div class="qr-code">
                     <div id="qrcode"></div>
-                    <p class="qr-hint">扫描二维码下载</p>
+                    <p class="qr-hint">扫描二维码访问下载页面</p>
                 </div>
 
-                <p style="font-size: 0.9em; margin-top: 20px;">
+                <p style="font-size: 0.9em; margin-top: 20px; opacity: 0.9;">
                     文件大小: 3.74 MB<br>
-                    最新版本: v1.0.0
+                    最新版本: v1.0.0<br>
+                    <span style="color: #ffd700;">⚠️ 请在Actions页面下载最新构建的APK</span>
                 </p>
             </div>
 
@@ -750,8 +751,8 @@
     <!-- 二维码生成库 -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
-        // 生成下载链接的二维码
-        const downloadUrl = 'https://github.com/mafeicnnui/PrajnaReader/releases/latest/download/Prajna-Reader.apk';
+        // 生成GitHub Actions页面的二维码
+        const downloadUrl = 'https://github.com/mafeicnnui/PrajnaReader/actions';
         
         new QRCode(document.getElementById("qrcode"), {
             text: downloadUrl,
@@ -764,7 +765,6 @@
 
         // 统计下载次数（可选）
         document.querySelector('.download-btn').addEventListener('click', function() {
-            // 这里可以添加统计代码
             console.log('Download clicked');
         });
     </script>
