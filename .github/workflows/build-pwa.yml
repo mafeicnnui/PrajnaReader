@@ -1,0 +1,92 @@
+name: Build and Deploy PWA
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  build-pwa:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: prajna-buddy/package-lock.json
+
+      - name: Install dependencies
+        working-directory: prajna-buddy
+        run: npm ci
+
+      - name: Build PWA
+        working-directory: prajna-buddy
+        run: npm run build
+        env:
+          VITE_TTS_API_URL: https://tts.zhdnpx.cn
+
+      - name: Create deployment package
+        working-directory: prajna-buddy
+        run: |
+          cd dist
+          tar -czf ../pwa-dist.tar.gz .
+          cd ..
+          ls -lh pwa-dist.tar.gz
+
+      - name: Upload PWA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: prajna-buddy-pwa
+          path: prajna-buddy/pwa-dist.tar.gz
+          if-no-files-found: error
+
+      - name: Upload dist directory
+        uses: actions/upload-artifact@v4
+        with:
+          name: prajna-buddy-pwa-dist
+          path: prajna-buddy/dist/
+          if-no-files-found: error
+
+  # 可选：自动部署到服务器
+  # deploy-pwa:
+  #   needs: build-pwa
+  #   runs-on: ubuntu-latest
+  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  #   
+  #   steps:
+  #     - name: Download PWA artifact
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: prajna-buddy-pwa
+  #     
+  #     - name: Deploy to server
+  #       uses: appleboy/scp-action@v0.1.7
+  #       with:
+  #         host: ${{ secrets.SERVER_HOST }}
+  #         username: ${{ secrets.SERVER_USER }}
+  #         key: ${{ secrets.SERVER_SSH_KEY }}
+  #         source: "pwa-dist.tar.gz"
+  #         target: "/tmp/"
+  #     
+  #     - name: Extract and deploy
+  #       uses: appleboy/ssh-action@v1.0.3
+  #       with:
+  #         host: ${{ secrets.SERVER_HOST }}
+  #         username: ${{ secrets.SERVER_USER }}
+  #         key: ${{ secrets.SERVER_SSH_KEY }}
+  #         script: |
+  #           mkdir -p /opt/nginx/app
+  #           cd /opt/nginx/app
+  #           tar -xzf /tmp/pwa-dist.tar.gz
+  #           rm /tmp/pwa-dist.tar.gz
+  #           echo "PWA deployed successfully"
