@@ -315,8 +315,26 @@ const SutraChapterReader: React.FC = () => {
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(`section-${sectionId}`);
-    // 使用 'center' 而不是 'start'，让段落在屏幕中间显示，避免滚动过多
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!el) return;
+
+    // 获取段落高度和视口高度
+    const sectionHeight = el.offsetHeight;
+    const viewportHeight = window.innerHeight;
+    
+    // 如果段落高度超过视口高度的 60%，说明是长段落
+    // 使用 'start' 对齐并添加偏移量，避免被工具栏遮挡
+    if (sectionHeight > viewportHeight * 0.6) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // 添加一个小的延迟，然后向下滚动一点，留出工具栏空间
+      setTimeout(() => {
+        const toolbarHeight = 56; // Ionic toolbar 默认高度
+        const offset = toolbarHeight + 16; // 工具栏高度 + 16px 间距
+        window.scrollBy({ top: -offset, behavior: 'smooth' });
+      }, 300);
+    } else {
+      // 短段落使用 'center' 对齐，显示效果更好
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   };
 
   const scrollToTop = () => {
