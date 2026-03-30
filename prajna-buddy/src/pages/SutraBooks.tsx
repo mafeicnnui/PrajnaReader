@@ -34,7 +34,7 @@ const SutraBooks: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonList inset>
+        <IonList>
           {books.map((b) => (
             <IonItem key={b.id} routerLink={`/sutra/${b.id}`} detail>
               <IonLabel className="ion-text-wrap">{b.title}</IonLabel>

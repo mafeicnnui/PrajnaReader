@@ -186,6 +186,7 @@ const SutraChapterReader: React.FC = () => {
 
   const [voice, setVoice] = useState<VoiceId>('male');
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const contentRef = useRef<HTMLIonContentElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSectionId, setCurrentSectionId] = useState<string | null>(null);
   const [audioError, setAudioError] = useState<string | undefined>(undefined);
@@ -313,39 +314,39 @@ const SutraChapterReader: React.FC = () => {
     }
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = async (sectionId: string) => {
     const el = document.getElementById(`section-${sectionId}`);
     if (!el) {
       console.warn('[滚动] 未找到元素:', sectionId);
       return;
     }
 
-    // 使用 scrollIntoView 而不是 window.scrollTo
-    // 因为在 Ionic 中 IonContent 有自己的滚动容器
-    const toolbarHeight = 56;
-    const safePadding = 16;
-    
     console.log('[滚动] 段落:', sectionId);
     
-    // 先滚动到元素位置
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    // 然后调整偏移量
-    setTimeout(() => {
-      const ionContent = document.querySelector('ion-content');
-      if (ionContent) {
-        ionContent.scrollByPoint(0, -(toolbarHeight + safePadding), 300);
-        console.log('[滚动] 使用 IonContent.scrollByPoint 调整偏移');
-      } else {
-        // 降级方案：使用 window.scrollBy
-        try {
-          window.scrollBy({ top: -(toolbarHeight + safePadding), behavior: 'smooth' });
-          console.log('[滚动] 使用 window.scrollBy 调整偏移');
-        } catch (e) {
-          console.warn('[滚动] 调整偏移失败:', e);
-        }
+    const content = contentRef.current;
+    if (content) {
+      // 使用 Ionic 的 scrollToPoint 方法
+      try {
+        const rect = el.getBoundingClientRect();
+        const scrollElement = await content.getScrollElement();
+        const currentY = scrollElement.scrollTop;
+        
+        // 计算目标位置
+        const toolbarHeight = 56;
+        const safePadding = 16;
+        const targetY = currentY + rect.top - toolbarHeight - safePadding;
+        
+        console.log('[滚动] 当前Y:', currentY, '元素距顶部:', rect.top, '目标Y:', targetY);
+        
+        // 滚动到目标位置
+        await content.scrollToPoint(0, Math.max(0, targetY), 300);
+        console.log('[滚动] 使用 IonContent.scrollToPoint 完成');
+      } catch (e) {
+        console.error('[滚动] 失败:', e);
       }
-    }, 100);
+    } else {
+      console.warn('[滚动] 未找到 IonContent ref');
+    }
   };
 
   const scrollToTop = () => {
@@ -690,7 +691,7 @@ const SutraChapterReader: React.FC = () => {
         </IonToolbar>
       </IonHeader>
 
-      <IonContent fullscreen>
+      <IonContent fullscreen ref={contentRef}>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">{chapter?.title ?? '章节阅读'}</IonTitle>
