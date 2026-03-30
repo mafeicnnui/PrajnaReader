@@ -315,11 +315,14 @@ const SutraChapterReader: React.FC = () => {
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(`section-${sectionId}`);
-    if (!el) return;
+    if (!el) {
+      console.warn('[滚动] 未找到元素:', sectionId);
+      return;
+    }
 
     // 获取元素当前位置
     const rect = el.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     // 工具栏高度 + 安全边距
     const toolbarHeight = 56; // Ionic toolbar 默认高度
@@ -327,13 +330,26 @@ const SutraChapterReader: React.FC = () => {
     const targetOffset = toolbarHeight + safePadding;
     
     // 计算目标滚动位置：元素顶部应该在工具栏下方
-    const targetPosition = rect.top + scrollTop - targetOffset;
+    const targetPosition = rect.top + currentScrollTop - targetOffset;
     
-    // 执行滚动
-    window.scrollTo({
-      top: Math.max(0, targetPosition),
-      behavior: 'smooth'
-    });
+    console.log('[滚动] 段落:', sectionId);
+    console.log('[滚动] 当前位置:', currentScrollTop);
+    console.log('[滚动] 元素距顶部:', rect.top);
+    console.log('[滚动] 目标位置:', targetPosition);
+    
+    // 执行滚动（确保不会滚动到负数位置）
+    const finalPosition = Math.max(0, targetPosition);
+    
+    // 只有当目标位置与当前位置差异超过 10px 时才滚动
+    if (Math.abs(finalPosition - currentScrollTop) > 10) {
+      window.scrollTo({
+        top: finalPosition,
+        behavior: 'smooth'
+      });
+      console.log('[滚动] 执行滚动到:', finalPosition);
+    } else {
+      console.log('[滚动] 已在目标位置，无需滚动');
+    }
   };
 
   const scrollToTop = () => {
@@ -733,7 +749,13 @@ const SutraChapterReader: React.FC = () => {
 
         <audio ref={audioRef} preload="none" />
 
-        <div style={{ padding: 12, display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <div style={{ 
+          padding: 12, 
+          display: 'flex', 
+          gap: 8, 
+          flexWrap: 'wrap',
+          background: 'var(--ion-background-color)',
+        }}>
           <IonChip color={showText ? 'primary' : undefined} onClick={() => setShowText((v) => !v)}>
             <IonLabel>经文</IonLabel>
           </IonChip>
