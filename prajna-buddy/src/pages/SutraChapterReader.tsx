@@ -691,19 +691,9 @@ const SutraChapterReader: React.FC = () => {
           </IonButtons>
           <IonTitle>{chapter?.title ?? '章节阅读'}</IonTitle>
         </IonToolbar>
-      </IonHeader>
-
-      <IonContent fullscreen ref={contentRef}>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">{chapter?.title ?? '章节阅读'}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
-        <IonToolbar style={{ 
-          '--min-height': '48px', 
-          fontSize: 14 
-        } as any}>
+        
+        {/* 工具栏：字体调整、显示选项、音色选择 */}
+        <IonToolbar style={{ '--min-height': '48px', fontSize: 14 } as any}>
           <IonButtons slot="start">
             <IonButton size="small" fill="clear" onClick={() => setFontSize((s) => Math.max(14, s - 1))}>
               <IonIcon slot="icon-only" icon={remove} />
@@ -715,6 +705,62 @@ const SutraChapterReader: React.FC = () => {
               <IonIcon slot="icon-only" icon={list} />
             </IonButton>
           </IonButtons>
+
+          {/* 中间：Chips */}
+          <div style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 6, 
+            flexWrap: 'nowrap',
+            overflow: 'auto',
+            fontSize: 13,
+          }}>
+            <IonChip 
+              style={{ margin: 0, height: 28, fontSize: 13 }} 
+              color={showText ? 'primary' : undefined} 
+              onClick={() => setShowText((v) => !v)}
+            >
+              <IonLabel>经文</IonLabel>
+            </IonChip>
+            <IonChip 
+              style={{ margin: 0, height: 28, fontSize: 13 }} 
+              color={showMeaning ? 'primary' : undefined} 
+              onClick={() => setShowMeaning((v) => !v)}
+            >
+              <IonLabel>白话</IonLabel>
+            </IonChip>
+            <IonChip 
+              style={{ margin: 0, height: 28, fontSize: 13 }} 
+              color={continuousPlay ? 'primary' : undefined} 
+              onClick={() => {
+                setContinuousPlay((v) => {
+                  const next = !v;
+                  if (next && loopAudio) setLoopAudio(false);
+                  presentToast({
+                    message: next ? '连续播放：已开启' : '连续播放：已关闭',
+                    duration: 900,
+                    position: 'top',
+                  });
+                  return next;
+                });
+              }}
+            >
+              <IonLabel>连续</IonLabel>
+            </IonChip>
+            <IonChip
+              style={{ margin: 0, height: 28, fontSize: 13 }}
+              color={showBookmarks ? 'primary' : undefined}
+              onClick={() => {
+                setShowBookmarks((v) => {
+                  const next = !v;
+                  if (next) scrollToTop();
+                  return next;
+                });
+              }}
+            >
+              <IonLabel>收藏{chapterBookmarks.length ? `(${chapterBookmarks.length})` : ''}</IonLabel>
+            </IonChip>
+          </div>
 
           <div
             slot="end"
@@ -748,48 +794,16 @@ const SutraChapterReader: React.FC = () => {
             </IonSelect>
           </div>
         </IonToolbar>
+      </IonHeader>
+
+      <IonContent fullscreen ref={contentRef}>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{chapter?.title ?? '章节阅读'}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
 
         <audio ref={audioRef} preload="none" />
-
-        <div style={{ 
-          padding: 12, 
-          display: 'flex', 
-          gap: 8, 
-          flexWrap: 'wrap',
-        }}>
-          <IonChip color={showText ? 'primary' : undefined} onClick={() => setShowText((v) => !v)}>
-            <IonLabel>经文</IonLabel>
-          </IonChip>
-          <IonChip color={showMeaning ? 'primary' : undefined} onClick={() => setShowMeaning((v) => !v)}>
-            <IonLabel>白话</IonLabel>
-          </IonChip>
-          <IonChip color={continuousPlay ? 'primary' : undefined} onClick={() => {
-            setContinuousPlay((v) => {
-              const next = !v;
-              if (next && loopAudio) setLoopAudio(false); // 连续播放时关闭单段循环
-              presentToast({
-                message: next ? '连续播放：已开启' : '连续播放：已关闭',
-                duration: 900,
-                position: 'top',
-              });
-              return next;
-            });
-          }}>
-            <IonLabel>连续播放</IonLabel>
-          </IonChip>
-          <IonChip
-            color={showBookmarks ? 'primary' : undefined}
-            onClick={() => {
-              setShowBookmarks((v) => {
-                const next = !v;
-                if (next) scrollToTop();
-                return next;
-              });
-            }}
-          >
-            <IonLabel>收藏{chapterBookmarks.length ? `(${chapterBookmarks.length})` : ''}</IonLabel>
-          </IonChip>
-        </div>
 
         <div
           style={{
