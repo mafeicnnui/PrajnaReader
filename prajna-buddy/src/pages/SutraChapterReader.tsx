@@ -370,9 +370,6 @@ const SutraChapterReader: React.FC = () => {
       console.log('[播放音频] 段落:', sectionId, '音色:', voice);
       console.log('[播放音频] URL:', audioUrl);
       
-      // 立即滚动到段落（在音频加载之前）
-      scrollToSection(sectionId);
-      
       // 设置音频源
       audio.src = audioUrl;
       
@@ -412,6 +409,11 @@ const SutraChapterReader: React.FC = () => {
       // 播放音频
       await audio.play();
       console.log('[播放音频] 开始播放');
+      
+      // 音频开始播放后，延迟一下再滚动，确保DOM稳定
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 100);
     } catch (error) {
       console.error('[播放音频] 失败:', error);
       
