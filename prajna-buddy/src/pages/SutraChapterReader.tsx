@@ -332,13 +332,17 @@ const SutraChapterReader: React.FC = () => {
         const currentY = scrollElement.scrollTop;
         
         // 计算目标位置
-        const toolbarHeight = 56; // 顶部工具栏高度
-        const miniPlayerHeight = 54; // 播放工具栏高度（sticky）
-        const safePadding = 40; // 安全边距（增加以确保标题和第一行内容完整显示）
-        const totalOffset = toolbarHeight + miniPlayerHeight + safePadding;
-        const targetY = currentY + rect.top - totalOffset;
+        // rect.top 是元素距离视口顶部的距离
+        // 我们需要让元素滚动到播放工具栏下方
+        // 播放工具栏是 sticky，在 IonContent 内部，所以只需要考虑它的高度
+        const miniPlayerHeight = 54; // 播放工具栏高度（sticky，在 IonContent 内）
+        const safePadding = 16; // 安全边距
+        const targetOffset = miniPlayerHeight + safePadding;
         
-        console.log('[滚动] 当前Y:', currentY, '元素距顶部:', rect.top, '目标Y:', targetY);
+        // 目标位置 = 当前滚动位置 + 元素距视口顶部的距离 - 目标偏移量
+        const targetY = currentY + rect.top - targetOffset;
+        
+        console.log('[滚动] 当前Y:', currentY, '元素距顶部:', rect.top, '目标偏移:', targetOffset, '目标Y:', targetY);
         
         // 滚动到目标位置
         await content.scrollToPoint(0, Math.max(0, targetY), 300);
