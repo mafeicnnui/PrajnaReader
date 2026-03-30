@@ -28,13 +28,13 @@ const SutraBooks: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
+        <IonHeader collapse="condense" style={{ background: 'var(--ion-background-color)' } as any}>
+          <IonToolbar style={{ '--background': 'var(--ion-background-color)' } as any}>
             <IonTitle size="large">经典阅读</IonTitle>
           </IonToolbar>
         </IonHeader>
 
-        <IonList inset>
+        <IonList inset style={{ '--ion-background-color': 'var(--ion-background-color)', '--ion-item-background': 'var(--ion-item-background, var(--ion-background-color))' } as any}>
           {books.map((b) => (
             <IonItem key={b.id} routerLink={`/sutra/${b.id}`} detail>
               <IonLabel className="ion-text-wrap">{b.title}</IonLabel>

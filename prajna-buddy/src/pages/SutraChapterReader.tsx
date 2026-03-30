@@ -333,23 +333,18 @@ const SutraChapterReader: React.FC = () => {
     const targetPosition = rect.top + currentScrollTop - targetOffset;
     
     console.log('[滚动] 段落:', sectionId);
-    console.log('[滚动] 当前位置:', currentScrollTop);
-    console.log('[滚动] 元素距顶部:', rect.top);
-    console.log('[滚动] 目标位置:', targetPosition);
+    console.log('[滚动] 当前滚动位置:', currentScrollTop);
+    console.log('[滚动] 元素距视口顶部:', rect.top);
+    console.log('[滚动] 目标滚动位置:', targetPosition);
     
     // 执行滚动（确保不会滚动到负数位置）
     const finalPosition = Math.max(0, targetPosition);
     
-    // 只有当目标位置与当前位置差异超过 10px 时才滚动
-    if (Math.abs(finalPosition - currentScrollTop) > 10) {
-      window.scrollTo({
-        top: finalPosition,
-        behavior: 'smooth'
-      });
-      console.log('[滚动] 执行滚动到:', finalPosition);
-    } else {
-      console.log('[滚动] 已在目标位置，无需滚动');
-    }
+    console.log('[滚动] 执行滚动到:', finalPosition);
+    window.scrollTo({
+      top: finalPosition,
+      behavior: 'smooth'
+    });
   };
 
   const scrollToTop = () => {
