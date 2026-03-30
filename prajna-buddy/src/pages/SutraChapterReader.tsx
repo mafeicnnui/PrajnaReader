@@ -317,27 +317,23 @@ const SutraChapterReader: React.FC = () => {
     const el = document.getElementById(`section-${sectionId}`);
     if (!el) return;
 
-    // 获取段落高度和视口高度
-    const sectionHeight = el.offsetHeight;
-    const viewportHeight = window.innerHeight;
+    // 获取元素当前位置
+    const rect = el.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
-    // 如果段落高度超过视口高度的 50%，说明是长段落
-    if (sectionHeight > viewportHeight * 0.5) {
-      // 长段落：计算精确的滚动位置，确保顶部可见且不被遮挡
-      const rect = el.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const toolbarHeight = 56; // Ionic toolbar 默认高度
-      const extraPadding = 24; // 额外的上边距，确保内容完全可见
-      const targetPosition = rect.top + scrollTop - toolbarHeight - extraPadding;
-      
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: 'smooth'
-      });
-    } else {
-      // 短段落使用 'center' 对齐，显示效果更好
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+    // 工具栏高度 + 安全边距
+    const toolbarHeight = 56; // Ionic toolbar 默认高度
+    const safePadding = 16; // 安全边距，确保内容不被遮挡
+    const targetOffset = toolbarHeight + safePadding;
+    
+    // 计算目标滚动位置：元素顶部应该在工具栏下方
+    const targetPosition = rect.top + scrollTop - targetOffset;
+    
+    // 执行滚动
+    window.scrollTo({
+      top: Math.max(0, targetPosition),
+      behavior: 'smooth'
+    });
   };
 
   const scrollToTop = () => {
