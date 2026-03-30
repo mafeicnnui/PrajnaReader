@@ -861,9 +861,11 @@ const SutraChapterReader: React.FC = () => {
                 )}
               </IonList>
             ) : (
-              <>
+              <div style={{ position: 'relative' }}>
                 {renderMiniPlayer()}
-                <IonList inset>
+                {/* 内容区域，添加 margin-top 避免被 sticky 的 mini player 遮挡 */}
+                <div style={{ marginTop: 8 }}>
+                  <IonList inset>
                   {sections.map((s) => {
                     const revealed = !reciteMode || !!revealedIds[s.id];
                     const showPinyin = showText && showPinyinAbove;
@@ -967,7 +969,8 @@ const SutraChapterReader: React.FC = () => {
                     </IonItem>
                   ) : null}
                 </IonList>
-              </>
+                </div>
+              </div>
             )}
           </div>
         </div>
