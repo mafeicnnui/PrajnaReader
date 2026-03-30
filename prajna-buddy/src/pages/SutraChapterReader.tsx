@@ -494,19 +494,38 @@ const SutraChapterReader: React.FC = () => {
             background: 'rgba(255,255,255,0.04)',
           }}
         >
-          {/* 播放/暂停按钮 */}
+          {/* 音色切换按钮（头像） */}
           <IonButton
             size="small"
             fill="clear"
             disabled={!hasAudio}
             style={{ width: 34, height: 34, minWidth: 34, '--padding-start': '0px', '--padding-end': '0px' } as any}
-            onClick={togglePlayPause}
+            onClick={() => {
+              const newVoice = voice === 'male' ? 'female' : 'male';
+              setVoice(newVoice);
+              presentToast({
+                message: newVoice === 'male' ? '切换到男声' : '切换到女声',
+                duration: 900,
+                position: 'top',
+              });
+            }}
           >
             <img
               alt={voice === 'male' ? '男声' : '女声'}
               src={getVoiceAvatarSrc(voice)}
               style={{ width: 26, height: 26, borderRadius: 999, display: 'block' }}
             />
+          </IonButton>
+
+          {/* 播放/暂停按钮 */}
+          <IonButton
+            size="small"
+            fill="clear"
+            disabled={!hasAudio}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={togglePlayPause}
+          >
+            <IonIcon slot="icon-only" icon={isPlaying ? pause : play} />
           </IonButton>
 
           {/* 上一段 */}
@@ -790,10 +809,6 @@ const SutraChapterReader: React.FC = () => {
             >
               <IonIcon slot="icon-only" icon={school} />
             </IonButton>
-            <IonSelect value={voice} interface="popover" style={{ fontSize: 14, minWidth: 74 } as any} onIonChange={(e) => setVoice(e.detail.value as VoiceId)}>
-              <IonSelectOption value="male">男声</IonSelectOption>
-              <IonSelectOption value="female">女声</IonSelectOption>
-            </IonSelect>
           </div>
         </IonToolbar>
       </IonHeader>
