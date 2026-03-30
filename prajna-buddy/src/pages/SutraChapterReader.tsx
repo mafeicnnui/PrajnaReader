@@ -334,7 +334,7 @@ const SutraChapterReader: React.FC = () => {
         // 计算目标位置
         const toolbarHeight = 56; // 顶部工具栏高度
         const miniPlayerHeight = 54; // 播放工具栏高度（sticky）
-        const safePadding = 16; // 安全边距
+        const safePadding = 40; // 安全边距（增加以确保标题和第一行内容完整显示）
         const totalOffset = toolbarHeight + miniPlayerHeight + safePadding;
         const targetY = currentY + rect.top - totalOffset;
         
