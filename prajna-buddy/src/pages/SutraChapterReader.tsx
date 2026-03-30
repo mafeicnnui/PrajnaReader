@@ -373,6 +373,9 @@ const SutraChapterReader: React.FC = () => {
       console.log('[播放音频] 段落:', sectionId, '音色:', voice);
       console.log('[播放音频] URL:', audioUrl);
       
+      // 立即滚动到段落（在音频加载之前）
+      scrollToSection(sectionId);
+      
       // 设置音频源
       audio.src = audioUrl;
       
@@ -412,9 +415,6 @@ const SutraChapterReader: React.FC = () => {
       // 播放音频
       await audio.play();
       console.log('[播放音频] 开始播放');
-      
-      // 滚动到段落
-      scrollToSection(sectionId);
     } catch (error) {
       console.error('[播放音频] 失败:', error);
       
@@ -695,13 +695,17 @@ const SutraChapterReader: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
+        <IonHeader collapse="condense" style={{ background: 'var(--ion-background-color)' } as any}>
+          <IonToolbar style={{ '--background': 'var(--ion-background-color)' } as any}>
             <IonTitle size="large">{chapter?.title ?? '章节阅读'}</IonTitle>
           </IonToolbar>
         </IonHeader>
 
-        <IonToolbar style={{ '--min-height': '48px', fontSize: 14 } as any}>
+        <IonToolbar style={{ 
+          '--min-height': '48px', 
+          '--background': 'var(--ion-background-color)',
+          fontSize: 14 
+        } as any}>
           <IonButtons slot="start">
             <IonButton size="small" fill="clear" onClick={() => setFontSize((s) => Math.max(14, s - 1))}>
               <IonIcon slot="icon-only" icon={remove} />
