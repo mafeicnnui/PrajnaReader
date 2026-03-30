@@ -320,31 +320,32 @@ const SutraChapterReader: React.FC = () => {
       return;
     }
 
-    // 获取元素当前位置
-    const rect = el.getBoundingClientRect();
-    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // 工具栏高度 + 安全边距
-    const toolbarHeight = 56; // Ionic toolbar 默认高度
-    const safePadding = 16; // 安全边距，确保内容不被遮挡
-    const targetOffset = toolbarHeight + safePadding;
-    
-    // 计算目标滚动位置：元素顶部应该在工具栏下方
-    const targetPosition = rect.top + currentScrollTop - targetOffset;
+    // 使用 scrollIntoView 而不是 window.scrollTo
+    // 因为在 Ionic 中 IonContent 有自己的滚动容器
+    const toolbarHeight = 56;
+    const safePadding = 16;
     
     console.log('[滚动] 段落:', sectionId);
-    console.log('[滚动] 当前滚动位置:', currentScrollTop);
-    console.log('[滚动] 元素距视口顶部:', rect.top);
-    console.log('[滚动] 目标滚动位置:', targetPosition);
     
-    // 执行滚动（确保不会滚动到负数位置）
-    const finalPosition = Math.max(0, targetPosition);
+    // 先滚动到元素位置
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     
-    console.log('[滚动] 执行滚动到:', finalPosition);
-    window.scrollTo({
-      top: finalPosition,
-      behavior: 'smooth'
-    });
+    // 然后调整偏移量
+    setTimeout(() => {
+      const ionContent = document.querySelector('ion-content');
+      if (ionContent) {
+        ionContent.scrollByPoint(0, -(toolbarHeight + safePadding), 300);
+        console.log('[滚动] 使用 IonContent.scrollByPoint 调整偏移');
+      } else {
+        // 降级方案：使用 window.scrollBy
+        try {
+          window.scrollBy({ top: -(toolbarHeight + safePadding), behavior: 'smooth' });
+          console.log('[滚动] 使用 window.scrollBy 调整偏移');
+        } catch (e) {
+          console.warn('[滚动] 调整偏移失败:', e);
+        }
+      }
+    }, 100);
   };
 
   const scrollToTop = () => {
@@ -690,15 +691,14 @@ const SutraChapterReader: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense" style={{ background: 'var(--ion-background-color)' } as any}>
-          <IonToolbar style={{ '--background': 'var(--ion-background-color)' } as any}>
+        <IonHeader collapse="condense">
+          <IonToolbar>
             <IonTitle size="large">{chapter?.title ?? '章节阅读'}</IonTitle>
           </IonToolbar>
         </IonHeader>
 
         <IonToolbar style={{ 
           '--min-height': '48px', 
-          '--background': 'var(--ion-background-color)',
           fontSize: 14 
         } as any}>
           <IonButtons slot="start">
@@ -753,7 +753,6 @@ const SutraChapterReader: React.FC = () => {
           display: 'flex', 
           gap: 8, 
           flexWrap: 'wrap',
-          background: 'var(--ion-background-color)',
         }}>
           <IonChip color={showText ? 'primary' : undefined} onClick={() => setShowText((v) => !v)}>
             <IonLabel>经文</IonLabel>
