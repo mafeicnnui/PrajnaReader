@@ -3,8 +3,22 @@ name: Android Debug APK
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'README.md'
+      - 'tts-server/data/**'
+      - '*.sh'
+      - '*.bat'
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - 'README.md'
+      - 'tts-server/data/**'
+      - '*.sh'
+      - '*.bat'
   workflow_dispatch:
 
 env:
