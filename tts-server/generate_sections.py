@@ -1,10 +1,12 @@
 """
 为地藏经每个小段（section）生成音频文件
-支持男声和女声，输出到 prajna-buddy/public/audio/dizang/sections/
+支持男声和女声，输出到 cache 目录
+文件名格式与 TTS 服务器一致：section_{section_id}_{voice}_{hash}.mp3
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import sys
@@ -20,6 +22,11 @@ VOICE_MAP: dict[VoiceId, str] = {
     "male": "zh-CN-YunxiNeural",
     "female": "zh-CN-XiaoxiaoNeural",
 }
+
+
+def _cache_key(text: str, voice: VoiceId) -> str:
+    """生成缓存key（与 main.py 保持一致）"""
+    return hashlib.sha256(f"{text}:{voice}".encode()).hexdigest()
 
 
 def load_sections_from_ts(ts_file: Path) -> list[dict]:
@@ -71,8 +78,8 @@ async def main():
     )
     parser.add_argument(
         "--out", 
-        default=str(Path(__file__).resolve().parents[1] / "prajna-buddy" / "public" / "audio" / "sutras" / "dizang" / "sections"),
-        help="输出目录"
+        default=str(Path(__file__).parent / "cache"),
+        help="输出目录（默认为 cache 目录）"
     )
     parser.add_argument(
         "--proxy", 
@@ -143,7 +150,10 @@ async def main():
 
         for voice in voices_to_generate:
             current += 1
-            out_file = out_dir / f"{section_id}_{voice}.mp3"
+            
+            # 生成与 TTS 服务器一致的文件名
+            key = _cache_key(text, voice)
+            out_file = out_dir / f"section_{section_id}_{voice}_{key[:8]}.mp3"
             
             # 如果文件已存在，跳过
             if out_file.exists():
