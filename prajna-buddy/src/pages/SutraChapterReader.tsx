@@ -315,7 +315,8 @@ const SutraChapterReader: React.FC = () => {
 
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(`section-${sectionId}`);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 使用 'center' 而不是 'start'，让段落在屏幕中间显示，避免滚动过多
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   const scrollToTop = () => {
@@ -336,59 +337,64 @@ const SutraChapterReader: React.FC = () => {
       setCurrentSectionId(sectionId);
       setAudioError(undefined);
       
-      // iOS PWA 模式下，先加载再播放，避免自动播放限制
-      if (isIOSPWA()) {
-        console.log('[iOS PWA] 加载音频:', audioUrl);
-        audio.src = audioUrl;
-        audio.load(); // 显式调用 load()
-        
-        // 等待音频可以播放
-        await new Promise<void>((resolve, reject) => {
-          const timeout = setTimeout(() => {
-            reject(new Error('音频加载超时'));
-          }, 10000); // 10秒超时
-          
-          const onCanPlay = () => {
-            clearTimeout(timeout);
-            audio.removeEventListener('canplay', onCanPlay);
-            audio.removeEventListener('error', onError);
-            resolve();
-          };
-          
-          const onError = () => {
-            clearTimeout(timeout);
-            audio.removeEventListener('canplay', onCanPlay);
-            audio.removeEventListener('error', onError);
-            reject(new Error('音频加载失败'));
-          };
-          
-          audio.addEventListener('canplay', onCanPlay, { once: true });
-          audio.addEventListener('error', onError, { once: true });
-        });
-        
-        console.log('[iOS PWA] 音频已就绪，开始播放');
-      } else {
-        audio.src = audioUrl;
-      }
+      console.log('[播放音频] 段落:', sectionId, '音色:', voice);
+      console.log('[播放音频] URL:', audioUrl);
       
+      // 设置音频源
+      audio.src = audioUrl;
+      
+      // 显式加载音频
+      audio.load();
+      
+      // 等待音频可以播放
+      await new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error('音频加载超时（10秒）'));
+        }, 10000); // 10秒超时
+        
+        const onCanPlay = () => {
+          clearTimeout(timeout);
+          audio.removeEventListener('canplay', onCanPlay);
+          audio.removeEventListener('error', onError);
+          console.log('[播放音频] 加载成功，时长:', audio.duration, '秒');
+          resolve();
+        };
+        
+        const onError = () => {
+          clearTimeout(timeout);
+          audio.removeEventListener('canplay', onCanPlay);
+          audio.removeEventListener('error', onError);
+          const error = audio.error;
+          const errorMsg = error 
+            ? `错误代码 ${error.code}: ${error.message}` 
+            : '未知错误';
+          console.error('[播放音频] 加载失败:', errorMsg);
+          reject(new Error(`音频加载失败: ${errorMsg}`));
+        };
+        
+        audio.addEventListener('canplay', onCanPlay, { once: true });
+        audio.addEventListener('error', onError, { once: true });
+      });
+      
+      // 播放音频
       await audio.play();
+      console.log('[播放音频] 开始播放');
+      
+      // 滚动到段落
       scrollToSection(sectionId);
     } catch (error) {
-      console.error('播放失败:', error);
-      setAudioError('音频加载失败');
+      console.error('[播放音频] 失败:', error);
       
-      // iOS PWA 模式下，尝试重试一次
-      if (isIOSPWA() && error instanceof Error && error.message !== '音频加载失败') {
-        console.log('[iOS PWA] 尝试重试...');
-        setTimeout(() => {
-          playSection(sectionId);
-        }, 1000);
-        return;
+      let errorMessage = '音频加载失败';
+      if (error instanceof Error) {
+        errorMessage = error.message;
       }
       
+      setAudioError(errorMessage);
+      
       presentToast({
-        message: '音频加载失败，请检查网络连接',
-        duration: 2000,
+        message: `${errorMessage}\n段落: ${sectionId}`,
+        duration: 3000,
         position: 'top',
         color: 'danger',
       });
@@ -524,7 +530,7 @@ const SutraChapterReader: React.FC = () => {
           </div>
 
           {/* 进度条 */}
-          <div style={{ flex: 1, minWidth: 60, maxWidth: 120 }}>
+          <div style={{ flex: 1, minWidth: 60, maxWidth: 120, paddingLeft: 8 }}>
             <IonRange
               min={0}
               max={audioDuration && Number.isFinite(audioDuration) ? audioDuration : 0}
