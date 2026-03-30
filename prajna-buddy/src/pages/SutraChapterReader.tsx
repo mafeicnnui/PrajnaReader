@@ -332,9 +332,11 @@ const SutraChapterReader: React.FC = () => {
         const currentY = scrollElement.scrollTop;
         
         // 计算目标位置
-        const toolbarHeight = 56;
-        const safePadding = 16;
-        const targetY = currentY + rect.top - toolbarHeight - safePadding;
+        const toolbarHeight = 56; // 顶部工具栏高度
+        const miniPlayerHeight = 54; // 播放工具栏高度（sticky）
+        const safePadding = 16; // 安全边距
+        const totalOffset = toolbarHeight + miniPlayerHeight + safePadding;
+        const targetY = currentY + rect.top - totalOffset;
         
         console.log('[滚动] 当前Y:', currentY, '元素距顶部:', rect.top, '目标Y:', targetY);
         
