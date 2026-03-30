@@ -573,6 +573,34 @@ const SutraChapterReader: React.FC = () => {
             <IonIcon slot="icon-only" icon={repeat} />
           </IonButton>
 
+          {/* 显示拼音 */}
+          <IonButton
+            size="small"
+            fill="clear"
+            color={showPinyinAbove ? 'primary' : undefined}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={() => setShowPinyinAbove((v) => !v)}
+          >
+            <IonIcon slot="icon-only" icon={eye} />
+          </IonButton>
+
+          {/* 背诵模式 */}
+          <IonButton
+            size="small"
+            fill="clear"
+            color={reciteMode ? 'primary' : undefined}
+            style={{ '--padding-start': '4px', '--padding-end': '4px' } as any}
+            onClick={() => {
+              setReciteMode((v) => {
+                const next = !v;
+                if (!next) setRevealedIds({});
+                return next;
+              });
+            }}
+          >
+            <IonIcon slot="icon-only" icon={school} />
+          </IonButton>
+
           {/* 当前播放信息 */}
           <div style={{ fontSize: 11, opacity: 0.7, whiteSpace: 'nowrap', maxWidth: 120, overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {currentSection ? currentSection.title || `段落 ${currentSectionIndex + 1}` : '未播放'}
@@ -787,28 +815,6 @@ const SutraChapterReader: React.FC = () => {
             slot="end"
             style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'nowrap', fontSize: 14 }}
           >
-            <IonButton
-              size="small"
-              fill="clear"
-              color={showPinyinAbove ? 'primary' : undefined}
-              onClick={() => setShowPinyinAbove((v) => !v)}
-            >
-              <IonIcon slot="icon-only" icon={eye} />
-            </IonButton>
-            <IonButton
-              size="small"
-              fill="clear"
-              color={reciteMode ? 'primary' : undefined}
-              onClick={() => {
-                setReciteMode((v) => {
-                  const next = !v;
-                  if (!next) setRevealedIds({});
-                  return next;
-                });
-              }}
-            >
-              <IonIcon slot="icon-only" icon={school} />
-            </IonButton>
           </div>
         </IonToolbar>
       </IonHeader>
