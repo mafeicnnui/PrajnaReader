@@ -76,7 +76,7 @@ export const dizangBook: SutraBook = {
     {
       id: 'chapter-4',
       title: '第四品 阎浮众生业感品',
-      sectionIds: ['ch4-1', 'ch4-2', 'ch4-3', 'ch4-4', 'ch4-5', 'ch4-6', 'ch4-7', 'ch4-8', 'ch4-9', 'ch4-10'],
+      sectionIds: ['ch4-1', 'ch4-2', 'ch4-3', 'ch4-4', 'ch4-5', 'ch4-6', 'ch4-7', 'ch4-8', 'ch4-9', 'ch4-10', 'ch4-11', 'ch4-12', 'ch4-13'],
     },
     {
       id: 'chapter-5',
