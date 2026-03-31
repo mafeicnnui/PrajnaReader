@@ -336,7 +336,7 @@ const SutraChapterReader: React.FC = () => {
         // 我们需要让元素滚动到播放工具栏下方
         // 播放工具栏是 sticky，在 IonContent 内部，所以只需要考虑它的高度
         const miniPlayerHeight = 54; // 播放工具栏高度（sticky，在 IonContent 内）
-        const safePadding = 16; // 安全边距
+        const safePadding = 50; // 安全边距，确保标题和第一行完全可见
         const targetOffset = miniPlayerHeight + safePadding;
         
         // 目标位置 = 当前滚动位置 + 元素距视口顶部的距离 - 目标偏移量
