@@ -23,6 +23,13 @@
   - 项目文档和资料
   - 包含地藏经原文、数据说明等
   - 详见 [docs/README.md](./docs/README.md)
+- `scripts/`
+  - 部署和维护脚本
+  - 包含nginx配置更新、APK部署、诊断工具等
+  - 详见 [scripts/README.md](./scripts/README.md)
+- `nginx-config/`
+  - Nginx反向代理配置文件
+  - 各域名的虚拟主机配置
 
 ## 为什么代码在 `prajna-buddy/` 目录下？
 
@@ -116,6 +123,20 @@ Ionic 的脚手架默认会创建一个 **项目目录**（这里是 `prajna-bud
 - [地藏经原文](./docs/地藏菩萨本愿经.txt)
 - [地藏经数据更新总结](./docs/地藏经数据更新总结.md)
 - [地藏经数据结构说明](./docs/地藏经数据结构说明.md)
+- [Nginx服务器部署说明](./docs/Nginx服务器部署说明.md)
+- [TTS服务器部署说明](./docs/TTS服务器部署说明.md)
+- [PWA部署指南](./docs/PWA部署指南.md)
 - [更多文档...](./docs/README.md)
 
 查看完整文档列表：[docs/README.md](./docs/README.md)
+
+## 🛠️ 脚本工具
+
+项目提供了一系列部署和维护脚本，位于 `scripts/` 目录：
+
+- **Nginx相关**：配置更新、重载、调试
+- **TTS服务**：页面部署、配置更新
+- **PWA部署**：构建和部署PWA应用
+- **诊断工具**：APK下载检查、错误诊断
+
+查看完整脚本说明：[scripts/README.md](./scripts/README.md)
