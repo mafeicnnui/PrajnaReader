@@ -38,7 +38,9 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 
-setupIonicReact();
+setupIonicReact({
+  animated: false, // 禁用所有页面过渡动画
+});
 
 const App: React.FC = () => (
   <IonApp>
