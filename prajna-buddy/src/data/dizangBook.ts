@@ -91,7 +91,7 @@ export const dizangBook: SutraBook = {
     {
       id: 'chapter-7',
       title: '第七品 利益存亡品',
-      sectionIds: ['ch7-1', 'ch7-2', 'ch7-3', 'ch7-4', 'ch7-5'],
+      sectionIds: ['ch7-1', 'ch7-2', 'ch7-3', 'ch7-4'],
     },
     {
       id: 'chapter-8',

@@ -31,11 +31,4 @@ export const chapter7Sections: SutraSection[] = [
     pinyin: 'pì rú yǒu rén cóng yuǎn dì lái, jué liáng sān rì, suǒ fù dān wù, qiáng guò bǎi jīn, hū yù lín rén, gèng fù shǎo wù, yǐ shì zhī gù, zhuǎn fù kùn zhòng. shì zūn! wǒ guān yán fú zhòng shēng, dàn néng wéi qí fù mǔ nǎi zhì juàn shǔ, mìng zhōng zhī hòu, shè zhāi gòng yǎng, zhì xīn qín kěn. rú shì zhī rén, cún wáng huò lì. shuō shì yǔ shí, dāo lì tiān gōng, yǒu qiān wàn yì nà yóu tā yán fú guǐ shén, xī fā wú liàng pú tí zhī xīn, dà biàn zhǎng zhě, zuò lǐ ér tuì.',
     meaning: '譬如有人从远地来，绝粮三日，所负担物，强过百斤，忽遇邻人，更附少物，因此之故，转复困重。世尊！我观阎浮众生，只能为其父母乃至眷属，命终之后，设斋供养，志心勤恳。如此之人，存亡获利。说这话时，忉利天宫，有千万亿那由他阎浮鬼神，全都发无量菩提之心，大辩长者，作礼而退。',
   },
-  {
-    id: 'ch7-5',
-    title: '第七品 利益存亡品（五）大辩长者',
-    text: '尔时大辩长者，作礼而退。',
-    pinyin: 'ěr shí dà biàn zhǎng zhě, zuò lǐ ér tuì.',
-    meaning: '这时大辩长者，作礼而退。',
-  },
 ];
