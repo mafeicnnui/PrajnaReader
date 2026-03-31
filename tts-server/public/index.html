@@ -914,6 +914,17 @@
     <!-- 二维码生成库 -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
+        // 全局错误处理 - 忽略浏览器扩展的错误
+        window.addEventListener('unhandledrejection', function(event) {
+            // 忽略浏览器扩展相关的错误
+            if (event.reason && event.reason.message && 
+                (event.reason.message.includes('could not establish connection') ||
+                 event.reason.message.includes('receiving end does not exist'))) {
+                event.preventDefault();
+                return;
+            }
+        });
+
         // 生成下载链接的二维码（使用服务器地址）
         const downloadUrl = 'https://tts.zhdnpx.cn/downloads/Prajna-Reader.apk';
         
