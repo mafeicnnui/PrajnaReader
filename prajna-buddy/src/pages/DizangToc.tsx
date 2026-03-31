@@ -1,9 +1,14 @@
 import {
+  IonBackButton,
+  IonButtons,
   IonContent,
+  IonHeader,
   IonItem,
   IonLabel,
   IonList,
   IonPage,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import React from 'react';
 import { dizangBook } from '../data/dizangBook';
@@ -11,11 +16,23 @@ import { dizangBook } from '../data/dizangBook';
 const DizangToc: React.FC = () => {
   return (
     <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/sutra" />
+          </IonButtons>
+          <IonTitle>{dizangBook.title}</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+
       <IonContent fullscreen>
-        <IonList inset>
-          <IonItem routerLink="/home" detail>
-            <IonLabel>返回</IonLabel>
-          </IonItem>
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">{dizangBook.title}</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
+        <IonList>
           {dizangBook.chapters.map((c) => (
             <IonItem key={c.id} routerLink={`/sutra/dizang/${c.id}`} detail>
               <IonLabel className="ion-text-wrap">{c.title}</IonLabel>
