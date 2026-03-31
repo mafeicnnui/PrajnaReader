@@ -26,15 +26,16 @@ const DizangToc: React.FC = () => {
       </IonHeader>
 
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">{dizangBook.title}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
         <IonList style={{ background: 'transparent', margin: 0, padding: 0 }}>
           {dizangBook.chapters.map((c) => (
-            <IonItem key={c.id} routerLink={`/sutra/dizang/${c.id}`} detail>
+            <IonItem 
+              key={c.id} 
+              routerLink={`/sutra/dizang/${c.id}`} 
+              detail
+              lines="full"
+              button={false}
+              className="ion-no-padding"
+            >
               <IonLabel className="ion-text-wrap">{c.title}</IonLabel>
             </IonItem>
           ))}
