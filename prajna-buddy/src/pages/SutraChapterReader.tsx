@@ -385,14 +385,25 @@ const SutraChapterReader: React.FC = () => {
       // 等待音频可以播放
       await new Promise<void>((resolve, reject) => {
         const timeout = setTimeout(() => {
-          reject(new Error('音频加载超时（10秒）'));
-        }, 10000); // 10秒超时
+          reject(new Error('音频加载超时（30秒）'));
+        }, 30000); // 增加到30秒超时，iOS可能需要更长时间
         
         const onCanPlay = () => {
           clearTimeout(timeout);
           audio.removeEventListener('canplay', onCanPlay);
           audio.removeEventListener('error', onError);
+          audio.removeEventListener('loadeddata', onLoadedData);
           console.log('[播放音频] 加载成功，时长:', audio.duration, '秒');
+          resolve();
+        };
+        
+        const onLoadedData = () => {
+          // iOS有时候不触发canplay，但loadeddata可以
+          clearTimeout(timeout);
+          audio.removeEventListener('canplay', onCanPlay);
+          audio.removeEventListener('error', onError);
+          audio.removeEventListener('loadeddata', onLoadedData);
+          console.log('[播放音频] 数据加载完成（loadeddata），时长:', audio.duration, '秒');
           resolve();
         };
         
@@ -400,6 +411,7 @@ const SutraChapterReader: React.FC = () => {
           clearTimeout(timeout);
           audio.removeEventListener('canplay', onCanPlay);
           audio.removeEventListener('error', onError);
+          audio.removeEventListener('loadeddata', onLoadedData);
           const error = audio.error;
           const errorMsg = error 
             ? `错误代码 ${error.code}: ${error.message}` 
@@ -409,6 +421,7 @@ const SutraChapterReader: React.FC = () => {
         };
         
         audio.addEventListener('canplay', onCanPlay, { once: true });
+        audio.addEventListener('loadeddata', onLoadedData, { once: true });
         audio.addEventListener('error', onError, { once: true });
       });
       
