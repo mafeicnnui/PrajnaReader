@@ -32,7 +32,7 @@ const DizangToc: React.FC = () => {
           </IonToolbar>
         </IonHeader>
 
-        <IonList>
+        <IonList style={{ background: 'transparent', margin: 0, padding: 0 }}>
           {dizangBook.chapters.map((c) => (
             <IonItem key={c.id} routerLink={`/sutra/dizang/${c.id}`} detail>
               <IonLabel className="ion-text-wrap">{c.title}</IonLabel>
