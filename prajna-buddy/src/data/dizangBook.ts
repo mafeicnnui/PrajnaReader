@@ -96,7 +96,7 @@ export const dizangBook: SutraBook = {
     {
       id: 'chapter-8',
       title: '第八品 阎罗王众赞叹品',
-      sectionIds: ['ch8-1', 'ch8-2', 'ch8-3', 'ch8-4', 'ch8-5', 'ch8-6', 'ch8-7'],
+      sectionIds: ['ch8-1', 'ch8-2', 'ch8-3', 'ch8-4', 'ch8-5', 'ch8-6', 'ch8-7', 'ch8-8', 'ch8-9', 'ch8-10'],
     },
     {
       id: 'chapter-9',
@@ -106,7 +106,7 @@ export const dizangBook: SutraBook = {
     {
       id: 'chapter-10',
       title: '第十品 校量布施功德缘品',
-      sectionIds: ['ch10-1', 'ch10-2', 'ch10-3', 'ch10-4', 'ch10-5', 'ch10-6', 'ch10-7', 'ch10-8'],
+      sectionIds: ['ch10-1', 'ch10-2', 'ch10-3', 'ch10-4', 'ch10-5', 'ch10-6', 'ch10-7', 'ch10-8', 'ch10-9', 'ch10-10', 'ch10-11', 'ch10-12'],
     },
     {
       id: 'chapter-11',

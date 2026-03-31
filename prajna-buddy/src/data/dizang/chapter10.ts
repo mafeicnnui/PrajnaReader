@@ -59,4 +59,32 @@ export const chapter10Sections: SutraSection[] = [
     pinyin: 'fù cì dì zàng! wèi lái shì zhōng, ruò shàn nán zǐ shàn nǚ rén, yú fó fǎ zhōng, zhǒng shǎo shàn gēn, máo fà shā chén děng xǔ, suǒ shòu fú lì, bù kě wéi yù.',
     meaning: '再次地藏！未来世中，若善男子善女人，在佛法中，种少善根，毛发沙尘等许，所受福利，不可为喻。',
   },
+  {
+    id: 'ch10-9',
+    title: '第十品 校量布施功德缘品（九）供养形像',
+    text: '复次地藏！未来世中，若有善男子善女人，遇佛形像、菩萨形像、辟支佛形像、转轮王形像，布施供养，得无量福，常在人天，受胜妙乐。若能回向法界，是人福利不可为喻。',
+    pinyin: 'fù cì dì zàng! wèi lái shì zhōng, ruò yǒu shàn nán zǐ shàn nǚ rén, yù fó xíng xiàng, pú sà xíng xiàng, bì zhī fó xíng xiàng, zhuǎn lún wáng xíng xiàng, bù shī gòng yǎng, dé wú liàng fú, cháng zài rén tiān, shòu shèng miào lè. ruò néng huí xiàng fǎ jiè, shì rén fú lì bù kě wéi yù.',
+    meaning: '再次地藏！未来世中，如果有善男子善女人，遇佛形像、菩萨形像、辟支佛形像、转轮王形像，布施供养，得无量福，常在人天，受胜妙乐。若能回向法界，这人福利不可为喻。',
+  },
+  {
+    id: 'ch10-10',
+    title: '第十品 校量布施功德缘品（十）听闻经典',
+    text: '复次地藏！未来世中，若有善男子善女人，遇大乘经典，或听闻一偈一句，发殷重心，赞叹恭敬，布施供养。是人获大果报，无量无边。若能回向法界，其福不可为喻。',
+    pinyin: 'fù cì dì zàng! wèi lái shì zhōng, ruò yǒu shàn nán zǐ shàn nǚ rén, yù dà chéng jīng diǎn, huò tīng wén yī jì yī jù, fā yīn zhòng xīn, zàn tàn gōng jìng, bù shī gòng yǎng. shì rén huò dà guǒ bào, wú liàng wú biān. ruò néng huí xiàng fǎ jiè, qí fú bù kě wéi yù.',
+    meaning: '再次地藏！未来世中，如果有善男子善女人，遇大乘经典，或听闻一偈一句，发殷重心，赞叹恭敬，布施供养。这人获大果报，无量无边。若能回向法界，其福不可为喻。',
+  },
+  {
+    id: 'ch10-11',
+    title: '第十品 校量布施功德缘品（十一）修补塔寺',
+    text: '复次地藏！若未来世中，有善男子善女人，遇佛塔寺，大乘经典。新者布施供养，瞻礼赞叹，恭敬合掌。若遇故者，或毁坏者，修补营理，或独发心，或劝多人同共发心。如是等辈，三十生中常为诸小国王。檀越之人，常为轮王，还以善法教化诸小国王。',
+    pinyin: 'fù cì dì zàng! ruò wèi lái shì zhōng, yǒu shàn nán zǐ shàn nǚ rén, yù fó tǎ sì, dà chéng jīng diǎn. xīn zhě bù shī gòng yǎng, zhān lǐ zàn tàn, gōng jìng hé zhǎng. ruò yù gù zhě, huò huǐ huài zhě, xiū bǔ yíng lǐ, huò dú fā xīn, huò quàn duō rén tóng gòng fā xīn. rú shì děng bèi, sān shí shēng zhōng cháng wéi zhū xiǎo guó wáng. tán yuè zhī rén, cháng wéi lún wáng, hái yǐ shàn fǎ jiào huà zhū xiǎo guó wáng.',
+    meaning: '再次地藏！若未来世中，有善男子善女人，遇佛塔寺，大乘经典。新的布施供养，瞻礼赞叹，恭敬合掌。若遇旧的，或毁坏的，修补营理，或独发心，或劝多人同共发心。如此等辈，三十生中常为诸小国王。檀越之人，常为轮王，还以善法教化诸小国王。',
+  },
+  {
+    id: 'ch10-12',
+    title: '第十品 校量布施功德缘品（十二）回向法界',
+    text: '复次地藏！未来世中，若有善男子善女人，于佛法中所种善根，或布施供养，或修补塔寺，或装理经典，乃至一毛一尘，一沙一渧。如是善事，但能回向法界，是人功德，百千生中受上妙乐。如但回向自家眷属，或自身利益。如是之果，即三生受乐，舍一得万报。是故地藏，布施因缘，其事如是。',
+    pinyin: 'fù cì dì zàng! wèi lái shì zhōng, ruò yǒu shàn nán zǐ shàn nǚ rén, yú fó fǎ zhōng suǒ zhǒng shàn gēn, huò bù shī gòng yǎng, huò xiū bǔ tǎ sì, huò zhuāng lǐ jīng diǎn, nǎi zhì yī máo yī chén, yī shā yī dì. rú shì shàn shì, dàn néng huí xiàng fǎ jiè, shì rén gōng dé, bǎi qiān shēng zhōng shòu shàng miào lè. rú dàn huí xiàng zì jiā juàn shǔ, huò zì shēn lì yì. rú shì zhī guǒ, jí sān shēng shòu lè, shě yī dé wàn bào. shì gù dì zàng, bù shī yīn yuán, qí shì rú shì.',
+    meaning: '再次地藏！未来世中，如果有善男子善女人，在佛法中所种善根，或布施供养，或修补塔寺，或装理经典，乃至一毛一尘，一沙一渧。如此善事，只能回向法界，这人功德，百千生中受上妙乐。如只回向自家眷属，或自身利益。如此之果，即三生受乐，舍一得万报。所以地藏，布施因缘，其事如此。',
+  },
 ];
