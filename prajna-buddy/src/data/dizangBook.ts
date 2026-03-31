@@ -111,7 +111,7 @@ export const dizangBook: SutraBook = {
     {
       id: 'chapter-11',
       title: '第十一品 地神护法品',
-      sectionIds: ['ch11-1', 'ch11-2', 'ch11-3'],
+      sectionIds: ['ch11-1', 'ch11-2', 'ch11-3', 'ch11-4'],
     },
     {
       id: 'chapter-12',

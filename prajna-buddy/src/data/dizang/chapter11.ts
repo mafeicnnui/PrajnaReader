@@ -24,4 +24,11 @@ export const chapter11Sections: SutraSection[] = [
     pinyin: 'fù bái fó yán: shì zūn! wèi lái shì zhōng, ruò yǒu shàn nán zǐ shàn nǚ rén, yú suǒ zhù chù, yǒu cǐ jīng diǎn jí pú sà xiàng, shì rén gèng néng zhuǎn dú jīng diǎn, gòng yǎng pú sà. wǒ cháng rì yè yǐ běn shén lì, wèi hù shì rén, nǎi zhì shuǐ huǒ dào zéi, dà héng xiǎo héng, yī qiè è shì, xī jiē xiāo miè.',
     meaning: '又对佛说：世尊！未来世中，若有善男子善女人，在所住处，有此经典及菩萨像，这人更能转读经典，供养菩萨。我常日夜以本神力，卫护这人，乃至水火盗贼，大横小横，一切恶事，全都消灭。',
   },
+  {
+    id: 'ch11-4',
+    title: '第十一品 地神护法品（四）佛告地神',
+    text: '佛告坚牢地神：汝大神力，诸神少及。何以故？阎浮土地，悉蒙汝护，乃至草木沙石，稻麻竹苇，谷米宝贝，从地而有，皆因汝力。又当称扬地藏菩萨利益之事，汝之功德，及以神通，百千倍于常分地神。若未来世中，有善男子善女人，供养菩萨，及转读是经，但依地藏本愿经一事修行者。汝以本神力而拥护之，勿令一切灾害及不如意事，辄闻于耳，何况令受？非但汝独护是人故，亦有释梵眷属、诸天眷属，拥护是人。何故得如是圣贤拥护？皆由瞻礼地藏形像，及转读是本愿经故，自然毕竟出离苦海，证涅槃乐。以是之故，得大拥护。',
+    pinyin: 'fó gào jiān láo dì shén: rǔ dà shén lì, zhū shén shǎo jí. hé yǐ gù? yán fú tǔ dì, xī méng rǔ hù, nǎi zhì cǎo mù shā shí, dào má zhú wěi, gǔ mǐ bǎo bèi, cóng dì ér yǒu, jiē yīn rǔ lì. yòu dāng chēng yáng dì zàng pú sà lì yì zhī shì, rǔ zhī gōng dé, jí yǐ shén tōng, bǎi qiān bèi yú cháng fēn dì shén. ruò wèi lái shì zhōng, yǒu shàn nán zǐ shàn nǚ rén, gòng yǎng pú sà, jí zhuǎn dú shì jīng, dàn yī dì zàng běn yuàn jīng yī shì xiū xíng zhě. rǔ yǐ běn shén lì ér yōng hù zhī, wù lìng yī qiè zāi hài jí bù rú yì shì, zhé wén yú ěr, hé kuàng lìng shòu? fēi dàn rǔ dú hù shì rén gù, yì yǒu shì fàn juàn shǔ, zhū tiān juàn shǔ, yōng hù shì rén. hé gù dé rú shì shèng xián yōng hù? jiē yóu zhān lǐ dì zàng xíng xiàng, jí zhuǎn dú shì běn yuàn jīng gù, zì rán bì jìng chū lí kǔ hǎi, zhèng niè pán lè. yǐ shì zhī gù, dé dà yōng hù.',
+    meaning: '佛告诉坚牢地神：你的大神力，诸神少有能及。为什么呢？阎浮土地，全都蒙你护持，乃至草木沙石，稻麻竹苇，谷米宝贝，从地而有，都因你的力量。又当称扬地藏菩萨利益之事，你的功德，及以神通，百千倍于常分地神。若未来世中，有善男子善女人，供养菩萨，及转读这经，但依地藏本愿经一事修行者。你以本神力而拥护之，勿令一切灾害及不如意事，辄闻于耳，何况令受？非但你独护这人故，亦有释梵眷属、诸天眷属，拥护这人。为何得如此圣贤拥护？皆由瞻礼地藏形像，及转读这本愿经故，自然毕竟出离苦海，证涅槃乐。以是之故，得大拥护。',
+  },
 ];
