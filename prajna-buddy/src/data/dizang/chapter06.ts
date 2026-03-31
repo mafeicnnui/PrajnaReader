@@ -73,4 +73,32 @@ export const chapter6Sections: SutraSection[] = [
     pinyin: 'shì gù pǔ guǎng, ruò jiàn yǒu rén dú sòng shì jīng, nǎi zhì yī niàn zàn tàn shì jīng, huò gōng jìng zhě. rǔ xū bǎi qiān fāng biàn, quàn shì děng rén, qín xīn mò tuì, néng dé wèi lái, xiàn zài qiān wàn yì bù kě sī yì gōng dé. fù cì pǔ guǎng! ruò wèi lái shì zhū zhòng shēng děng, huò mèng huò mèi, jiàn zhū guǐ shén nǎi jí zhū xíng, huò bēi, huò tí, huò chóu, huò tàn, huò kǒng, huò bù. cǐ jiē shì yī shēng shí shēng bǎi shēng qiān shēng guò qù fù mǔ, nán nǚ dì mèi, fū qī juàn shǔ, zài yú è qù, wèi dé chū lí, wú chù xī wàng fú lì jiù bá, dāng gào sù shì gǔ ròu, shǐ zuò fāng biàn, yuàn lí è dào. pǔ guǎng! rǔ yǐ shén lì, qiǎn shì juàn shǔ, lìng duì zhū fó pú sà xiàng qián, zhì xīn zì dú cǐ jīng, huò qǐng rén dú, qí shù sān biàn huò qī biàn. rú shì è dào juàn shǔ, jīng shēng bì shì biàn shù, dāng dé jiě tuō, nǎi zhì mèng mèi zhī zhōng, yǒng bù fù jiàn.',
     meaning: '所以普广，如果见有人读诵此经，乃至一念赞叹此经，或恭敬的。你须百千方便，劝这等人，勤心莫退，能得未来、现在千万亿不可思议功德。再次普广！如果未来世诸众生等，或梦或寐，见诸鬼神乃及诸形，或悲、或啼、或愁、或叹、或恐、或怖。此皆是一生十生百生千生过去父母、男女弟妹、夫妻眷属，在于恶趣，未得出离，无处希望福力救拔，应当告宿世骨肉，使作方便，愿离恶道。普广！你以神力，遣这眷属，令对诸佛菩萨像前，志心自读此经，或请人读，其数三遍或七遍。如此恶道眷属，经声完毕这遍数，应当得解脱，乃至梦寐之中，永不再见。',
   },
+  {
+    id: 'ch6-11',
+    title: '第六品 如来赞叹品（十一）下贱忏悔',
+    text: '复次普广！若未来世，有诸下贱等人，或奴或婢，乃至诸不自由之人，觉知宿业，要忏悔者。志心瞻礼地藏菩萨形像，乃至一七日中，念菩萨名，可满万遍。如是等人，尽此报后，千万生中，常生尊贵，更不经三恶道苦。',
+    pinyin: 'fù cì pǔ guǎng! ruò wèi lái shì, yǒu zhū xià jiàn děng rén, huò nú huò bì, nǎi zhì zhū bù zì yóu zhī rén, jué zhī sù yè, yào chàn huǐ zhě. zhì xīn zhān lǐ dì zàng pú sà xíng xiàng, nǎi zhì yī qī rì zhōng, niàn pú sà míng, kě mǎn wàn biàn. rú shì děng rén, jìn cǐ bào hòu, qiān wàn shēng zhōng, cháng shēng zūn guì, gèng bù jīng sān è dào kǔ.',
+    meaning: '再次普广！如果未来世，有诸下贱等人，或奴或婢，乃至诸不自由之人，觉知宿业，要忏悔的。志心瞻礼地藏菩萨形像，乃至一七日中，念菩萨名，可满万遍。如此等人，尽此报后，千万生中，常生尊贵，更不经三恶道苦。',
+  },
+  {
+    id: 'ch6-12',
+    title: '第六品 如来赞叹品（十二）新产儿福',
+    text: '复次普广！若未来世中，阎浮提内，刹利、婆罗门、长者居士、一切人等，及异姓种族，有新产者，或男或女。七日之中，早与读诵此不思议经典，更为念菩萨名，可满万遍。是新生子，或男或女，宿有殃报，便得解脱，安乐易养，寿命增长。若是承福生者，转增安乐，及与寿命。',
+    pinyin: 'fù cì pǔ guǎng! ruò wèi lái shì zhōng, yán fú tí nèi, chà lì, pó luó mén, zhǎng zhě jū shì, yī qiè rén děng, jí yì xìng zhǒng zú, yǒu xīn chǎn zhě, huò nán huò nǚ. qī rì zhī zhōng, zǎo yǔ dú sòng cǐ bù sī yì jīng diǎn, gèng wéi niàn pú sà míng, kě mǎn wàn biàn. shì xīn shēng zǐ, huò nán huò nǚ, sù yǒu yāng bào, biàn dé jiě tuō, ān lè yì yǎng, shòu mìng zēng zhǎng. ruò shì chéng fú shēng zhě, zhuǎn zēng ān lè, jí yǔ shòu mìng.',
+    meaning: '再次普广！如果未来世中，阎浮提内，刹利、婆罗门、长者居士、一切人等，及异姓种族，有新产者，或男或女。七日之中，早与读诵此不思议经典，更为念菩萨名，可满万遍。这新生子，或男或女，宿有殃报，便得解脱，安乐易养，寿命增长。若是承福生者，转增安乐，及与寿命。',
+  },
+  {
+    id: 'ch6-13',
+    title: '第六品 如来赞叹品（十三）十斋日福',
+    text: '复次普广！若未来世众生，于月一日、八日、十四日、十五日、十八日、二十三、二十四、二十八、二十九日，乃至三十日，是诸日等，诸罪结集，定其轻重。南阎浮提众生，举止动念，无不是业，无不是罪，何况恣情杀害、窃盗、邪淫、妄语，百千罪状。能于是十斋日，对佛菩萨诸贤圣像前，读是经一遍。东西南北，百由旬内，无诸灾难。当此居家，若长若幼，现在未来，百千岁中，永离恶趣。能于十斋日，每转一遍，现世令此居家，无诸横病，衣食丰溢。是故普广，当知地藏菩萨有如是等不可说百千万亿大威神力利益之事。阎浮众生，于此大士有大因缘。是诸众生，闻菩萨名，见菩萨像，乃至闻是经三字五字，或一偈一句者，现在殊妙安乐，未来之世，百千万生，常得端正，生尊贵家。',
+    pinyin: 'fù cì pǔ guǎng! ruò wèi lái shì zhòng shēng, yú yuè yī rì, bā rì, shí sì rì, shí wǔ rì, shí bā rì, èr shí sān, èr shí sì, èr shí bā, èr shí jiǔ rì, nǎi zhì sān shí rì, shì zhū rì děng, zhū zuì jié jí, dìng qí qīng zhòng. nán yán fú tí zhòng shēng, jǔ zhǐ dòng niàn, wú bù shì yè, wú bù shì zuì, hé kuàng zì qíng shā hài, qiè dào, xié yín, wàng yǔ, bǎi qiān zuì zhuàng. néng yú shì shí zhāi rì, duì fó pú sà zhū xián shèng xiàng qián, dú shì jīng yī biàn. dōng xī nán běi, bǎi yóu xún nèi, wú zhū zāi nàn. dāng cǐ jū jiā, ruò zhǎng ruò yòu, xiàn zài wèi lái, bǎi qiān suì zhōng, yǒng lí è qù. néng yú shí zhāi rì, měi zhuǎn yī biàn, xiàn shì lìng cǐ jū jiā, wú zhū héng bìng, yī shí fēng yì. shì gù pǔ guǎng, dāng zhī dì zàng pú sà yǒu rú shì děng bù kě shuō bǎi qiān wàn yì dà wēi shén lì lì yì zhī shì. yán fú zhòng shēng, yú cǐ dà shì yǒu dà yīn yuán. shì zhū zhòng shēng, wén pú sà míng, jiàn pú sà xiàng, nǎi zhì wén shì jīng sān zì wǔ zì, huò yī jì yī jù zhě, xiàn zài shū miào ān lè, wèi lái zhī shì, bǎi qiān wàn shēng, cháng dé duān zhèng, shēng zūn guì jiā.',
+    meaning: '再次普广！如果未来世众生，于月一日、八日、十四日、十五日、十八日、二十三、二十四、二十八、二十九日，乃至三十日，这诸日等，诸罪结集，定其轻重。南阎浮提众生，举止动念，无不是业，无不是罪，何况恣情杀害、窃盗、邪淫、妄语，百千罪状。能于这十斋日，对佛菩萨诸贤圣像前，读此经一遍。东西南北，百由旬内，无诸灾难。当此居家，若长若幼，现在未来，百千岁中，永离恶趣。能于十斋日，每转一遍，现世令此居家，无诸横病，衣食丰溢。所以普广，应当知道地藏菩萨有如此等不可说百千万亿大威神力利益之事。阎浮众生，于此大士有大因缘。这诸众生，闻菩萨名，见菩萨像，乃至闻此经三字五字，或一偈一句的，现在殊妙安乐，未来之世，百千万生，常得端正，生尊贵家。',
+  },
+  {
+    id: 'ch6-14',
+    title: '第六品 如来赞叹品（十四）经名流布',
+    text: '尔时普广菩萨，闻佛如来，称扬赞叹地藏菩萨已，胡跪合掌，复白佛言：世尊！我久知是大士，有如此不可思议神力，及大誓愿力。为未来众生遣知利益，故问如来，唯然顶受。世尊！当何名此经，使我云何流布？佛告普广：此经有三名，一名地藏本愿，亦名地藏本行，亦名地藏本誓力经。缘此菩萨，久远劫来，发大重愿，利益众生，是故汝等，依愿流布。普广闻已，合掌恭敬，作礼而退。',
+    pinyin: 'ěr shí pǔ guǎng pú sà, wén fó rú lái, chēng yáng zàn tàn dì zàng pú sà yǐ, hú guì hé zhǎng, fù bái fó yán: shì zūn! wǒ jiǔ zhī shì dà shì, yǒu rú cǐ bù kě sī yì shén lì, jí dà shì yuàn lì. wéi wèi lái zhòng shēng qiǎn zhī lì yì, gù wèn rú lái, wéi rán dǐng shòu. shì zūn! dāng hé míng cǐ jīng, shǐ wǒ yún hé liú bù? fó gào pǔ guǎng: cǐ jīng yǒu sān míng, yī míng dì zàng běn yuàn, yì míng dì zàng běn xíng, yì míng dì zàng běn shì lì jīng. yuán cǐ pú sà, jiǔ yuǎn jié lái, fā dà zhòng yuàn, lì yì zhòng shēng, shì gù rǔ děng, yī yuàn liú bù. pǔ guǎng wén yǐ, hé zhǎng gōng jìng, zuò lǐ ér tuì.',
+    meaning: '这时普广菩萨，闻佛如来，称扬赞叹地藏菩萨已，胡跪合掌，又对佛说：世尊！我久知这大士，有如此不可思议神力，及大誓愿力。为未来众生遣知利益，故问如来，唯然顶受。世尊！应当何名此经，使我如何流布？佛告诉普广：此经有三名，一名地藏本愿，亦名地藏本行，亦名地藏本誓力经。缘此菩萨，久远劫来，发大重愿，利益众生，所以你等，依愿流布。普广闻已，合掌恭敬，作礼而退。',
+  },
 ];
